@@ -7,6 +7,7 @@ body {
     font-family: 'Courier New', Courier, monospace;
     color: #fff !important;
     text-align: center;
+    background-color: rgba(0, 0, 0, 0.35);
 }
 .logohref {
     width: 20px;
@@ -19,10 +20,6 @@ body {
 .jumbotron#intro{
     height:calc(100vh - 51px);
     background-color: rgba(0, 0, 0, 0.35);
-    /*
-    background:-webkit-linear-gradient(45deg,#7a1d73 0%,#852d51 100%);
-    background:linear-gradient(45deg,#7a1d73 0%,#852d51 100%);
-    */
 }
 .jumbotron#featuredon{
     /*
@@ -42,7 +39,8 @@ body {
     */
     background-color: rgba(0, 0, 0, 0.35);
 }
-footer{
+footer {
+    margin: 0;
     background-color: rgba(145, 0, 190, 0.75);
     color:#fff;
     font-size:12px;
