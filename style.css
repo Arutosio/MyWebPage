@@ -34,14 +34,14 @@ body {
     */
 }
 #imgSelectMain {
-    width : 95%;
+    /* width : 95%; */
 }
 .jumbotron#featuredon {
     /*
     height:calc(100vh - 85.3px);
     background-color: rgb(20, 20, 20);
     */
-    height:calc(100vh);
+    /* height:calc(100vh); */
     margin-bottom: 0;
     background-image: url("img/images/denpan.jpg");
     background-size: cover; /* Resize the background image to cover the entire container */
@@ -54,7 +54,7 @@ body {
     height:calc(100vh - 85.3px);
     background-image: url("img/images/AnimeClassRoom.jpg");
     */
-    height:calc(100vh);
+    /* height:calc(100vh); */
     margin-bottom: 0;
     background-color: rgba(0, 0, 0, 0.35);
 }
