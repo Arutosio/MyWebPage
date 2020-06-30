@@ -8,8 +8,8 @@
         <title>Arutosio Website</title>
         <link rel="shortcut icon" href="img/icons/ArutosioIcon.ico">
         <link rel="stylesheet" type="text/css" href="lib/fancybox-master/css/jquery.fancybox.min.css">
-        <link rel="stylesheet" type="text/css" href="style.css">
         <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap-4.5.0-dist/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
         <!-- Navbar -->
@@ -18,6 +18,27 @@
                 <img src="img/images/logo_no_border.png" width="77" class="img-fluid" alt="Responsive image">
                 Arutosio
             </a>
+            <div class="dropdown show bg-dark">
+                <a class="btn btn-secondary dropdown-toggle bg-dark" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Reference
+                </a>
+                <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="https://www.youtube.com/user/arutosio" target="_blank">
+                        <img class="logohref" alt="Responsive image" src="img/icons/youtubeLogo.png"/> Youtube</a>
+                    <a class="dropdown-item" href="https://www.twitch.tv/arutosio" target="_blank">
+                        <img class="logohref" alt="Responsive image" src="img/icons//twitchLogo.png"/> Twitch</a>
+                    <a class="dropdown-item" href="https://github.com/Arutosio" target="_blank">
+                        <img class="logohref" alt="Responsive image" src="img/icons/GitHub-Mark-120px-plus.png"/> GitHub</a>
+                    <a class="dropdown-item" href="https://twitter.com/arutosio" target="_blank">
+                        <img class="logohref" alt="Responsive image" src="img/icons/Twitter_bird_logo.png"/> Twitter</a>
+                    <a class="dropdown-item" href="https://myanimelist.net/profile/Arutosio" target="_blank">
+                        <img class="logohref" alt="Responsive image" src="https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png"/> MyAnimeList</a>
+                    <a class="dropdown-item" href="" target="_blank">
+                        <img class="logohref" alt="Responsive image" src="img/icons/discordLogo.png"/> Discord</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -32,36 +53,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#dev"> dev </a>
                     </li>
-                    <div class="dropdown show bg-dark">
-                        <a class="btn btn-secondary dropdown-toggle bg-dark" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Reference
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="https://www.youtube.com/user/arutosio" target="_blank">
-                                <img class="logohref" alt="Responsive image" src="img/icons/youtubeLogo.png"/> Youtube</a>
-                            <a class="dropdown-item" href="https://www.twitch.tv/arutosio" target="_blank">
-                                <img class="logohref" alt="Responsive image" src="img/icons//twitchLogo.png"/> Twitch</a>
-                            <a class="dropdown-item" href="https://github.com/Arutosio" target="_blank">
-                                <img class="logohref" alt="Responsive image" src="img/icons/GitHub-Mark-120px-plus.png"/> GitHub</a>
-                            <a class="dropdown-item" href="https://twitter.com/arutosio" target="_blank">
-                                <img class="logohref" alt="Responsive image" src="img/icons/Twitter_bird_logo.png"/> Twitter</a>
-                            <a class="dropdown-item" href="https://myanimelist.net/profile/Arutosio" target="_blank">
-                                <img class="logohref" alt="Responsive image" src="https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png"/> MyAnimeList</a>
-                            <a class="dropdown-item" href="" target="_blank">
-                                <img class="logohref" alt="Responsive image" src="img/icons/discordLogo.png"/> Discord</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </div>
                 </ul>
             </div>
-            <ul class="nav navbar-nav navbar-right">
+            <!-- <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a href="https://github.com/Arutosio/MyWebPage" target="_blank" id="divID" ng-init="imgsrc='img/icons/GitHub-Mark-120px-plus.png'" ng-mouseover="imgsrc='img/icons/GitHub-Mark-Light-120px-plus.png'" ng-mouseout="imgsrc='img/icons/GitHub-Mark-120px-plus.png'">
                         <img ng-src="{{imgsrc}}" width="44" class="img-fluid" alt="Responsive image">
                     </a>
                 </li>
-            </ul>
+            </ul> -->
         </nav>
         <!-- Section 1 -->
         <section class="jumbotron" id="intro">
@@ -72,7 +72,7 @@
                 </div>
                 <div class="col">
                     <a href="img/images/AnimeClassRoom.jpg" data-fancybox="images" data-caption="My caption">
-                        <img src="img/images/AnimeClassRoom.jpg" class="card-img" alt="Responsive image">
+                        <img src="img/images/AnimeClassRoom.jpg" id="imgSelectMain" class="card-img" alt="Responsive image">
                     </a>
                 </div>
                 <div class="col">
@@ -80,9 +80,8 @@
                         </br>
                         I have learned to use PhotoShop and DavinciResolve by myself, because sometime i make a videos for my 
                         <a href="https://www.youtube.com/user/arutosio" target="_blank" class="badge badge-primary">YouTube Channel</a>
-                         or same themeplates for my <a href="https://www.twitch.tv/arutosio" target="_blank" class="badge badge-primary">Twitch Channel</a>.
+                        or same themeplates for my <a href="https://www.twitch.tv/arutosio" target="_blank" class="badge badge-primary">Twitch Channel</a>.
                     </p>
-                </div>
                 </div>
             </div>
         </section>

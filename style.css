@@ -4,32 +4,45 @@ body {
     background-size: cover; /* Resize the background image to cover the entire container */
     background-attachment: fixed;
     background-position: center;
-    font-family: 'Courier New', Courier, monospace;
+    /* font-family: 'Courier New', Courier, monospace; */
     color: #fff !important;
     text-align: center;
 }
 .logohref {
     width: 20px;
 }
+.dropdown-item {
+    color: #fff;
+}
+.dropdown-divider {
+    margin: 0;
+    border-top: 0;
+}
 .jumbotron{
     color:#fff;
     text-align:center;
-    margin:0;
+    margin: 0;
     margin-bottom: 0;
 }
 .jumbotron#intro{
     height:calc(100vh - 51px);
     background-color: rgba(0, 0, 0, 0.35);
+    margin-bottom: 0;
     /*
     background:-webkit-linear-gradient(45deg,#7a1d73 0%,#852d51 100%);
     background:linear-gradient(45deg,#7a1d73 0%,#852d51 100%);
     */
 }
-.jumbotron#featuredon{
+#imgSelectMain {
+    width : 95%;
+}
+.jumbotron#featuredon {
     /*
     height:calc(100vh - 85.3px);
     background-color: rgb(20, 20, 20);
     */
+    height:calc(100vh);
+    margin-bottom: 0;
     background-image: url("img/images/denpan.jpg");
     background-size: cover; /* Resize the background image to cover the entire container */
     background-attachment: fixed;
@@ -41,6 +54,8 @@ body {
     height:calc(100vh - 85.3px);
     background-image: url("img/images/AnimeClassRoom.jpg");
     */
+    height:calc(100vh);
+    margin-bottom: 0;
     background-color: rgba(0, 0, 0, 0.35);
 }
 footer{
