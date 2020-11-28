@@ -1,0 +1,31 @@
+body {
+    font-family: "Lucida Console", Courier, monospace;
+    color: azure;
+    background-color: black;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+}
+
+table {
+    border: 4px solid rgba(174, 0, 255, 0.842);
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+}
+
+td, th {
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+}
