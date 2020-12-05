@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     var eleSelections = document.getElementById("Selections");
     var eleSecHome = document.getElementById("home");
     var eleSecFeaturedon = document.getElementById("featuredon");
-    var eleSecGameAru = document.getElementById("gameAru");
+    var eleSecAboutMe = document.getElementById("aboutMe");
     var eleSecDev = document.getElementById("dev");
 
     //#region EVENT LISTENERS
@@ -26,11 +26,11 @@ document.addEventListener('DOMContentLoaded', function(event) {
                 eleSecFeaturedon.style.display = "flex";
             } else { eleSecFeaturedon.style.display = "none"; }
 
-            //Show and Hiden SelectionGameAru
-            if(nameSelection == eleSecGameAru.getAttribute("id")) {
+            //Show and Hiden SelectionAboutMe
+            if(nameSelection == eleSecAboutMe.getAttribute("id")) {
                 console.log(nameSelection);
-                eleSecGameAru.style.display = "flex";
-            } else { eleSecGameAru.style.display = "none"; }
+                eleSecAboutMe.style.display = "flex";
+            } else { eleSecAboutMe.style.display = "none"; }
 
             //Show and Hiden SelectionDev
             if(nameSelection == eleSecDev.getAttribute("id")) {
