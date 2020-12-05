@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     //the event occurred
     
     //ElementRef ele = element(tag HTML)
+    var eleVideoAccelerator = document.getElementById("videoAccelerator");
     // Sec = section
     var eleSelections = document.getElementById("Selections");
     var eleSecHome = document.getElementById("home");
@@ -25,21 +26,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
             //Show and Hiden SelectionHome
             if(nameSelection == eleSecHome.getAttribute("id")) {
                 eleSecHome.style.display = "flex";
+                eleVideoAccelerator.style.display = "inline-flex";
                 eleAHome.classList.add("active");
-                console.log(eleSecHome.className);
             } else { 
                 eleSecHome.style.display = "none";
+                eleVideoAccelerator.style.display = "none";
                 eleAHome.classList.remove("active");
-                console.log(eleSecHome.className);
-            }
-
-            //Show and Hiden SelectionFeaturedon
-            if(nameSelection == eleSecFeaturedon.getAttribute("id")) {
-                eleSecFeaturedon.style.display = "flex";
-                eleAFeaturedon.classList.add("active");
-            } else { 
-                eleSecFeaturedon.style.display = "none";
-                eleAFeaturedon.classList.remove("active");
             }
 
             //Show and Hiden SelectionAboutMe
@@ -49,6 +41,15 @@ document.addEventListener('DOMContentLoaded', function(event) {
             } else {
                 eleSecAboutMe.style.display = "none";
                 eleAAboutMe.classList.remove("active"); 
+            }
+
+            //Show and Hiden SelectionFeaturedon
+            if(nameSelection == eleSecFeaturedon.getAttribute("id")) {
+                eleSecFeaturedon.style.display = "flex";
+                eleAFeaturedon.classList.add("active");
+            } else { 
+                eleSecFeaturedon.style.display = "none";
+                eleAFeaturedon.classList.remove("active");
             }
 
             //Show and Hiden SelectionDev
@@ -70,14 +71,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
     //#endregion Method
     //Git logo contoller
     $('#logogit').click(function(){
-        if(($(this).attr('src')!='img/icons/GitHub-Mark-120px-plus.png')) {
-            $(this).attr('class','img/icons/GitHub-Mark-Light-120px-plus.png');
+        if(($(this).attr('src')!='Media/img/icons/GitHub-Mark-120px-plus.png')) {
+            $(this).attr('class','Media/img/icons/GitHub-Mark-Light-120px-plus.png');
         }
-    });
-
-    $('#sidebarCollapse').on('click', function () {
-        $('#sidebar, #content').toggleClass('active');
-        $('.collapse.in').toggleClass('in');
-        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
     });
 });
