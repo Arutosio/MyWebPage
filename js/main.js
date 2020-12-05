@@ -1,3 +1,4 @@
-$(document).ready(function () {
-
+document.addEventListener('DOMContentLoaded', function(event) {
+    //the event occurred
+    
 });
