@@ -2,7 +2,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
     //the event occurred
     
     //ElementRef ele = element(tag HTML)
-    var eleVideoAccelerator = document.getElementById("videoAccelerator");
+    var eleVideoBG = document.getElementById("videoBG");
+    // Sor = Sorce
+    var eleSorceVideoBG = document.getElementById("sorceVideoBG");
     // Sec = section
     var eleSelections = document.getElementById("Selections");
     var eleSecHome = document.getElementById("home");
@@ -26,17 +28,21 @@ document.addEventListener('DOMContentLoaded', function(event) {
             //Show and Hiden SelectionHome
             if(nameSelection == eleSecHome.getAttribute("id")) {
                 eleSecHome.style.display = "flex";
-                eleVideoAccelerator.style.display = "inline-flex";
+                eleVideoBG.style.display = "inline-flex";
+                eleSorceVideoBG.setAttribute('src', '../Media/video/Toaru-Kagaku-no-Accelerator.mp4');
+                eleVideoBG.load();
                 eleAHome.classList.add("active");
             } else { 
                 eleSecHome.style.display = "none";
-                eleVideoAccelerator.style.display = "none";
                 eleAHome.classList.remove("active");
             }
 
             //Show and Hiden SelectionAboutMe
             if(nameSelection == eleSecAboutMe.getAttribute("id")) {
                 eleSecAboutMe.style.display = "flex";
+                eleVideoBG.style.display = "inline-flex";
+                eleSorceVideoBG.setAttribute('src', '../Media/video/Toaru-Kagaku-no-Railgun.mp4');
+                eleVideoBG.load();
                 eleAAboutMe.classList.add("active");
             } else {
                 eleSecAboutMe.style.display = "none";
@@ -46,6 +52,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
             //Show and Hiden SelectionFeaturedon
             if(nameSelection == eleSecFeaturedon.getAttribute("id")) {
                 eleSecFeaturedon.style.display = "flex";
+                eleVideoBG.style.display = "inline-flex";
+                eleSorceVideoBG.setAttribute('src', '../Media/video/Toaru-Majutsu-no-Index2.mp4');
+                eleVideoBG.load();
                 eleAFeaturedon.classList.add("active");
             } else { 
                 eleSecFeaturedon.style.display = "none";
@@ -55,6 +64,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
             //Show and Hiden SelectionDev
             if(nameSelection == eleSecDev.getAttribute("id")) {
                 eleSecDev.style.display = "flex";
+                eleVideoBG.style.display = "inline-flex";
+                eleSorceVideoBG.setAttribute('src', '../Media/video/Toaru-Majutsu-no-Index1.mp4');
+                eleVideoBG.load();
                 eleADev.classList.add("active");
             } else {
                 eleSecDev.style.display = "none";

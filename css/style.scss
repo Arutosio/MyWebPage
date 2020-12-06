@@ -42,7 +42,7 @@ body {
     background: rgba(0, 0, 0, 0.5);
 }
 .jumbotron#aboutMe {
-    background-image: url("../Media/img/images/denpan.jpg");
+    //background-image: url("../Media/img/images/denpan.jpg");
     background-size: cover; /* Resize the background image to cover the entire container */
     background-attachment: fixed;
     background-position: center; /* Center the image */
@@ -62,7 +62,7 @@ body {
     // right: 0;
     // bottom: 0;
     // margin: 0;
-    background: rgba(0, 0, 0, 0.555);
+    background: rgba(0, 0, 0, 0.45);
     color: #fff;
     min-width: 100%;
     min-height: 100%;
@@ -84,7 +84,7 @@ footer p{
 footer a,footer a:active,footer a:focus,footer a:hover{
     color:#fff
 }
-#videoAccelerator {
+#videoBG {
     object-fit: cover;
     position: fixed;
     right: 0;
@@ -93,13 +93,13 @@ footer a,footer a:active,footer a:focus,footer a:hover{
     left: 0;
 }
 @media (min-aspect-ratio: 16/9) {
-    #videoAccelerator {
+    #videoBG {
         width: 100%;
         height: auto;
     }
 }
 @media (max-aspect-ratio: 16/9) {
-    #videoAccelerator {
+    #videoBG {
         width: auto;
         height: 100%;
     }
