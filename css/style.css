@@ -72,7 +72,6 @@ body {
 .divContain {
   position: relative;
   margin: 0;
-  background: rgba(0, 0, 0, 0.45);
   color: #fff;
   min-width: 100%;
   min-height: 100%;
@@ -111,6 +110,11 @@ footer a:hover {
   bottom: 0;
   top: 0;
   left: 0;
+  -webkit-filter: brightness(0.5);
+          filter: brightness(0.5);
+  margin: 0;
+  min-width: 100%;
+  min-height: 100%;
 }
 
 @media (min-aspect-ratio: 16 / 9) {
@@ -118,6 +122,7 @@ footer a:hover {
     width: 100%;
     height: auto;
     padding: 0;
+    position: fixed;
   }
 }
 

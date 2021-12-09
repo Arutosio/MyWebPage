@@ -42,6 +42,7 @@ body {
     background: rgba(0, 0, 0, 0.45);
     min-width: 100%;
     min-height: 100%;
+
 }
 
 .jumbotron {
@@ -86,7 +87,6 @@ body {
     // right: 0;
     // bottom: 0;
     margin: 0;
-    background: rgba(0, 0, 0, 0.45);
     color: #fff;
     min-width: 100%;
     min-height: 100%;
@@ -124,6 +124,15 @@ footer a:hover {
     bottom: 0;
     top: 0;
     left: 0;
+    filter: brightness(0.5);
+    // display: inline-flex;
+    // top: 0;
+    // left: 0;
+    // right: 0;
+    // bottom: 0;
+    margin: 0;
+    min-width: 100%;
+    min-height: 100%;
 }
 
 @media (min-aspect-ratio: 16/9) {
@@ -131,6 +140,7 @@ footer a:hover {
         width: 100%;
         height: auto;
         padding: 0;
+        position: fixed;
     }
 }
 
