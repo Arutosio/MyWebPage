@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
             if(nameSelection == eleSecHome.getAttribute("id")) {
                 eleSecHome.style.display = "flex";
                 eleVideoBG.style.display = "inline-flex";
-                eleSorceVideoBG.setAttribute('src', '../Media/videos/Toaru-Kagaku-no-Accelerator.m4v');
+                eleSorceVideoBG.setAttribute('src', '../Media/Videos/Toaru-Kagaku-no-Accelerator.m4v');
                 eleVideoBG.load();
                 eleIHome.classList.add("active");
             } else { 
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
             if(nameSelection == eleSecAboutMe.getAttribute("id")) {
                 eleSecAboutMe.style.display = "flex";
                 eleVideoBG.style.display = "inline-flex";
-                eleSorceVideoBG.setAttribute('src', '../Media/videos/Toaru-Kagaku-no-Railgun.m4v');
+                eleSorceVideoBG.setAttribute('src', '../Media/Videos/Toaru-Kagaku-no-Railgun.m4v');
                 eleVideoBG.load();
                 eleIAboutMe.classList.add("active");
             } else {
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
             if(nameSelection == eleSecFeatures.getAttribute("id")) {
                 eleSecFeatures.style.display = "flex";
                 eleVideoBG.style.display = "inline-flex";
-                eleSorceVideoBG.setAttribute('src', '../Media/videos/Toaru-Majutsu-no-Index2.m4v');
+                eleSorceVideoBG.setAttribute('src', '../Media/Videos/Toaru-Majutsu-no-Index2.m4v');
                 eleVideoBG.load();
                 eleIFeatures.classList.add("active");
             } else { 
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
             if(nameSelection == eleSecDev.getAttribute("id")) {
                 eleSecDev.style.display = "flex";
                 eleVideoBG.style.display = "inline-flex";
-                eleSorceVideoBG.setAttribute('src', '../Media/videos/Toaru-Majutsu-no-Index1.m4v');
+                eleSorceVideoBG.setAttribute('src', '../Media/Videos/Toaru-Majutsu-no-Index1.m4v');
                 eleVideoBG.load();
                 eleIDev.classList.add("active");
             } else {
