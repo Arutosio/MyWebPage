@@ -35,13 +35,13 @@
     .jumbotron#intro img{
         max-width:100%;max-height:calc(100vh - 256px)
     }
-    .jumbotron#featuredon{
+    .jumbotron#features{
         background:#d0303e
     }
-    .jumbotron#dev p a,.jumbotron#featuredon a{
+    .jumbotron#dev p a,.jumbotron#features a{
         color:#fff
     }
-    .jumbotron#featuredon a:hover{
+    .jumbotron#features a:hover{
         color:#ecdbff
     }
     .jumbotron#dev{
