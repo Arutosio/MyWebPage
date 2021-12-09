@@ -31,6 +31,19 @@ body {
     border-top: 0;
 }
 
+.videoContain {
+    position: relative;
+    // display: inline-flex;
+    // top: 0;
+    // left: 0;
+    // right: 0;
+    // bottom: 0;
+    margin: 0;
+    background: rgba(0, 0, 0, 0.45);
+    min-width: 100%;
+    min-height: 100%;
+}
+
 .jumbotron {
     color: #fff;
     text-align: center;
@@ -47,7 +60,6 @@ body {
 .jumbotron#sHome {
     /* height:calc(100vh - 51px); */
     display: flex;
-    background: rgba(0, 0, 0, 0.5);
 }
 
 .jumbotron#sAboutMe {
@@ -64,22 +76,7 @@ body {
 
 .jumbotron#sFeatures {}
 
-.jumbotron#sDev {
-    background-image: url("../Media/img/images/AnimeClassRoom.jpg");
-}
-
-.videoContain {
-    position: relative;
-    // display: inline-flex;
-    // top: 0;
-    // left: 0;
-    // right: 0;
-    // bottom: 0;
-    margin: 0;
-    background: rgba(0, 0, 0, 0.45);
-    min-width: 100%;
-    min-height: 100%;
-}
+.jumbotron#sDev {}
 
 .divContain {
     position: relative;
