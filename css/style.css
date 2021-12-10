@@ -19,7 +19,7 @@ body {
 }
 
 .logohref {
-  width: 20px;
+  width: 15%;
 }
 
 .dropdown-item {
@@ -31,12 +31,28 @@ body {
   border-top: 0;
 }
 
-.videoContain {
+.card {
+  width: auto;
+  height: auto;
   position: relative;
+  display: inline-block;
   margin: 0;
-  background: rgba(0, 0, 0, 0.45);
-  min-width: 100%;
-  min-height: 100%;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.card .img-top {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.card:hover .img-top {
+  display: inline;
+}
+
+#imgSelectMain {
+  width: 90%;
 }
 
 .jumbotron {

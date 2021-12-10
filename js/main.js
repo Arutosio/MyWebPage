@@ -86,12 +86,5 @@ document.addEventListener('DOMContentLoaded', function(event) {
     function ShowSelection(event) {
 
     }
-    //#endregion Method
-    //Git logo contoller
-    // $('#logogit').click(function(){
-    //     if(($(this).attr('src')!='Media/img/icons/GitHub-Mark-120px-plus.png')) {
-    //         $(this).attr('class','Media/img/icons/GitHub-Mark-Light-120px-plus.png');
-    //     }
-    // });
 });
     
