@@ -1,90 +1,114 @@
+
+import IndexManager from "./IndexManager.js";
+import UtilityClass from "./UtilityClass.js";
+import HtmlBuilder from "./HtmlBuilder.js";
+import RequestJson from "./GetterJson.js"
+
+var getterJson = new RequestJson("https://localhost:5001", null)
+var htmlBuilder = new HtmlBuilder("../Views");
+
+// console.log(UtilityClass.GetJsonFromFile("../Files/Json/test.json"));
+
 document.addEventListener('DOMContentLoaded', function(event) {
-    // Initialise Carousel
-    //the event occurred
-    //ElementRef ele = element(tag HTML)
+    StartUp().then(LoadConstant);
+});
+
+async function StartUp() {
+    //Insert Navbar
+    let htmlNavbar = await htmlBuilder.CreateNavbarView("");
+    IndexManager.ReplaceHtmlContent("mainNavbar", htmlNavbar);
+
+    let htmlSectionsHome = await htmlBuilder.CreateSectionView("");
+    IndexManager.ReplaceHtmlContent("sHome", htmlSectionsHome);
+
+    let htmlSectionsAboutMe = await htmlBuilder.CreateSectionViewById("sAboutMe");
+    IndexManager.ReplaceHtmlContent("sAboutMe", htmlSectionsAboutMe);
+
+    let htmlSectionsFeatures = await htmlBuilder.CreateSectionViewById("sFeatures");
+    IndexManager.ReplaceHtmlContent("sFeatures", htmlSectionsFeatures);
+
+    let htmlSectionsDev = await htmlBuilder.CreateSectionViewById("sDev");
+    IndexManager.ReplaceHtmlContent("sDev", htmlSectionsDev);
+
+    let jsonWalletDepositAddress = await UtilityClass.GetJsonFromRootPage("WalletDepositAddress");
+    let htmlSectionsDonate = await htmlBuilder.CreateSectionDonateView(jsonWalletDepositAddress);
+    IndexManager.ReplaceHtmlContent("sDonate", htmlSectionsDonate);
+
+    let htmlFooter = await htmlBuilder.CreateFooterViewById("iFooter");
+    IndexManager.ReplaceHtmlContent("iFooter", htmlFooter);
+}
+
+function LoadConstant() {
+    //Delcare Costant
     const eleVideoBG = document.querySelector("#videoBG");
     // Sor = Sorce
     const eleSorceVideoBG = document.querySelector("#sorceVideoBG");
-    // Sec = section
-    const eleSelections = document.querySelector("#Selections");
-    const eleSecHome = document.querySelector("#sHome");
-    const eleSecFeatures = document.querySelector("#sFeatures");
-    const eleSecAboutMe = document.querySelector("#sAboutMe");
-    const eleSecDev = document.querySelector("#sDev");
-    // A = a
-    const eleIHome = document.querySelector("#iHome");
-    const eleIFeatures = document.querySelector("#iFeatures");
-    const eleIAboutMe = document.querySelector("#iAboutMe");
-    const eleIDev = document.querySelector("#iDev");
-
-    const eleHrefNav = [eleIHome,eleIFeatures,eleIAboutMe,eleIDev]
+    
+    const tabs = [
+        { tabI: document.querySelector("#iHome"), tabS: document.querySelector("#sHome") },
+        { tabI: document.querySelector("#iAboutMe"), tabS: document.querySelector("#sAboutMe") },
+        { tabI: document.querySelector("#iFeatures"), tabS: document.querySelector("#sFeatures") },
+        { tabI: document.querySelector("#iDev"), tabS: document.querySelector("#sDev") },
+        { tabI: document.querySelector("#iDonate"), tabS: document.querySelector("#sDonate") },
+    ];
+    var current = tabs[0];
 
     //#region EVENT LISTENERS
     //document.body.querySelector("#Selections").addEventListener("click", ShowSelection(x));
     document.addEventListener('click', function( event ) 
     {
-        // if (eleSelections !== event.target && eleSelections.contains(event.target)) 
-        // {
-        //     let nameSelection = event.target.getAttribute("href").substring(1);
-
-        // }
-        if (event.target.getAttribute("class") != "nav-link active" && eleHrefNav.includes(event.target)) 
+        // console.log(tabScenaries[Object.keys(tabScenaries)]);
+        if (event.target.getAttribute("class") != "nav-link active" && tabs.find(t => t.tabI == event.target)) 
         {
-            let nameSelection = event.target.getAttribute("href").substring(1);
-            //Show and Hiden SelectionHome
-            if(nameSelection == eleSecHome.getAttribute("id")) {
-                eleSecHome.style.display = "flex";
-                eleVideoBG.style.display = "inline-flex";
-                eleSorceVideoBG.setAttribute('src', '../Media/Videos/Toaru-Kagaku-no-Accelerator.m4v');
-                eleVideoBG.load();
-                eleIHome.classList.add("active");
-            } else { 
-                eleSecHome.style.display = "none";
-                eleIHome.classList.remove("active");
+            switch(event.target) {
+                case tabs[0].tabI:
+                    tabs[0].tabS.style.display = "flex";
+                    //eleVideoBG.style.display = "inline-flex";
+                    eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Kagaku-no-Accelerator.m4v');
+                    eleVideoBG.load();
+                    tabs[0].tabI.classList.add("active");
+                    break;
+                case tabs[1].tabI:
+                    tabs[1].tabS.style.display = "flex";
+                    //eleVideoBG.style.display = "inline-flex";
+                    eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Kagaku-no-Railgun.m4v');
+                    eleVideoBG.load();
+                    tabs[1].tabI.classList.add("active");
+                    break;
+                case tabs[2].tabI:
+                    tabs[2].tabS.style.display = "flex";
+                    //eleVideoBG.style.display = "inline-flex";
+                    eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Majutsu-no-Index2.m4v');
+                    eleVideoBG.load();
+                    tabs[2].tabI.classList.add("active");
+                    break;
+                case tabs[3].tabI:
+                    tabs[3].tabS.style.display = "flex";
+                    //eleVideoBG.style.display = "inline-flex";
+                    eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Majutsu-no-Index1.m4v');
+                    eleVideoBG.load();
+                    tabs[3].tabI.classList.add("active");
+                    break;
+                case tabs[4].tabI:
+                    tabs[4].tabS.style.display = "flex";
+                    //eleVideoBG.style.display = "inline-flex";
+                    eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Kagaku-no-Accelerator.m4v');
+                    eleVideoBG.load();
+                    tabs[4].tabI.classList.add("active");
+                    break;
+                default:
+                    console.log(`NON RICONOSCIUTO! - ${event.target}`);
             }
 
-            //Show and Hiden SelectionAboutMe
-            if(nameSelection == eleSecAboutMe.getAttribute("id")) {
-                eleSecAboutMe.style.display = "flex";
-                eleVideoBG.style.display = "inline-flex";
-                eleSorceVideoBG.setAttribute('src', '../Media/Videos/Toaru-Kagaku-no-Railgun.m4v');
-                eleVideoBG.load();
-                eleIAboutMe.classList.add("active");
-            } else {
-                eleSecAboutMe.style.display = "none";
-                eleIAboutMe.classList.remove("active"); 
-            }
-
-            //Show and Hiden SelectionFeaturedon
-            if(nameSelection == eleSecFeatures.getAttribute("id")) {
-                eleSecFeatures.style.display = "flex";
-                eleVideoBG.style.display = "inline-flex";
-                eleSorceVideoBG.setAttribute('src', '../Media/Videos/Toaru-Majutsu-no-Index2.m4v');
-                eleVideoBG.load();
-                eleIFeatures.classList.add("active");
-            } else { 
-                eleSecFeatures.style.display = "none";
-                eleIFeatures.classList.remove("active");
-            }
-
-            //Show and Hiden SelectionDev
-            if(nameSelection == eleSecDev.getAttribute("id")) {
-                eleSecDev.style.display = "flex";
-                eleVideoBG.style.display = "inline-flex";
-                eleSorceVideoBG.setAttribute('src', '../Media/Videos/Toaru-Majutsu-no-Index1.m4v');
-                eleVideoBG.load();
-                eleIDev.classList.add("active");
-            } else {
-                eleSecDev.style.display = "none";
-                eleIDev.classList.remove("active");
-            }
+            current.tabS.style.display = "none";
+            current.tabI.classList.remove("active");
+            current = tabs.find(t => t.tabI == event.target);
         }
     });
-    //#endregion EVENT LISTENERS
 
-    //#region Method
-    function ShowSelection(event) {
-
-    }
-});
-    
+    // Example: Enable popovers everywhere
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+    })
+}

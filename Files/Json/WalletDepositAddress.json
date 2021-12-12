@@ -1,0 +1,65 @@
+[
+    {
+        "nameCrypto": "Bitcoin",
+        "nameSymbol": "BTC",
+        "logoCryptoIMG": "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png",
+        "addressWallet": [
+            {
+                "nameChain": "Bitcoin",
+                "nameSymbolChain": "BTC",
+                "addressDepositText": "1AkwmRBsT52EJdPwbdfysGJpcdDm2iTGmj",
+                "qrcDepositImgQRC": "/Files/img/CryptoQRC/PepeQRC.jpg"
+            },
+            {
+                "nameChain": "Binance Smart Chain (BEP20)",
+                "nameSymbolChain": "BSC",
+                "addressDepositText": "0xffb9af14b2e267dc6beff80f987509164e1bd913",
+                "qrcDepositImgQRC": "/Files/img/CryptoQRC/PepeQRC.jpg"
+            },
+            {
+                "nameChain": "Ethereum (ERC20)",
+                "nameSymbolChain": "ETH",
+                "addressDepositText": "0xffb9af14b2e267dc6beff80f987509164e1bd913",
+                "qrcDepositImgQRC": "/Files/img/CryptoQRC/PepeQRC.jpg"
+            }
+        ]
+    },
+    {
+        "nameCrypto": "Dogecoin",
+        "nameSymbol": "DOGE",
+        "logoCryptoIMG": "https://s2.coinmarketcap.com/static/img/coins/64x64/74.png",
+        "addressWallet": [
+            {
+                "nameChain": "dogecoin",
+                "nameSymbolChain": "DOGE",
+                "addressDepositText": "DTxeCKzu532n85NUexQJrTKmqojSqMN3YD",
+                "qrcDepositImgQRC": "~/Files/img/CryptoQRC/PepeQRC.jpg"
+            },
+            {
+                "nameChain": "Binance Smart Chain (BEP20)",
+                "nameSymbolChain": "BSC",
+                "addressDepositText": "0xffb9af14b2e267dc6beff80f987509164e1bd913",
+                "qrcDepositImgQRC": "/Files/img/CryptoQRC/PepeQRC.jpg"
+            }
+        ]
+    },
+    {
+        "nameCrypto": "Solana",
+        "nameSymbol": "SOL",
+        "logoCryptoIMG": "https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png",
+        "addressWallet": [
+            {
+                "nameChain": "Solana",
+                "nameSymbolChain": "SOL",
+                "addressDepositText": "23CxVQVTjVdqioZPgVvWiQn3JjrCCBdi6C4RmmDQvWZS",
+                "qrcDepositImgQRC": "/Files/img/CryptoQRC/PepeQRC.jpg"
+            },
+            {
+                "nameChain": "Binance Smart Chain (BEP20)",
+                "nameSymbolChain": "BSC",
+                "addressDepositText": "0xffb9af14b2e267dc6beff80f987509164e1bd913",
+                "qrcDepositImgQRC": "/Files/img/CryptoQRC/PepeQRC.jpg"
+            }
+        ]
+    }
+]
