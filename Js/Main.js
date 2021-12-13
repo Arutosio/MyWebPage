@@ -143,8 +143,6 @@ async function StartUp() {
     });
 
     cryptoSelectOptions.addEventListener("change", function(event) {
-        // console.log(jsonWalletDepositAddress[this.value]);
-        console.log(addressInfos);
         for (let i = 0; i < addressInfos.length; i++) {
             let address = addressInfos[i];
             if (i == this.value) {
