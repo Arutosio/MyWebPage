@@ -8,10 +8,10 @@ export default class RequestJson {
     }
 
     //request online
-    async GetNewPosts(isAdultContent) {
-        let url = `${this.domain}/Post`;
-        if (isAdultContent) {
-            url = `${url}?isAdultContent=TRUE`;
+    async TwitchGetUser(user) {
+        let url = "https://api.twitch.tv/kraken/user/";
+        if (user) {
+            url += user;
         }
         return await RequestJson.RequestJsonAsync("GET", url, this.data);
     }

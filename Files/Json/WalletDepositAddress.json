@@ -1,5 +1,36 @@
 [
     {
+        "nameCrypto": "Tether",
+        "nameSymbol": "USDT",
+        "logoCryptoIMG": "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png",
+        "addressWallet": [
+            {
+                "nameChain": "Ethereum (ERC20)",
+                "nameSymbolChain": "ETH",
+                "addressDepositText": "0xffb9af14b2e267dc6beff80f987509164e1bd913",
+                "qrcDepositImgQRC": "/Files/img/CryptoQRC/PepeQRC.jpg"
+            },
+            {
+                "nameChain": "Binance Smart Chain (BEP20)",
+                "nameSymbolChain": "BSC",
+                "addressDepositText": "0xffb9af14b2e267dc6beff80f987509164e1bd913",
+                "qrcDepositImgQRC": "/Files/img/CryptoQRC/PepeQRC.jpg"
+            },
+            {
+                "nameChain": "Tron (TRC20)",
+                "nameSymbolChain": "TRX",
+                "addressDepositText": "TGj356zQBKxNrMGbw45YquqERp7J2cCzXy",
+                "qrcDepositImgQRC": "/Files/img/CryptoQRC/PepeQRC.jpg"
+            },
+            {
+                "nameChain": "Solana",
+                "nameSymbolChain": "SOL",
+                "addressDepositText": "23CxVQVTjVdqioZPgVvWiQn3JjrCCBdi6C4RmmDQvWZS",
+                "qrcDepositImgQRC": "/Files/img/CryptoQRC/PepeQRC.jpg"
+            }
+        ]
+    },
+    {
         "nameCrypto": "Bitcoin",
         "nameSymbol": "BTC",
         "logoCryptoIMG": "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png",
@@ -34,6 +65,38 @@
                 "nameSymbolChain": "DOGE",
                 "addressDepositText": "DTxeCKzu532n85NUexQJrTKmqojSqMN3YD",
                 "qrcDepositImgQRC": "~/Files/img/CryptoQRC/PepeQRC.jpg"
+            },
+            {
+                "nameChain": "Binance Smart Chain (BEP20)",
+                "nameSymbolChain": "BSC",
+                "addressDepositText": "0xffb9af14b2e267dc6beff80f987509164e1bd913",
+                "qrcDepositImgQRC": "/Files/img/CryptoQRC/PepeQRC.jpg"
+            }
+        ]
+    },
+    {
+        "nameCrypto": "BNB",
+        "nameSymbol": "BNB",
+        "logoCryptoIMG": "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png",
+        "addressWallet": [
+            {
+                "nameChain": "Binance Smart Chain (BEP20)",
+                "nameSymbolChain": "BSC",
+                "addressDepositText": "0xffb9af14b2e267dc6beff80f987509164e1bd913",
+                "qrcDepositImgQRC": "/Files/img/CryptoQRC/PepeQRC.jpg"
+            }
+        ]
+    },
+    {
+        "nameCrypto": "SHIBA INU",
+        "nameSymbol": "SHIB",
+        "logoCryptoIMG": "https://s2.coinmarketcap.com/static/img/coins/64x64/14341.png",
+        "addressWallet": [
+            {
+                "nameChain": "Ethereum (ERC20)",
+                "nameSymbolChain": "ETH",
+                "addressDepositText": "0xffb9af14b2e267dc6beff80f987509164e1bd913",
+                "qrcDepositImgQRC": "/Files/img/CryptoQRC/PepeQRC.jpg"
             },
             {
                 "nameChain": "Binance Smart Chain (BEP20)",

@@ -1,0 +1,52 @@
+
+@host = http://localhost:5000
+
+### GetPost
+GET {{host}}/Post HTTP/1.1
+
+### AddPost
+POST {{host}}/Add HTTP/1.1
+header name:
+Content-Type: application/json
+content
+{
+    "isDone" : "TRUE",
+    "DoneMessage" : "This is a test post request..",
+    "ErrMessage" : "MALE",
+    "ErrMessageUser" : "MALE"
+}
+
+### POST
+POST https://zfs-world-check-one-api-pilot.thomsonreuters.com/ HTTP/1.1
+header name:
+Authorization:"'Signature keyId="99381b37-fbcf-4473-99ef-72478189a838",algorithm="hmac-sha256""
+host:"zfs-world-check-one-api-pilot.thomsonreuters.com"
+date:"Tue, 08 Feb 2019 07:45:35 GMT"
+content-type:"application/json"
+cache-control:"no-cache"
+Postman-Token:"04d44b68-95af-40b5-800b-1e592d490955"
+User-Agent:"PostmanRuntime/7.6.0"
+Accept:"*/*"
+accept-encoding:"gzip, deflate"
+content
+{
+    "caseId":"my customer ID",
+    "name":"John Doe",
+    "region":"California"
+}
+
+### GetPost
+GET https://api.twitch.tv/kraken/user/arutosio
+headerPOST url HTTP/1.1
+Content-Type: application/soap+xml
+header name: header value {
+
+}
+
+    Client-ID: uo6dggojyb8d6soh92zknwmi5ej1q2,
+    Authorization':"OAuth cfabdegwdoklmawdzdo98xt2fo512y"
+
+curl -H 'Accept: application/vnd.twitchtv.v5+json' \
+-H 'Client-ID: uo6dggojyb8d6soh92zknwmi5ej1q2' \
+-H 'Authorization: OAuth cfabdegwdoklmawdzdo98xt2fo512y' \
+GET 'https://api.twitch.tv/kraken/user'

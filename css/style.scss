@@ -90,6 +90,14 @@ body {
 
 .jumbotron#sDev {}
 
+.jumbotron#sDonate {}
+
+.form-select {
+    border-width: 5px;
+    border-color: rgba(180, 180, 180, 05);
+}
+
+
 .divContain {
     position: relative;
     // display: inline-flex;
@@ -192,8 +200,35 @@ footer a:hover {
 
 .popover {
     border-width: 5px;
-    border-color: rgb(120, 120, 120, 05);
+    border-color: rgba(100, 100, 100, 0.5);
 }
+
+$--bs-gutter-x: 0;
+
+.aru-data-container {
+
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.chainList {
+    display: none;
+}
+
+.aru-row {
+    padding-right: 0;
+}
+
+// TAG ELEMENT
+.table {
+    vertical-align: middle;
+}
+
+.aru-border {
+    border-width: 5px;
+    border-color: rgba(180, 180, 180, 05);
+}
+
 
 // #mainNavbar {
 //     top: 0; 

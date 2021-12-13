@@ -1,4 +1,4 @@
-import UtilityClass from '../Js/UtilityClass.js';
+import UtilityClass from './UtilityClass.js';
 
 export default class HtmlBuilder {
     constructor(pathTemplate, pathJson) {
@@ -68,7 +68,7 @@ export default class HtmlBuilder {
         htmlAddressinfo = HtmlBuilder.RepleaceAllKey(htmlAddressinfo, "nameSymbol", elementCryptoInfo.nameSymbol);
         
         let htmlTrTableChains = "";
-        let indexNum = 1;
+        let indexNum = 0;
         for (const keyChain in elementCryptoInfo.addressWallet) {
             if (Object.hasOwnProperty.call(elementCryptoInfo.addressWallet, keyChain)) {
                 const infoChain = elementCryptoInfo.addressWallet[keyChain];
@@ -93,7 +93,7 @@ export default class HtmlBuilder {
 
     async CreateHtmlCryptoOptionSelects(jsonWalletDepositAddress) {
         let htmlOptionSelects = "";
-        let indexNum = 1;
+        let indexNum = 0;
         for (const keyCryptoInfo in jsonWalletDepositAddress) {
             if (Object.hasOwnProperty.call(jsonWalletDepositAddress, keyCryptoInfo)) {
                 const elementCryptoInfo = jsonWalletDepositAddress[keyCryptoInfo];
