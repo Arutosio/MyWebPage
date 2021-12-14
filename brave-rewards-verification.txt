@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: arutosio.com
+Token: df0a35cfd65aeb3655bf9c0ec4d85b952cef1939f5de543139c4e2870bd7c30d
