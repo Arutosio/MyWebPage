@@ -194,8 +194,10 @@ footer a:hover {
   display: none;
 }
 
-.aru-row {
+.aru-no-border {
   padding-right: 0;
+  padding-left: 0;
+  padding-top: 0;
 }
 
 .table {
