@@ -1,0 +1,6 @@
+It’s probably Jekyll that’s blocking that folder from being included in your deploy.
+Jekyll is run be default and ignores folders that start with certain characters.
+
+It looks like you’re not using Jekyll so you can disable it by creating an empty file called
+.nojekyll in the root of your gh-pages branch. Once you’ve done that any folders starting
+with . should be included in your site build.
