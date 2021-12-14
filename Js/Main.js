@@ -69,7 +69,7 @@ async function StartUp() {
     
     embed = new Twitch.Embed("twitch-embed", {
         width: "90%",
-        height: "60%",
+        height: "600",
         theme: "dark",
         // layout: "video",
         autoplay: false,
