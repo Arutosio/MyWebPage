@@ -8,6 +8,9 @@ var htmlBuilder = new HtmlBuilder("../Views");
 
 
 // console.log(UtilityClass.GetJsonFromFile("../Files/Json/test.json"));
+
+var date = new Date();
+
 var jsonWalletDepositAddress;
 var eleVideoBG;
 var eleSorceVideoBG;
@@ -32,6 +35,8 @@ async function StartUp() {
     IndexManager.ReplaceHtmlContent("mainNavbar", htmlNavbar);
 
     let htmlSectionsHome = await htmlBuilder.CreateSectionView("");
+    htmlSectionsHome = HtmlBuilder.RepleaceAllKey(htmlSectionsHome, "myAge", date.getFullYear() - 1994);
+    console.log(htmlSectionsHome);
     IndexManager.ReplaceHtmlContent("sHome", htmlSectionsHome);
 
     let htmlSectionsAboutMe = await htmlBuilder.CreateSectionViewById("sAboutMe");
@@ -55,11 +60,11 @@ async function StartUp() {
     eleSorceVideoBG = document.querySelector("#sorceVideoBG");
 
     tabs = [
-    { tabI: document.querySelector("#iHome"), tabS: document.querySelector("#sHome") },
-    { tabI: document.querySelector("#iAboutMe"), tabS: document.querySelector("#sAboutMe") },
-    { tabI: document.querySelector("#iFeatures"), tabS: document.querySelector("#sFeatures") },
-    { tabI: document.querySelector("#iDev"), tabS: document.querySelector("#sDev") },
-    { tabI: document.querySelector("#iDonate"), tabS: document.querySelector("#sDonate") },
+        { tabI: document.querySelector("#iHome"), tabS: document.querySelector("#sHome") },
+        { tabI: document.querySelector("#iAboutMe"), tabS: document.querySelector("#sAboutMe") },
+        { tabI: document.querySelector("#iFeatures"), tabS: document.querySelector("#sFeatures") },
+        { tabI: document.querySelector("#iDev"), tabS: document.querySelector("#sDev") },
+        { tabI: document.querySelector("#iDonate"), tabS: document.querySelector("#sDonate") },
     ];
     current = tabs[0];
     cryptoSelectOptions = document.querySelector('#cryptoSelectOptions');
