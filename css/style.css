@@ -1,13 +1,13 @@
+@charset "UTF-8";
 @font-face {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-style: normal;
   font-weight: 400;
   src: local("Open Sans"), local("OpenSans"), url(../Files/Fonts/OpenSans.woff2) format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
-
 body {
-  background: #232323 !important;
+  background: rgb(35, 35, 35) !important;
   /* background-image: url("../Files/img/images/bg.jpg"); */
   background-size: cover;
   /* Resize the background image to cover the entire container */
@@ -65,13 +65,11 @@ body {
   background-color: rgba(0, 0, 0, 0.35);
   background-size: cover;
   /* Resize the background image to cover the entire container */
-  height: calc(100vh);
+  height: 100vh;
 }
 
 .jumbotron#sHome {
   /* height:calc(100vh - 51px); */
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
 }
 
@@ -87,7 +85,7 @@ body {
 
 .form-select {
   border-width: 5px;
-  border-color: #b4b4b4;
+  border-color: rgb(180, 180, 180);
 }
 
 .divContain {
@@ -123,6 +121,10 @@ footer a:hover {
   display: inline-block;
 }
 
+#sourceVideoBG {
+  transition: opacity 1s ease;
+}
+
 #videoBG {
   -o-object-fit: cover;
      object-fit: cover;
@@ -131,14 +133,15 @@ footer a:hover {
   bottom: 0;
   top: 0;
   left: 0;
-  -webkit-filter: brightness(0.5);
-          filter: brightness(0.5);
+  filter: brightness(0.5);
   margin: 0;
   min-width: 100%;
   min-height: 100%;
+  opacity: 0; /* Opacità iniziale a 0% */
+  transition: opacity 0.5s ease; /* Aggiungi una transizione per un effetto graduale */
 }
 
-@media (min-aspect-ratio: 16 / 9) {
+@media (min-aspect-ratio: 16/9) {
   #videoBG {
     width: 100%;
     height: auto;
@@ -146,14 +149,12 @@ footer a:hover {
     position: fixed;
   }
 }
-
-@media (max-aspect-ratio: 16 / 9) {
+@media (max-aspect-ratio: 16/9) {
   #videoBG {
     width: auto;
     height: 100%;
   }
 }
-
 #FlagCounter {
   float: right;
   padding: 0;
@@ -167,16 +168,16 @@ footer a:hover {
 }
 
 .badge {
-  font-size: .90em;
+  font-size: 0.9em;
 }
 
 .popover-header {
-  background-color: #3c3c3c;
+  background-color: rgb(60, 60, 60);
   color: #fff;
 }
 
 .popover-body {
-  background-color: #282828;
+  background-color: rgb(40, 40, 40);
   color: #fff;
 }
 
@@ -206,7 +207,7 @@ footer a:hover {
 
 .aru-border {
   border-width: 5px;
-  border-color: #b4b4b4;
+  border-color: rgb(180, 180, 180);
 }
 
 /*
@@ -288,5 +289,4 @@ strong {
     frameborder: no;
     allow: autoplay;
 }
-*/
-/*# sourceMappingURL=style.css.map */
+*//*# sourceMappingURL=style.css.map */

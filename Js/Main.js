@@ -35,11 +35,10 @@ async function StartUp() {
     IndexManager.ReplaceHtmlContent("mainNavbar", htmlNavbar);
 
     let htmlSectionsHome = await htmlBuilder.CreateSectionView("");
-    htmlSectionsHome = HtmlBuilder.RepleaceAllKey(htmlSectionsHome, "myAge", date.getFullYear() - 1994);
-    console.log(htmlSectionsHome);
     IndexManager.ReplaceHtmlContent("sHome", htmlSectionsHome);
-
+    
     let htmlSectionsAboutMe = await htmlBuilder.CreateSectionViewById("sAboutMe");
+    htmlSectionsAboutMe = HtmlBuilder.RepleaceAllKey(htmlSectionsAboutMe, "myAge", date.getFullYear() - 1994);
     IndexManager.ReplaceHtmlContent("sAboutMe", htmlSectionsAboutMe);
 
     let htmlSectionsFeatures = await htmlBuilder.CreateSectionViewById("sFeatures");
@@ -83,6 +82,7 @@ async function StartUp() {
         parent: ["embed.example.com", "othersite.example.com"]
     });
 
+    eleVideoBG.style.opacity = '1';
 
     // EVENTI!!!!
     document.addEventListener('click', function(event) 
@@ -90,46 +90,63 @@ async function StartUp() {
         // console.log(tabScenaries[Object.keys(tabScenaries)]);
         if (event.target.getAttribute("class") != "nav-link active" && tabs.find(t => t.tabI == event.target)) 
         {
+
+                eleVideoBG.style.opacity = '0';
+
             switch(event.target) {
                 case tabs[0].tabI:
                     tabs[0].tabS.style.display = "flex";
                     //eleVideoBG.style.display = "inline-flex";
                     eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Kagaku-no-Accelerator.m4v');
-                    eleVideoBG.load();
+                    setTimeout(function() {
+                        eleVideoBG.load();
+                    }, 500); // Ritardo di 500 millisecondi (0,5 secondi)
                     tabs[0].tabI.classList.add("active");
                     break;
                 case tabs[1].tabI:
                     tabs[1].tabS.style.display = "flex";
                     //eleVideoBG.style.display = "inline-flex";
                     eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Kagaku-no-Railgun.m4v');
-                    eleVideoBG.load();
+                    setTimeout(function() {
+                        eleVideoBG.load();
+                    }, 500); // Ritardo di 500 millisecondi (0,5 secondi)
                     tabs[1].tabI.classList.add("active");
                     break;
                 case tabs[2].tabI:
                     tabs[2].tabS.style.display = "flex";
                     //eleVideoBG.style.display = "inline-flex";
                     eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Majutsu-no-Index2.m4v');
-                    eleVideoBG.load();
+                    setTimeout(function() {
+                        eleVideoBG.load();
+                    }, 500); // Ritardo di 500 millisecondi (0,5 secondi)
                     tabs[2].tabI.classList.add("active");
                     break;
                 case tabs[3].tabI:
                     tabs[3].tabS.style.display = "flex";
                     //eleVideoBG.style.display = "inline-flex";
                     eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Majutsu-no-Index1.m4v');
-                    eleVideoBG.load();
+                    setTimeout(function() {
+                        eleVideoBG.load();
+                    }, 500); // Ritardo di 500 millisecondi (0,5 secondi)
                     tabs[3].tabI.classList.add("active");
                     break;
                 case tabs[4].tabI:
                     tabs[4].tabS.style.display = "flex";
                     //eleVideoBG.style.display = "inline-flex";
                     eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Kagaku-no-Accelerator.m4v');
-                    eleVideoBG.load();
+                    setTimeout(function() {
+                        eleVideoBG.load();
+                    }, 500); // Ritardo di 500 millisecondi (0,5 secondi)
                     tabs[4].tabI.classList.add("active");
                     break;
                 default:
                     console.log(`NON RICONOSCIUTO! - ${event.target}`);
             }
 
+            setTimeout(function() {
+                // Imposta l'opacità a 1 per far apparire gradualmente il video
+                eleVideoBG.style.opacity = '1';
+            }, 500); // Ritardo di 500 millisecondi (0,5 secondi)
             current.tabS.style.display = "none";
             current.tabI.classList.remove("active");
             current = tabs.find(t => t.tabI == event.target);
@@ -270,4 +287,17 @@ function AppendEvents() {
 //METODI SECONDARI
 function ShowAddressInfo() {
     cryptoSelectOptions
+}
+
+function Fade(element) {
+    var op = 1;  // initial opacity
+    var timer = setInterval(function () {
+        if (op <= 0.1){
+            clearInterval(timer);
+            // element.style.display = 'none';
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op -= op * 0.1;
+    }, 50);
 }

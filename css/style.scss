@@ -136,6 +136,10 @@ footer a:hover {
     display: inline-block;
 }
 
+#sourceVideoBG {
+    transition: opacity 1s ease;
+}
+
 #videoBG {
     object-fit: cover;
     position: fixed;
@@ -152,7 +156,9 @@ footer a:hover {
     margin: 0;
     min-width: 100%;
     min-height: 100%;
-}
+    opacity: 0; /* Opacità iniziale a 0% */
+    transition: opacity 0.5s ease; /* Aggiungi una transizione per un effetto graduale */
+  }
 
 @media (min-aspect-ratio: 16/9) {
     #videoBG {
