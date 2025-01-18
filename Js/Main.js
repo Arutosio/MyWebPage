@@ -3,9 +3,12 @@ import UtilityClass from "./UtilityClass.js";
 import HtmlBuilder from "./HtmlBuilder.js";
 import RequestJson from "./RequestJson.js"
 
-var requestJson = new RequestJson("https://localhost:5001", null);
+var requestJson = new RequestJson(null, "https://data.mongodb-api.com/app/data-ivdyd/endpoint/data/beta", null);
 var htmlBuilder = new HtmlBuilder("../Views");
 
+
+var partPath = window.location.hash
+console.log(partPath);
 
 // console.log(UtilityClass.GetJsonFromFile("../Files/Json/test.json"));
 
@@ -22,7 +25,13 @@ var popoverTriggerList;
 var popoverList;
 var embed;
 
+var x = await RequestJson.RequestMongoDB();
 document.addEventListener('DOMContentLoaded', function(event) {
+
+    //var x = await requestJson.RequestMongoDB();
+    //console.log(await requestJson.RequestMongoDB());
+
+    //document.querySelector(window.location.hash).style.display.
     StartUp();
     // CreateVariables();
     // AppendEvents();
@@ -66,6 +75,8 @@ async function StartUp() {
         { tabI: document.querySelector("#iDonate"), tabS: document.querySelector("#sDonate") },
     ];
     current = tabs[0];
+
+
     cryptoSelectOptions = document.querySelector('#cryptoSelectOptions');
     addressInfos = document.querySelectorAll(".chainList");
     //console.log(andressInfo);
@@ -96,7 +107,7 @@ async function StartUp() {
             switch(event.target) {
                 case tabs[0].tabI:
                     tabs[0].tabS.style.display = "flex";
-                    //eleVideoBG.style.display = "inline-flex";
+                    eleVideoBG.style.display = "inline-flex";
                     eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Kagaku-no-Accelerator.m4v');
                     setTimeout(function() {
                         eleVideoBG.load();
@@ -105,7 +116,7 @@ async function StartUp() {
                     break;
                 case tabs[1].tabI:
                     tabs[1].tabS.style.display = "flex";
-                    //eleVideoBG.style.display = "inline-flex";
+                    eleVideoBG.style.display = "inline-flex";
                     eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Kagaku-no-Railgun.m4v');
                     setTimeout(function() {
                         eleVideoBG.load();
@@ -114,7 +125,7 @@ async function StartUp() {
                     break;
                 case tabs[2].tabI:
                     tabs[2].tabS.style.display = "flex";
-                    //eleVideoBG.style.display = "inline-flex";
+                    eleVideoBG.style.display = "inline-flex";
                     eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Majutsu-no-Index2.m4v');
                     setTimeout(function() {
                         eleVideoBG.load();
@@ -123,7 +134,7 @@ async function StartUp() {
                     break;
                 case tabs[3].tabI:
                     tabs[3].tabS.style.display = "flex";
-                    //eleVideoBG.style.display = "inline-flex";
+                    eleVideoBG.style.display = "inline-flex";
                     eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Majutsu-no-Index1.m4v');
                     setTimeout(function() {
                         eleVideoBG.load();
@@ -132,7 +143,7 @@ async function StartUp() {
                     break;
                 case tabs[4].tabI:
                     tabs[4].tabS.style.display = "flex";
-                    //eleVideoBG.style.display = "inline-flex";
+                    eleVideoBG.style.display = "inline-flex";
                     eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Kagaku-no-Accelerator.m4v');
                     setTimeout(function() {
                         eleVideoBG.load();
@@ -179,6 +190,12 @@ async function StartUp() {
 
 
 }
+function ChnageVideoSetup(tabS) {
+    tabs[4].tabS.style.display = "flex";
+    eleVideoBG.style.display = "inline-flex";
+    eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Kagaku-no-Accelerator.m4v');
+}
+
 
 //CREAZIONE DI TUTTE LE VARIABILI NECESARIE UTILIZZATI DALLE FUNZIONI
 function CreateVariables()
