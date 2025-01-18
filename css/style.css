@@ -81,6 +81,7 @@ body {
   /* Center the image */
   background-repeat: no-repeat;
   /* Do not repeat the image */
+  display: flex;
 }
 
 .form-select {
@@ -126,9 +127,6 @@ footer a:hover {
 }
 
 #videoBG {
-  -o-object-fit: cover;
-     object-fit: cover;
-  position: fixed;
   right: 0;
   bottom: 0;
   top: 0;
@@ -139,6 +137,17 @@ footer a:hover {
   min-height: 100%;
   opacity: 0; /* Opacità iniziale a 0% */
   transition: opacity 0.5s ease; /* Aggiungi una transizione per un effetto graduale */
+}
+
+.videobcg {
+  width: 100vw;
+  height: 100vh;
+  -o-object-fit: cover;
+     object-fit: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 
 @media (min-aspect-ratio: 16/9) {
