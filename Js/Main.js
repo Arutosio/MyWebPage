@@ -1,7 +1,8 @@
 import IndexManager from "./IndexManager.js";
 import UtilityClass from "./UtilityClass.js";
 import HtmlBuilder from "./HtmlBuilder.js";
-import RequestJson from "./RequestJson.js"
+import RequestJson from "./RequestJson.js";
+// import Fancybox from "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.esm.js";
 
 var requestJson = new RequestJson(null, "https://data.mongodb-api.com/app/data-ivdyd/endpoint/data/beta", null);
 var htmlBuilder = new HtmlBuilder("../Views");
@@ -82,16 +83,16 @@ async function StartUp() {
     //console.log(andressInfo);
 
     
-    embed = new Twitch.Embed("twitch-embed", {
-        width: "90%",
-        height: "600",
-        theme: "dark",
-        // layout: "video",
-        autoplay: false,
-        channel: "arutosio",
-        // Only needed if this page is going to be embedded on other websites
-        parent: ["embed.example.com", "othersite.example.com"]
-    });
+    // embed = new Twitch.Embed("twitch-embed", {
+    //     width: "90%",
+    //     height: "600",
+    //     theme: "dark",
+    //     // layout: "video",
+    //     autoplay: false,
+    //     channel: "arutosio",
+    //     // Only needed if this page is going to be embedded on other websites
+    //     parent: ["embed.example.com", "othersite.example.com"]
+    // });
 
     eleVideoBG.style.opacity = '1';
 
@@ -101,14 +102,13 @@ async function StartUp() {
         // console.log(tabScenaries[Object.keys(tabScenaries)]);
         if (event.target.getAttribute("class") != "nav-link active" && tabs.find(t => t.tabI == event.target)) 
         {
-
-                eleVideoBG.style.opacity = '0';
+            eleVideoBG.style.opacity = '0';
 
             switch(event.target) {
                 case tabs[0].tabI:
                     tabs[0].tabS.style.display = "flex";
                     eleVideoBG.style.display = "inline-flex";
-                    eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Kagaku-no-Accelerator.m4v');
+                    eleSorceVideoBG.setAttribute('src', '../Files/Videos_webm/Toaru-Kagaku-no-Accelerator.webm');
                     setTimeout(function() {
                         eleVideoBG.load();
                     }, 500); // Ritardo di 500 millisecondi (0,5 secondi)
@@ -117,7 +117,7 @@ async function StartUp() {
                 case tabs[1].tabI:
                     tabs[1].tabS.style.display = "flex";
                     eleVideoBG.style.display = "inline-flex";
-                    eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Kagaku-no-Railgun.m4v');
+                    eleSorceVideoBG.setAttribute('src', '../Files/Videos_webm/Toaru-Kagaku-no-Railgun.webm');
                     setTimeout(function() {
                         eleVideoBG.load();
                     }, 500); // Ritardo di 500 millisecondi (0,5 secondi)
@@ -126,7 +126,7 @@ async function StartUp() {
                 case tabs[2].tabI:
                     tabs[2].tabS.style.display = "flex";
                     eleVideoBG.style.display = "inline-flex";
-                    eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Majutsu-no-Index2.m4v');
+                    eleSorceVideoBG.setAttribute('src', '../Files/Videos_webm/Toaru-Majutsu-no-Index2.webm');
                     setTimeout(function() {
                         eleVideoBG.load();
                     }, 500); // Ritardo di 500 millisecondi (0,5 secondi)
@@ -135,7 +135,7 @@ async function StartUp() {
                 case tabs[3].tabI:
                     tabs[3].tabS.style.display = "flex";
                     eleVideoBG.style.display = "inline-flex";
-                    eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Majutsu-no-Index1.m4v');
+                    eleSorceVideoBG.setAttribute('src', '../Files/Videos_webm/Toaru-Majutsu-no-Index1.webm');
                     setTimeout(function() {
                         eleVideoBG.load();
                     }, 500); // Ritardo di 500 millisecondi (0,5 secondi)
@@ -144,7 +144,7 @@ async function StartUp() {
                 case tabs[4].tabI:
                     tabs[4].tabS.style.display = "flex";
                     eleVideoBG.style.display = "inline-flex";
-                    eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Kagaku-no-Accelerator.m4v');
+                    eleSorceVideoBG.setAttribute('src', '../Files/Videos_webm/Toaru-Kagaku-no-Accelerator.webm');
                     setTimeout(function() {
                         eleVideoBG.load();
                     }, 500); // Ritardo di 500 millisecondi (0,5 secondi)
@@ -170,10 +170,10 @@ async function StartUp() {
         return new bootstrap.Popover(popoverTriggerEl)
     });
 
-    embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
-        var player = embed.getPlayer();
-        player.play();
-    });
+    // embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
+    //     var player = embed.getPlayer();
+    //     player.play();
+    // });
 
     cryptoSelectOptions.addEventListener("change", function(event) {
         for (let i = 0; i < addressInfos.length; i++) {
@@ -186,14 +186,11 @@ async function StartUp() {
             }
         }
     });
-
-
-
 }
 function ChnageVideoSetup(tabS) {
     tabs[4].tabS.style.display = "flex";
     eleVideoBG.style.display = "inline-flex";
-    eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Kagaku-no-Accelerator.m4v');
+    eleSorceVideoBG.setAttribute('src', '../Files/Videos_webm/Toaru-Kagaku-no-Accelerator.webm');
 }
 
 
@@ -217,16 +214,16 @@ function CreateVariables()
     //console.log(andressInfo);
 
     
-    embed = new Twitch.Embed("twitch-embed", {
-        width: "90%",
-        height: "60%",
-        theme: "dark",
-        // layout: "video",
-        autoplay: false,
-        channel: "arutosio",
-        // Only needed if this page is going to be embedded on other websites
-        parent: ["embed.example.com", "othersite.example.com"]
-    });
+    // embed = new Twitch.Embed("twitch-embed", {
+    //     width: "90%",
+    //     height: "60%",
+    //     theme: "dark",
+    //     // layout: "video",
+    //     autoplay: false,
+    //     channel: "arutosio",
+    //     // Only needed if this page is going to be embedded on other websites
+    //     parent: ["embed.example.com", "othersite.example.com"]
+    // });
 }
 
 //CREAZIONI ASSOCIAGIONE AGLI EVENTI DEGLI ELEMENTI
@@ -243,36 +240,41 @@ function AppendEvents() {
                 case tabs[0].tabI:
                     tabs[0].tabS.style.display = "flex";
                     //eleVideoBG.style.display = "inline-flex";
-                    eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Kagaku-no-Accelerator.m4v');
+                    eleSorceVideoBG.setAttribute('src', '../Files/Videos_webm/Toaru-Kagaku-no-Accelerator.webm');
                     eleVideoBG.load();
+                    eleVideoBG.play();
                     tabs[0].tabI.classList.add("active");
                     break;
                 case tabs[1].tabI:
                     tabs[1].tabS.style.display = "flex";
                     //eleVideoBG.style.display = "inline-flex";
-                    eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Kagaku-no-Railgun.m4v');
+                    eleSorceVideoBG.setAttribute('src', '../Files/Videos_webm/Toaru-Kagaku-no-Railgun.webm');
                     eleVideoBG.load();
+                    eleVideoBG.play();
                     tabs[1].tabI.classList.add("active");
                     break;
                 case tabs[2].tabI:
                     tabs[2].tabS.style.display = "flex";
                     //eleVideoBG.style.display = "inline-flex";
-                    eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Majutsu-no-Index2.m4v');
+                    eleSorceVideoBG.setAttribute('src', '../Files/Videos_webm/Toaru-Majutsu-no-Index2.webm');
                     eleVideoBG.load();
+                    eleVideoBG.play();
                     tabs[2].tabI.classList.add("active");
                     break;
                 case tabs[3].tabI:
                     tabs[3].tabS.style.display = "flex";
                     //eleVideoBG.style.display = "inline-flex";
-                    eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Majutsu-no-Index1.m4v');
+                    eleSorceVideoBG.setAttribute('src', '../Files/Videos_webm/Toaru-Majutsu-no-Index1.webm');
                     eleVideoBG.load();
+                    eleVideoBG.play();
                     tabs[3].tabI.classList.add("active");
                     break;
                 case tabs[4].tabI:
                     tabs[4].tabS.style.display = "flex";
                     //eleVideoBG.style.display = "inline-flex";
-                    eleSorceVideoBG.setAttribute('src', '../Files/Videos/Toaru-Kagaku-no-Accelerator.m4v');
+                    eleSorceVideoBG.setAttribute('src', '../Files/Videos_webm/Toaru-Kagaku-no-Accelerator.webm');
                     eleVideoBG.load();
+                    eleVideoBG.play();
                     tabs[4].tabI.classList.add("active");
                     break;
                 default:
@@ -291,14 +293,12 @@ function AppendEvents() {
         return new bootstrap.Popover(popoverTriggerEl)
     });
 
-    embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
-        var player = embed.getPlayer();
-        player.play();
-    });
+    // embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
+    //     var player = embed.getPlayer();
+    //     player.play();
+    // });
 
     cryptoSelectOptions.addEventListener("select", ShowAddressInfo());
-
-
 }
 
 //METODI SECONDARI
