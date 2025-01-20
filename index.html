@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -18,8 +18,8 @@
 
 <body>
     <video id="videoBG" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop"
-        class="collapse multi-collapse box show" id="multiCollapseVideo">
-        <source id="sorceVideoBG" src="../Files/Videos/Toaru-Kagaku-no-Accelerator.m4v" type="video/mp4">
+        class="collapse multi-collapse box show">
+        <source id="sorceVideoBG" src="../Files/Videos_webm/Toaru-Kagaku-no-Accelerator.webm" type="video/webm">
         Your browser does not support HTML5 video.
     </video>
 
@@ -57,11 +57,17 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script type="module">
         import { Fancybox } from "https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.esm.js";
+        
+        // import { Fancybox } from "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.esm.js";
+        // Inizializzazione di Fancybox su tutti gli elementi con la classe 'fancybox'
+        // $(document).ready(function() {
+        // $('[data-fancybox]').fancybox();
+        // });
     </script>
     <!-- latest -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script> -->
     <!-- Load the Twitch embed JavaScript file -->
-    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+    <!-- <script src="https://embed.twitch.tv/embed/v1.js"></script> -->
     <script src="./Js/Main.js" type="module"></script>
 </body>
 

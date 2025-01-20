@@ -73,17 +73,6 @@ body {
   display: flex;
 }
 
-.jumbotron#sAboutMe {
-  background-size: cover;
-  /* Resize the background image to cover the entire container */
-  background-attachment: fixed;
-  background-position: center;
-  /* Center the image */
-  background-repeat: no-repeat;
-  /* Do not repeat the image */
-  display: flex;
-}
-
 .form-select {
   border-width: 5px;
   border-color: rgb(180, 180, 180);
@@ -147,7 +136,7 @@ footer a:hover {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: -1;
+  z-index: -1; /* Manda il video sotto gli altri elementi */
 }
 
 @media (min-aspect-ratio: 16/9) {
@@ -156,12 +145,20 @@ footer a:hover {
     height: auto;
     padding: 0;
     position: fixed;
+    -o-object-fit: cover;
+       object-fit: cover;
+    z-index: -1; /* Manda il video sotto gli altri elementi */
   }
 }
 @media (max-aspect-ratio: 16/9) {
   #videoBG {
     width: auto;
     height: 100%;
+    padding: 0;
+    position: fixed;
+    -o-object-fit: cover;
+       object-fit: cover;
+    z-index: -1; /* Manda il video sotto gli altri elementi */
   }
 }
 #FlagCounter {
