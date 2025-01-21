@@ -89,6 +89,40 @@ export default class RequestJson {
             console.log(err);
         });
     }
+    // Octokit.js
+    // https://github.com/octokit/core.js#readme
+    // const octokit = new Octokit({
+    //     auth: 'YOUR-TOKEN'
+    // })
+    // static async fetchGitUserInfo(user) {
+    //     return await octokit.request('GET /search/users', {
+    //         headers: {
+    //         'X-GitHub-Api-Version': '2022-11-28'
+    //         }
+    //     })
+    // }
+
+    static async fetchGitHubRepoInfo(repoName) {
+        const apiUrl = `https://api.github.com/repos/${repoName}`;
+      
+        return fetch(apiUrl)
+          .then(response => response.json())
+          .then(data => {
+            const repoInfo = {
+              name: data.name,
+              description: data.description,
+              language: data.language,
+              stars: data.stargazers_count,
+              forks: data.forks_count,
+              updatedAt: data.updated_at
+            };
+            return repoInfo;
+          })
+          .catch(error => {
+            console.error('Errore durante il recupero dei dati del repository:', error);
+            return null; // Restituisci null in caso di errore
+          });
+    }
 
     static async RequestMongoDB() {
         let dataRaw = {
@@ -135,7 +169,6 @@ export default class RequestJson {
         }).then().catch(err => {
             console.log(err);
         });
-
 
     // Send a POST request
         // return await axios({

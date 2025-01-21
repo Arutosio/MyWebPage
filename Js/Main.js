@@ -284,6 +284,7 @@ function AppendEvents() {
             current.tabS.style.display = "none";
             current.tabI.classList.remove("active");
             current = tabs.find(t => t.tabI == event.target);
+            fetchGitHubRepoInfo("AnimeWorldDownloader")
         }
     });
 
@@ -305,3 +306,20 @@ function AppendEvents() {
 function ShowAddressInfo() {
     cryptoSelectOptions
 }
+
+const repoName = 'AnimeWorldDownloader'; // Sostituisci con il nome del tuo repository
+const apiUrl = `https://api.github.com/repos/${repoName}`;
+
+fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+        const repoInfo = document.getElementById('repo-info');
+        repoInfo.innerHTML = `
+            <h2>${data.name}</h2>
+            <p>Descrizione: ${data.description}</p>
+            <p>Linguaggio: ${data.language}</p>
+            <p>Stelle: ${data.stargazers_count}</p>
+            <p>Fork: ${data.forks_count}</p>
+            <p>Ultimo aggiornamento: ${data.updated_at}</p>
+        `;
+    });
