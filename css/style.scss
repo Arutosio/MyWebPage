@@ -112,6 +112,14 @@ body {
     min-height: 100%;
 }
 
+.repo-info {
+    border: 3px solid #ccc;
+    padding: 20px;
+}
+
+p {
+    font-size: 24px;
+}
 footer {
     position: relative;
     background-color: rgba(145, 0, 190, 0.75);
