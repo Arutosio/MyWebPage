@@ -2,6 +2,9 @@ import IndexManager from "./IndexManager.js";
 import UtilityClass from "./UtilityClass.js";
 import HtmlBuilder from "./HtmlBuilder.js";
 import RequestJson from "./RequestJson.js";
+import Fireworks from "./Effect/Fireworks.js";
+
+
 // import Fancybox from "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.esm.js";
 
 var requestJson = new RequestJson(null, "https://data.mongodb-api.com/app/data-ivdyd/endpoint/data/beta", null);
@@ -13,7 +16,12 @@ console.log(partPath);
 
 // console.log(UtilityClass.GetJsonFromFile("../Files/Json/test.json"));
 
-var date = new Date();
+let birthDate = new Date(1994, 3, 30); // Data di nascita: 30 aprile 1994
+let currentDate = new Date(); // Data corrente
+// Controllo se il compleanno è passato nell'anno corrente
+let isBirthdayPassed = currentDate.getMonth() > birthDate.getMonth() || (currentDate.getMonth() === birthDate.getMonth() && currentDate.getDate() >= birthDate.getDate());
+// Calcolo dell'età
+let age = currentDate.getFullYear() - birthDate.getFullYear() - (isBirthdayPassed ? 0 : 1);
 
 var jsonWalletDepositAddress;
 var eleVideoBG;
@@ -25,6 +33,8 @@ var addressInfos;
 var popoverTriggerList;
 var popoverList;
 var embed;
+// Istanza dei fuochi d'artificio
+var fireworks = new Fireworks();
 
 var x = await RequestJson.RequestMongoDB();
 document.addEventListener('DOMContentLoaded', function(event) {
@@ -36,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     StartUp();
     // CreateVariables();
     // AppendEvents();
+    // (Facoltativo) Ferma i fuochi d'artificio dopo un certo tempo
 });
 
 //CREAZIONE DI TUTTO IL CONTENUTO HTML
@@ -48,12 +59,6 @@ async function StartUp() {
     IndexManager.ReplaceHtmlContent("sHome", htmlSectionsHome);
     
     let htmlSectionsAboutMe = await htmlBuilder.CreateSectionViewById("sAboutMe");
-    let birthDate = new Date(1994, 3, 30); // Data di nascita: 30 aprile 1994
-    let currentDate = new Date(); // Data corrente
-    // Controllo se il compleanno è passato nell'anno corrente
-    let isBirthdayPassed = currentDate.getMonth() > birthDate.getMonth() || (currentDate.getMonth() === birthDate.getMonth() && currentDate.getDate() >= birthDate.getDate());
-    // Calcolo dell'età
-    let age = currentDate.getFullYear() - birthDate.getFullYear() - (isBirthdayPassed ? 0 : 1);
     htmlSectionsAboutMe = HtmlBuilder.RepleaceAllKey(htmlSectionsAboutMe, "myAge", age);
     IndexManager.ReplaceHtmlContent("sAboutMe", htmlSectionsAboutMe);
 
@@ -128,6 +133,15 @@ async function StartUp() {
                         eleVideoBG.load();
                     }, 500); // Ritardo di 500 millisecondi (0,5 secondi)
                     tabs[1].tabI.classList.add("active");
+                    // Avvia i fuochi d'artificio
+                    if (currentDate.getDate() === birthDate.getDate() && currentDate.getMonth() === birthDate.getMonth()) 
+                        {
+                            console.log("Oggi è il tuo compleanno! 🎉");
+                            fireworks.start();
+                            //fireworks.stop();
+                        } else { 
+                            console.log("Oggi NON è il tuo compleanno.");
+                        }
                     break;
                 case tabs[2].tabI:
                     tabs[2].tabS.style.display = "flex";

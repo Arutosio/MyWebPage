@@ -279,4 +279,16 @@ strong {
     frameborder: no;
     allow: autoplay;
 }
-*//*# sourceMappingURL=style.css.map */
+*/
+.mainDivCanvasdiv {
+  position: relative;
+}
+
+.mainCanvas {
+  position: absolute;
+  background-color: red;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}/*# sourceMappingURL=style.css.map */
