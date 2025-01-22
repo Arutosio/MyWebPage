@@ -48,7 +48,13 @@ async function StartUp() {
     IndexManager.ReplaceHtmlContent("sHome", htmlSectionsHome);
     
     let htmlSectionsAboutMe = await htmlBuilder.CreateSectionViewById("sAboutMe");
-    htmlSectionsAboutMe = HtmlBuilder.RepleaceAllKey(htmlSectionsAboutMe, "myAge", date.getFullYear() - 1994);
+    let birthDate = new Date(1994, 3, 30); // Data di nascita: 30 aprile 1994
+    let currentDate = new Date(); // Data corrente
+    // Controllo se il compleanno è passato nell'anno corrente
+    let isBirthdayPassed = currentDate.getMonth() > birthDate.getMonth() || (currentDate.getMonth() === birthDate.getMonth() && currentDate.getDate() >= birthDate.getDate());
+    // Calcolo dell'età
+    let age = currentDate.getFullYear() - birthDate.getFullYear() - (isBirthdayPassed ? 0 : 1);
+    htmlSectionsAboutMe = HtmlBuilder.RepleaceAllKey(htmlSectionsAboutMe, "myAge", age);
     IndexManager.ReplaceHtmlContent("sAboutMe", htmlSectionsAboutMe);
 
     let htmlSectionsFeatures = await htmlBuilder.CreateSectionViewById("sFeatures");
