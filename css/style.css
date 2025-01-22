@@ -7,7 +7,7 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
 body {
-  background: rgb(35, 35, 35) !important;
+  background: rgb(0, 0, 0) !important;
   /* background-image: url("../Files/img/images/bg.jpg"); */
   background-size: cover;
   /* Resize the background image to cover the entire container */
@@ -31,41 +31,17 @@ body {
   border-top: 0;
 }
 
-.card {
-  width: auto;
-  height: auto;
-  position: relative;
-  display: inline-block;
-  margin: 0;
-  background-color: rgba(0, 0, 0, 0);
-}
-
-.card .img-top {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.card:hover .img-top {
-  display: inline;
-}
-
 #imgSelectMain {
   width: 90%;
 }
 
 .jumbotron {
-  color: #fff;
   text-align: center;
   margin: 0;
   margin-bottom: 0;
   padding: 0;
   display: none;
-  background-color: rgba(0, 0, 0, 0.35);
-  background-size: cover;
   /* Resize the background image to cover the entire container */
-  height: 100vh;
 }
 
 .jumbotron#sHome {
@@ -95,12 +71,15 @@ p {
   font-size: 24px;
 }
 
+video {
+  opacity: 0; /* Opacità iniziale a 0% */
+  transition: opacity 0.8s ease-in-out;
+  background-color: black; /* Sfondo nero durante il caricamento */
+}
+
 footer {
   position: relative;
   background-color: rgba(145, 0, 190, 0.75);
-  color: #fff;
-  font-size: 14px;
-  text-align: center;
   margin: 0;
   top: 0;
   padding: 0;
@@ -110,6 +89,8 @@ footer p {
   margin: 0;
   top: 0;
   padding: 0;
+  font-size: 16px;
+  text-align: center;
 }
 
 footer a,
@@ -118,10 +99,6 @@ footer a:focus,
 footer a:hover {
   color: #fff;
   display: inline-block;
-}
-
-#sourceVideoBG {
-  transition: opacity 1s ease;
 }
 
 #videoBG {
@@ -133,8 +110,6 @@ footer a:hover {
   margin: 0;
   min-width: 100%;
   min-height: 100%;
-  opacity: 0; /* Opacità iniziale a 0% */
-  transition: opacity 0.5s ease; /* Aggiungi una transizione per un effetto graduale */
 }
 
 .videobcg {
