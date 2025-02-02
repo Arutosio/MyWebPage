@@ -1,10 +1,93 @@
 <div class="divContain">
     <div class="row" style="margin-top: 2%"></div>
-    <select id="kanjiListSelectOptions" class="form-select form-select-lg mb-3 dropdown-menu-dark" 
-    aria-label=".form-select-lg example">
-        <option selected>Open this to select a list of Kanji.</option>
-        :|§Option_Select§|:
-    </select>
-    <!-- QUA DENTRO -->
+    <div class="container text-center">
+        <div class="row align-items-start">
+            <div class="col">
+                <div class="row">
+                    <select id="kanjiListSelectOptions" class="form-select form-select-lg mb-3 dropdown-menu-dark" 
+                    aria-label=".form-select-lg example">
+                        <option selected>Open this to select a list of Kanji.</option>
+                        :|§Option_Select§|:
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="row">
+                        <div class="col-6">
+                            <button id="removeKanjiList" type="button" class="btn btn-outline-danger">Remove</button>
+                        </div>
+                        <div class="col-6">
+                            <button id="addKanjiList" type="button" class="btn btn-outline-success">Add</button>
+                        </div>
+                    </div>
 
+                    <div class="row" style="margin-top: 2%"></div>
+
+                    <div class="row">
+                        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                            <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btncheck1">Kun Yomi</label>
+                          
+                            <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btncheck2">On Yomi</label>
+                          
+                            <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btncheck3">Checkbox 3</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <ol id=":|§ListKanjiList§|:" class="list-group list-group-numbered">
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                      <div class="ms-2 me-auto">
+                        <div class="fw-bold">Subheading</div>
+                        Content for list item
+                      </div>
+                      <span class="badge text-bg-primary rounded-pill">14</span>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 2%"></div>
+
+        <div class="row align-items-start">
+            <h1><span class="badge text-bg-dark">日</span></h1>
+            <div class="row" style="margin-top: 2%"></div>
+
+            <div class="row">
+                <div class="col">
+                    <label class="visually-hidden" for="autoSizingInputGroup">Kun Yomi</label>
+                    <div class="input-group">
+                        <div class="input-group-text">Kun Yomi</div>
+                        <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="Kun Yomi">
+                    </div>
+                </div>
+                <div class="col">
+                    <label class="visually-hidden" for="autoSizingInputGroup">On Yomi</label>
+                    <div class="input-group">
+                        <div class="input-group-text">On Yomi</div>
+                        <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="On Yomi">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label for="formGroupExampleInput" class="form-label">Kun Yomi</label>
+                    <input type="text" class="form-control" placeholder="Kun Yomi" aria-label="Kun Yomi">
+                </div>
+                <div class="col">
+                    <label for="formGroupExampleInput" class="form-label">On Yomi</label>
+                    <input type="text" class="form-control" placeholder="On Yomi" aria-label="On Yomi">
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 2%"></div>
+
+        <div class="row align-items-start">
+            <button type="button" class="btn btn-outline-warning">Check</button>
+        </div>
+    </div>
 </div>
