@@ -49,6 +49,16 @@ document.addEventListener('DOMContentLoaded', function(event) {
     // CreateVariables();
     // AppendEvents();
     // (Facoltativo) Ferma i fuochi d'artificio dopo un certo tempo
+
+    // Avvia i fuochi d'artificio
+    if (currentDate.getDate() === birthDate.getDate() && currentDate.getMonth() === birthDate.getMonth()) 
+        {
+            console.log("Oggi è il tuo compleanno! 🎉");
+            fireworks.start();
+            //fireworks.stop();
+        } else { 
+            console.log("Oggi NON è il tuo compleanno.");
+        }
 });
 
 //CREAZIONE DI TUTTO IL CONTENUTO HTML
@@ -75,7 +85,6 @@ async function StartUp() {
     IndexManager.ReplaceHtmlContent("sDonate", htmlSectionsDonate);
 
     let kanjiFileNames = ["Kanji_Numeri", "Kanji_NumeriOver", "Kanji_Prova"];
-    //kanjiListJson = await UtilityClass.GetJsonListFromFolder("Kanji_Json");
     kanjiListJson = await UtilityClass.GetJsonFilesFromFolder("Kanji_Json", kanjiFileNames);
     let htmlSectionsKanji = await htmlBuilder.CreateSectionKanjiView(kanjiListJson);
     IndexManager.ReplaceHtmlContent("sKanji", htmlSectionsKanji);
@@ -143,15 +152,6 @@ async function StartUp() {
                         eleVideoBG.load();
                     }, 500); // Ritardo di 500 millisecondi (0,5 secondi)
                     tabs[1].tabI.classList.add("active");
-                    // Avvia i fuochi d'artificio
-                    if (currentDate.getDate() === birthDate.getDate() && currentDate.getMonth() === birthDate.getMonth()) 
-                        {
-                            console.log("Oggi è il tuo compleanno! 🎉");
-                            fireworks.start();
-                            //fireworks.stop();
-                        } else { 
-                            console.log("Oggi NON è il tuo compleanno.");
-                        }
                     break;
                 case tabs[2].tabI:
                     tabs[2].tabS.style.display = "flex";
