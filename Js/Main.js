@@ -33,6 +33,8 @@ var addressInfos;
 var popoverTriggerList;
 var popoverList;
 var embed;
+var kanjiListJson
+var kanjiListSelectOptions;
 // Istanza dei fuochi d'artificio
 var fireworks = new Fireworks();
 
@@ -51,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
 //CREAZIONE DI TUTTO IL CONTENUTO HTML
 async function StartUp() {
-    //Insert Navbar
+    // Insert Navbar
     let htmlNavbar = await htmlBuilder.CreateNavbarView("");
     IndexManager.ReplaceHtmlContent("mainNavbar", htmlNavbar);
 
@@ -72,6 +74,12 @@ async function StartUp() {
     let htmlSectionsDonate = await htmlBuilder.CreateSectionDonateView(jsonWalletDepositAddress);
     IndexManager.ReplaceHtmlContent("sDonate", htmlSectionsDonate);
 
+    let kanjiFileNames = ["Kanji_Numeri", "Kanji_NumeriOver", "Kanji_Prova"];
+    //kanjiListJson = await UtilityClass.GetJsonListFromFolder("Kanji_Json");
+    kanjiListJson = await UtilityClass.GetJsonFilesFromFolder("Kanji_Json", kanjiFileNames);
+    let htmlSectionsKanji = await htmlBuilder.CreateSectionKanjiView(kanjiListJson);
+    IndexManager.ReplaceHtmlContent("sKanji", htmlSectionsKanji);
+
     let htmlFooter = await htmlBuilder.CreateFooterViewById("iFooter");
     IndexManager.ReplaceHtmlContent("iFooter", htmlFooter);
 
@@ -85,12 +93,14 @@ async function StartUp() {
         { tabI: document.querySelector("#iFeatures"), tabS: document.querySelector("#sFeatures") },
         { tabI: document.querySelector("#iDev"), tabS: document.querySelector("#sDev") },
         { tabI: document.querySelector("#iDonate"), tabS: document.querySelector("#sDonate") },
+        { tabI: document.querySelector("#iKanji"), tabS: document.querySelector("#sKanji") },
     ];
     current = tabs[0];
 
 
     cryptoSelectOptions = document.querySelector('#cryptoSelectOptions');
     addressInfos = document.querySelectorAll(".chainList");
+    kanjiListSelectOptions = document.querySelector('#kanjiListSelectOptions');
     //console.log(andressInfo);
 
     
@@ -170,6 +180,15 @@ async function StartUp() {
                     }, 500); // Ritardo di 500 millisecondi (0,5 secondi)
                     tabs[4].tabI.classList.add("active");
                     break;
+                case tabs[5].tabI:
+                        tabs[5].tabS.style.display = "flex";
+                        eleVideoBG.style.display = "inline-flex";
+                        //eleSorceVideoBG.setAttribute('src', '../Files/Videos_webm/Toaru-Kagaku-no-Accelerator.webm');
+                        setTimeout(function() {
+                            eleVideoBG.load();
+                        }, 500); // Ritardo di 500 millisecondi (0,5 secondi)
+                        tabs[5].tabI.classList.add("active");
+                        break;
                 default:
                     console.log(`NON RICONOSCIUTO! - ${event.target}`);
             }
@@ -206,7 +225,16 @@ async function StartUp() {
             }
         }
     });
+
+    kanjiListSelectOptions.addEventListener("change", function(event) {
+        // Stampa il valore selezionato nella console
+        console.log('Valore selezionato:', kanjiListSelectOptions.value);
+        // Puoi anche ottenere il testo dell'opzione selezionata
+        const selectedText = kanjiListSelectOptions.options[kanjiListSelectOptions.selectedIndex].text;
+        console.log('Testo selezionato:', selectedText);
+    });
 }
+
 function ChnageVideoSetup(tabS) {
     tabs[4].tabS.style.display = "flex";
     eleVideoBG.style.display = "inline-flex";
@@ -340,6 +368,6 @@ fetch(apiUrl)
             <p>Linguaggio: ${data.language}</p>
             <p>Stelle: ${data.stargazers_count}</p>
             <p>Fork: ${data.forks_count}</p>
-            <p>Ultimo aggiornamento: ${data.updated_at}</p>
-        `;
+            `;
+            // <p>Ultimo aggiornamento: ${data.updated_at}</p>
     });

@@ -1,0 +1,65 @@
+{
+  "kanji": [
+    {
+      "carattere": "一",
+      "on_yomi": "イチ, イツ (ichi, itsu)",
+      "kun_yomi": "ひと(つ) (hito(tsu))",
+      "significato": "uno"
+    },
+    {
+      "carattere": "二",
+      "on_yomi": "ニ (ni)",
+      "kun_yomi": "ふた(つ) (futa(tsu))",
+      "significato": "due"
+    },
+    {
+      "carattere": "三",
+      "on_yomi": "サン (san)",
+      "kun_yomi": "みっ(つ) (mi(tsu))",
+      "significato": "tre"
+    },
+    {
+      "carattere": "四",
+      "on_yomi": "シ (shi)",
+      "kun_yomi": "よん, よっ(つ) (yon, yo(tsu))",
+      "significato": "quattro"
+    },
+    {
+      "carattere": "五",
+      "on_yomi": "ゴ (go)",
+      "kun_yomi": "いつ(つ) (itsu(tsu))",
+      "significato": "cinque"
+    },
+    {
+      "carattere": "六",
+      "on_yomi": "ロク (roku)",
+      "kun_yomi": "むっ(つ) (mu(tsu))",
+      "significato": "sei"
+    },
+    {
+      "carattere": "七",
+      "on_yomi": "シチ (shichi)",
+      "kun_yomi": "なな, なな(つ) (nana, nana(tsu))",
+      "significato": "sette"
+    },
+    {
+      "carattere": "八",
+      "on_yomi": "ハチ (hachi)",
+      "kun_yomi": "やっ(つ), よう (ya(tsu), you)",
+      "significato": "otto"
+    },
+    {
+      "carattere": "九",
+      "on_yomi": "キュウ, ク (kyuu, ku)",
+      "kun_yomi": "ここの(つ) (kokono(tsu))",
+      "significato": "nove"
+    },
+    {
+      "carattere": "十",
+      "on_yomi": "ジュウ, ジッ (juu, jitsu)",
+      "kun_yomi": "とお (too)",
+      "significato": "dieci"
+    }
+  ]
+}
+  

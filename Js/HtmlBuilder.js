@@ -114,6 +114,41 @@ export default class HtmlBuilder {
         return htmlOptionSelect;
     }
 
+    async CreateSectionKanjiView(jsonKanjiList) {
+        let pathFileTemplate = `${this.pathTemplate}/Section_sKanji.html`;
+        let htmlsKanji = await UtilityClass.GetTextFromFile(pathFileTemplate);
+
+        //html Option_Select
+        let htmlOptionSelects = await this.CreateHtmlKanjiListOptionSelects(jsonKanjiList);
+        htmlsKanji = HtmlBuilder.RepleaceAllKey(htmlsKanji, "Option_Select", htmlOptionSelects);
+
+        // let htmlAddressInfo = await this.CreateHtmlCryptoAddressInfos(jsonWalletDepositAddress);
+        // htmlsKanji = HtmlBuilder.RepleaceAllKey(htmlsDonate, "Address_Info", htmlAddressInfo);
+
+        // let key_Table_Chain = "Table_Chain";
+        // let htmlTableChain = await HtmlBuilder.CreateHtmlCryptoAddressInfos(this.pathTemplate, key_Table_Chain, jsonWalletDepositAddress);
+        // htmlsDonate = HtmlBuilder.RepleaceAllKey(htmlsDonate, key_Table_Chain, htmlTableChain);
+
+        return htmlsKanji;
+    }
+    
+    async CreateHtmlKanjiListOptionSelects(jsonKanjiList) {
+        let htmlOptionSelects = "";
+        for (let i = 0; i < jsonKanjiList.length; i++) {
+            const aKanjiListInfo = jsonKanjiList[i]; // Ottieni l'elemento corrente
+            htmlOptionSelects += await this.CreateHtmlKanjiOptionSelect(aKanjiListInfo.fileName, i);
+        }
+        return htmlOptionSelects;
+    }
+
+    async CreateHtmlKanjiOptionSelect(kanjiFileName, index) {
+        let pathOptionSelectTemplateHtml = `${this.pathTemplate}/Section_sKanji_Ele/Kanji_Option_Select.html`;
+        let htmlOptionSelect = await UtilityClass.GetTextFromFile(pathOptionSelectTemplateHtml);
+        htmlOptionSelect = HtmlBuilder.RepleaceAllKey(htmlOptionSelect, "indexNum", index);
+        htmlOptionSelect = HtmlBuilder.RepleaceAllKey(htmlOptionSelect, "nameKanjiList", kanjiFileName);
+        return htmlOptionSelect;
+    }
+
     static RepleaceKey(mainStr, keyword, replaceStr) {
         let htmlEdit;
         let keywordAdapted = `:|§${keyword}§|:`;

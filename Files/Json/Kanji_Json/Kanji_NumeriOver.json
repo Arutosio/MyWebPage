@@ -1,0 +1,35 @@
+{
+  "kanji": [
+    {
+      "carattere": "百",
+      "on_yomi": "ヒャク, ビャク, ピャク (hyaku, byaku, pyaku)",
+      "kun_yomi": "なし (nashi)",
+      "significato": "cento"
+    },
+    {
+      "carattere": "千",
+      "on_yomi": "セン, ゼン (sen, zen)",
+      "kun_yomi": "ち (chi)",
+      "significato": "mille"
+    },
+    {
+      "carattere": "万",
+      "on_yomi": "マン, バン (man, ban)",
+      "kun_yomi": "なし (nashi)",
+      "significato": "diecimila"
+    },
+    {
+      "carattere": "億",
+      "on_yomi": "オク (oku)",
+      "kun_yomi": "なし (nashi)",
+      "significato": "cento milioni"
+    },
+    {
+      "carattere": "兆",
+      "on_yomi": "チョウ (chou)",
+      "kun_yomi": "なし (nashi)",
+      "significato": "un bilione"
+    }
+  ]
+}
+  

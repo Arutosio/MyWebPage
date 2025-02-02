@@ -1,0 +1,65 @@
+{
+  "kanji": [
+    {
+      "carattere": "日",
+      "on_yomi": "ニチ, ジツ (nichi, jitsu)",
+      "kun_yomi": "ひ, か (hi, ka)",
+      "significato": "giorno, sole"
+    },
+    {
+      "carattere": "月",
+      "on_yomi": "ゲツ, ガツ (getsu, gatsu)",
+      "kun_yomi": "つき (tsuki)",
+      "significato": "mese, luna"
+    },
+    {
+      "carattere": "山",
+      "on_yomi": "サン (san)",
+      "kun_yomi": "やま (yama)",
+      "significato": "montagna"
+    },
+    {
+      "carattere": "水",
+      "on_yomi": "スイ (sui)",
+      "kun_yomi": "みず (mizu)",
+      "significato": "acqua"
+    },
+    {
+      "carattere": "火",
+      "on_yomi": "カ (ka)",
+      "kun_yomi": "ひ (hi)",
+      "significato": "fuoco"
+    },
+    {
+      "carattere": "木",
+      "on_yomi": "モク, ボク (moku, boku)",
+      "kun_yomi": "き, こ (ki, ko)",
+      "significato": "albero, legno"
+    },
+    {
+      "carattere": "金",
+      "on_yomi": "キン, コン (kin, kon)",
+      "kun_yomi": "かね (kane)",
+      "significato": "oro, denaro"
+    },
+    {
+      "carattere": "土",
+      "on_yomi": "ド, ト (do, to)",
+      "kun_yomi": "つち (tsuchi)",
+      "significato": "terra"
+    },
+    {
+      "carattere": "人",
+      "on_yomi": "ジン, ニン (jin, nin)",
+      "kun_yomi": "ひと (hito)",
+      "significato": "persona"
+    },
+    {
+      "carattere": "大",
+      "on_yomi": "ダイ, タイ (dai, tai)",
+      "kun_yomi": "おお(きい) (oo(kii))",
+      "significato": "grande"
+    }
+  ]
+}
+  
