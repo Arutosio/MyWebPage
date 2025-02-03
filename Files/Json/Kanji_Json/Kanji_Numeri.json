@@ -7,7 +7,7 @@
         { "hiragana": "イツ", "romaji": "itsu" }
       ],
       "kun_yomi": [
-        { "hiragana": "ひと(つ)", "romaji": "hito(tsu)" }
+        { "hiragana": "ひと", "romaji": "hito", "josuushi": "つ", "josuushi_romanji": "tsu" }
       ],
       "significato": "uno"
     },
@@ -17,7 +17,7 @@
         { "hiragana": "ニ", "romaji": "ni" }
       ],
       "kun_yomi": [
-        { "hiragana": "ふた(つ)", "romaji": "futa(tsu)" }
+        { "hiragana": "ふた", "romaji": "futa", "josuushi": "つ", "josuushi_romanji": "tsu" }
       ],
       "significato": "due"
     },
@@ -27,7 +27,7 @@
         { "hiragana": "サン", "romaji": "san" }
       ],
       "kun_yomi": [
-        { "hiragana": "みっ(つ)", "romaji": "mi(tsu)" }
+        { "hiragana": "みっ", "romaji": "mi", "josuushi": "つ", "josuushi_romanji": "tsu" }
       ],
       "significato": "tre"
     },
@@ -38,7 +38,7 @@
       ],
       "kun_yomi": [
         { "hiragana": "よん", "romaji": "yon" },
-        { "hiragana": "よっ(つ)", "romaji": "yo(tsu)" }
+        { "hiragana": "よっ", "romaji": "yo", "josuushi": "つ", "josuushi_romanji": "tsu" }
       ],
       "significato": "quattro"
     },
@@ -48,7 +48,7 @@
         { "hiragana": "ゴ", "romaji": "go" }
       ],
       "kun_yomi": [
-        { "hiragana": "いつ(つ)", "romaji": "itsu(tsu)" }
+        { "hiragana": "いつ", "romaji": "itsu", "josuushi": "つ", "josuushi_romanji": "tsu" }
       ],
       "significato": "cinque"
     },
@@ -58,7 +58,7 @@
         { "hiragana": "ロク", "romaji": "roku" }
       ],
       "kun_yomi": [
-        { "hiragana": "むっ(つ)", "romaji": "mu(tsu)" }
+        { "hiragana": "むっ", "romaji": "mu", "josuushi": "つ", "josuushi_romanji": "tsu" }
       ],
       "significato": "sei"
     },
@@ -69,7 +69,7 @@
       ],
       "kun_yomi": [
         { "hiragana": "なな", "romaji": "nana" },
-        { "hiragana": "なな(つ)", "romaji": "nana(tsu)" }
+        { "hiragana": "なな", "romaji": "nana", "josuushi": "つ", "josuushi_romanji": "tsu" }
       ],
       "significato": "sette"
     },
@@ -79,7 +79,7 @@
         { "hiragana": "ハチ", "romaji": "hachi" }
       ],
       "kun_yomi": [
-        { "hiragana": "やっ(つ)", "romaji": "ya(tsu)" },
+        { "hiragana": "やっ", "romaji": "ya", "josuushi": "つ", "josuushi_romanji": "tsu" },
         { "hiragana": "よう", "romaji": "you" }
       ],
       "significato": "otto"
@@ -91,7 +91,7 @@
         { "hiragana": "ク", "romaji": "ku" }
       ],
       "kun_yomi": [
-        { "hiragana": "ここの(つ)", "romaji": "kokono(tsu)" }
+        { "hiragana": "ここの", "romaji": "kokono", "josuushi": "つ", "josuushi_romanji": "tsu" }
       ],
       "significato": "nove"
     },

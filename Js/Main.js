@@ -545,8 +545,9 @@ function UpdateKanjiAsk(kanji) {
 function UpdateProgressBar() {
     const percent = (countKanjiAnswer / kanjiToLearn.length) * 100;
     const strProgressBar = `${percent}% ${countKanjiAnswer}/${kanjiToLearn.length}`;
-    kanjiProgressBar.dataset.ariaValuenow = percent
-    kanjiProgressBarProgress.dataset.style =`${percent}%`;
+    console.log(percent);
+    kanjiProgressBar.setAttribute('aria-valuenow', percent); // oppure kanjiProgressBar.ariaValueNow = percent;
+    kanjiProgressBarProgress.style.width = `${percent}%`; // Usa style.width
     kanjiProgressBarProgress.textContent = strProgressBar;
 }
 
@@ -595,44 +596,102 @@ async function AddKanjiInLearnKanjiList() {
 }
 
 function IsKanjiAnswersCorrect() {
-    let isCorrect = true
-    // Codice da eseguire quando il pulsante CheckKanji viene cliccato
+    let isCorrect = true;
     console.log('Eseguo IsKanjiAnswersCorrect.');
     const kanji = kanjiToLearn[countKanjiAnswer];
 
-    // Controllo KunYomi
-    if(inputKunYomi.value) {
-        const arrayKunYomi = inputKunYomi.value.split(',');
-        if(arrayKunYomi.length == kanji.kun_yomi.length) {
-            for (const i_kun_yomi of arrayKunYomi) {
-                let trimei_kun_yomi = i_kun_yomi.trim();
-                let found = false;
-                for (const k_kun_yomi of kanji.kun_yomi) {
-                    console.log(trimei_kun_yomi);
-                    console.log(k_kun_yomi.hiragana);
-                    console.log(k_kun_yomi.hiragana === trimei_kun_yomi);
-                    if(k_kun_yomi.hiragana === trimei_kun_yomi) {
-                        found = true;
-                        break;
+    if(checkboxKunYomi.checked) {
+        // Controllo KunYomi
+        if (inputKunYomi.value) {
+            const arrayKunYomi = inputKunYomi.value.split('、');
+            if (arrayKunYomi.length === kanji.kun_yomi.length) {
+
+                console.log(arrayKunYomi.length +' '+ kanji.kun_yomi.length);
+
+                let allKunYomiCorrect = true; // Flag per le kun'yomi
+
+                for (let i = 0; i < arrayKunYomi.length; i++) {
+                    const trimmedKunYomi = arrayKunYomi[i].trim();
+                    let kunYomiFound = false;
+                    for (const k_kun_yomi of kanji.kun_yomi) {
+                        // if(!isHiraganaContingOFF) {
+
+                        // }
+                        // const hiraganaN = str.replace(/\(.*?\)/g, '');
+                        console.log(trimmedKunYomi +' '+ k_kun_yomi.hiragana);
+
+                        if (k_kun_yomi.hiragana === trimmedKunYomi) {
+                            kunYomiFound = true;
+                            break;
+                        }
+                    }
+
+                    if (!kunYomiFound) {
+                        isCorrect = false; // isCorrect è definita esternamente
+                        allKunYomiCorrect = false;
+                        ShowToast("Kun Yomi", `${trimmedKunYomi} errato.`);
                     }
                 }
-                if(!found)
-                {
+
+                if (!allKunYomiCorrect) { // Se almeno una kun'yomi è sbagliata, isCorrect = false
                     isCorrect = false;
-                    ShowToast("Kun Yomi",`${trimei_kun_yomi} bagliato.`)
-                    break;
                 }
+            } else {
+                isCorrect = false;
+                ShowToast("Kun Yomi", `Inseriti ${arrayKunYomi.length} / ${kanji.kun_yomi.length} (effettivi).`);
             }
-        } else {
+        } else if (kanji.kun_yomi.length > 0) { // Gestisci il caso in cui il campo è vuoto ma ci sono kun'yomi
             isCorrect = false;
-            ShowToast("Kun Yomi",`(Inseriti)${arrayKunYomi.length}/${kanji.kun_yomi.length}(Effettivi)`)
+            ShowToast("Kun Yomi", "Il campo Kun Yomi è vuoto.");
         }
-    } else {
-        isCorrect = false;
-        ShowToast("Kun Yomi","Il campo Kun Yomi è vuoto");
     }
-    
-    // TODO: controllare la risposta e restituire true se è corretta, false altrimenti
+
+
+    if(checkboxOnYomi.checked) {
+        // Controllo OnYomi
+        if (inputOnYomi.value) {
+            const arrayOnYomi = inputOnYomi.value.split('、');
+            if (arrayOnYomi.length === kanji.on_yomi.length) {
+
+                console.log(arrayOnYomi.length +' '+ kanji.on_yomi.length);
+
+                let allOnYomiCorrect = true; // Flag per le kun'yomi
+
+                for (let i = 0; i < arrayOnYomi.length; i++) {
+                    const trimmedOnYomi = arrayOnYomi[i].trim();
+                    let onYomiFound = false;
+                    for (const k_on_yomi of kanji.on_yomi) {
+                        // if(!isHiraganaContingOFF) {
+
+                        // }
+                        // const hiraganaN = str.replace(/\(.*?\)/g, '');
+                        console.log(trimmedOnYomi +' '+ k_on_yomi.hiragana);
+
+                        if (k_on_yomi.hiragana === trimmedOnYomi) {
+                            onYomiFound = true;
+                            break;
+                        }
+                    }
+
+                    if (!onYomiFound) {
+                        isCorrect = false; // isCorrect è definita esternamente
+                        allOnYomiCorrect = false;
+                        ShowToast("On Yomi", `${trimmedOnYomi} errato.`);
+                    }
+                }
+
+                if (!allOnYomiCorrect) { // Se almeno una kun'yomi è sbagliata, isCorrect = false
+                    isCorrect = false;
+                }
+            } else {
+                isCorrect = false;
+                ShowToast("On Yomi", `Inseriti ${arrayOnYomi.length} / ${kanji.on_yomi.length} (effettivi).`);
+            }
+        } else if (kanji.on_yomi.length > 0) { // Gestisci il caso in cui il campo è vuoto ma ci sono kun'yomi
+            isCorrect = false;
+            ShowToast("On Yomi", "Il campo Kun Yomi è vuoto.");
+        }
+    }
     return isCorrect;
 }
 
@@ -648,7 +707,9 @@ function AskNextKanji() {
                 UpdateKanjiAsk(kanjiToLearn[countKanjiAnswer]); //
             } else {
                 ShowToast("Finish!", "Lista di kanji conclusa.");
-                
+                EnableAddRemoveButton(true);
+                EnableYomiCheckbox(true);
+                buttonCheckKanji.disabled = true;
             }
             UpdateProgressBar(); // Aggiorna la barra di progressione
         }
@@ -659,12 +720,12 @@ function AskNextKanji() {
 async function StartStopLearnKanji() {
     // Controlli
 
-    EnableAddRemoveButton(false); //
-    EnableYomiCheckbox(false)
+    EnableAddRemoveButton(false);
+    EnableYomiCheckbox(false);
     AddKanjiInLearnKanjiList();
     countKanjiAnswer = -1;
     spanButtonCountDid.textContent = 0;
-    spanButtonCountToDo.textContent = kanjiToLearn.length; //
+    spanButtonCountToDo.textContent = kanjiToLearn.length;
     AskNextKanji();
     buttonCheckKanji.disabled = false;
 }
