@@ -128,8 +128,8 @@ export default class HtmlBuilder {
         let htmlOptionSelects = await this.CreateHtmlKanjiListOptionSelects(jsonKanjiList);
         htmlsKanji = HtmlBuilder.RepleaceAllKey(htmlsKanji, "Option_Select", htmlOptionSelects);
         //html htmlListOfKanjiListAdded
-        let htmlListOfKanjiListAdded = await this.CreateHtmlAddedKanjiLists(jsonKanjiList);
-        htmlsKanji = HtmlBuilder.RepleaceAllKey(htmlsKanji, "ListKanjiList", htmlListOfKanjiListAdded);
+        // let htmlListOfKanjiListAdded = await this.CreateHtmlAddedKanjiLists(jsonKanjiList);
+        // htmlsKanji = HtmlBuilder.RepleaceAllKey(htmlsKanji, "ListKanjiList", htmlListOfKanjiListAdded);
         // END-APROCCIO 1
 
         // START-APROCCIO 2
@@ -182,20 +182,27 @@ export default class HtmlBuilder {
 
     // #endregion Section-Kanji
 
+    async CreateHtmlKanjiListInfoByJsonKanjiList(aKanjiListInfo) {
+        console.log(aKanjiListInfo);
+        let htmlKanjiListInfo = await this.GetHtmlKanjiListInfo();
+        let htmlKanjiListTemplate = HtmlBuilder.CreateHtmlListOfKanjiListAdded(htmlKanjiListInfo, aKanjiListInfo)
+        return htmlKanjiListTemplate;
+    }
     // #region Section-Kanji-APROCCIO-2
+
     async GetHtmlKanjiListInfo() {
         let pathlKanjiListInfoTemplateHtml = `${this.pathTemplate}/Section_sKanji_Ele/Kanji_List-group-item.html`;
         let htmlKanjiListInfo = await UtilityClass.GetTextFromFile(pathlKanjiListInfoTemplateHtml);
         return htmlKanjiListInfo;
     }
 
-    async CreateHtmlListOfKanjiListAdded(htmlKanjiListTemplate, aKanjiListInfo) {
+    static CreateHtmlListOfKanjiListAdded(htmlKanjiListTemplate, aKanjiListInfo) {
         htmlKanjiListTemplate = HtmlBuilder.RepleaceAllKey(htmlKanjiListTemplate, "nameKanjiList", aKanjiListInfo.fileName);
         htmlKanjiListTemplate = HtmlBuilder.RepleaceAllKey(htmlKanjiListTemplate, "countKanjiList", aKanjiListInfo.data.kanji.length);
         return htmlKanjiListTemplate;
     }
     // #endregion Section-Kanji-APROCCIO-2
-    
+
     // #region Utility-Methods 
     static RepleaceKey(mainStr, keyword, replaceStr) {
         let htmlEdit;
@@ -209,11 +216,15 @@ export default class HtmlBuilder {
     }
 
     static RepleaceAllKey(mainStr, keyword, replaceStr) {
-        let htmlEdit = mainStr;
+        if (!mainStr){ // || typeof mainStr !== "string") {
+            console.error("mainStr non è una stringa valida:", mainStr);
+            return ""; // Restituisci una stringa vuota in caso di errore
+        }
+        let htmlEdit = String(mainStr);
         let keywordAdapted = `:|§${keyword}§|:`;
         do {
             htmlEdit = htmlEdit.replace(keywordAdapted, replaceStr);
-        } while (htmlEdit.split(keywordAdapted).length > 1)
+        } while (htmlEdit.split(keywordAdapted).length > 1);
         return htmlEdit;
     }
     // #endregion Utility-Methods 

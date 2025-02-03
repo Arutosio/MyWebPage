@@ -35,6 +35,9 @@ var popoverList;
 var embed;
 var kanjiListJson
 var kanjiListSelectOptions;
+var buttonRemoveKanjiList;
+var buttonAddKanjiList;
+var kanjiListAddedOnTrainGroup;
 // Istanza dei fuochi d'artificio
 var fireworks = new Fireworks();
 
@@ -106,10 +109,14 @@ async function StartUp() {
     ];
     current = tabs[0];
 
-
     cryptoSelectOptions = document.querySelector('#cryptoSelectOptions');
     addressInfos = document.querySelectorAll(".chainList");
     kanjiListSelectOptions = document.querySelector('#kanjiListSelectOptions');
+    kanjiListAddedOnTrainGroup = document.querySelector('#kanjiListAddedOnTrainGroup');
+    buttonRemoveKanjiList = document.querySelector('#buttonRemoveKanjiList');
+    buttonAddKanjiList = document.querySelector('#buttonAddKanjiList');
+
+
     //console.log(andressInfo);
 
     
@@ -233,6 +240,9 @@ async function StartUp() {
         const selectedText = kanjiListSelectOptions.options[kanjiListSelectOptions.selectedIndex].text;
         console.log('Testo selezionato:', selectedText);
     });
+
+    // Aggiungi un evento al click del pulsante
+    buttonAddKanjiList.addEventListener('click', AddKanjiListOnGroup);
 }
 
 function ChnageVideoSetup(tabS) {
@@ -255,6 +265,7 @@ function CreateVariables()
     { tabI: document.querySelector("#iFeatures"), tabS: document.querySelector("#sFeatures") },
     { tabI: document.querySelector("#iDev"), tabS: document.querySelector("#sDev") },
     { tabI: document.querySelector("#iDonate"), tabS: document.querySelector("#sDonate") },
+    { tabI: document.querySelector("#iKanji"), tabS: document.querySelector("#sKanji") },
     ];
     current = tabs[0];
     cryptoSelectOptions = document.getElementById('#cryptoSelectOptions');
@@ -371,3 +382,52 @@ fetch(apiUrl)
             `;
             // <p>Ultimo aggiornamento: ${data.updated_at}</p>
     });
+
+
+// #region Section-Kanji-Methods
+async function AddKanjiListOnGroup() {
+    // Codice da eseguire quando il pulsante viene cliccato
+    console.log('Il pulsante buttonAddKanjiList è stato cliccato!');
+    let htmlKanjiListTemplate = ""; // Variabile per memorizzare il template HTML
+    // Itera attraverso l'array kanjiListJson
+    for (let i = 0; i < kanjiListJson.length; i++) {
+        const aKanjiListInfo = kanjiListJson[i]; // Ottieni l'elemento corrente
+        // Confronta il fileName con il valore selezionato
+        if (aKanjiListInfo.fileName === kanjiListSelectOptions.value) {
+            htmlKanjiListTemplate = await htmlBuilder.CreateHtmlKanjiListInfoByJsonKanjiList(aKanjiListInfo); // Crea il template HTML
+            break; // Esci dal ciclo una volta trovato l'elemento
+        }
+    }
+    // Se il template è vuoto, significa che non è stato trovato alcun elemento corrispondente
+    if (htmlKanjiListTemplate === "") {
+        console.log(`${htmlKanjiListTemplate} non trovato!`);
+    } else {
+        // Aggiungi il template HTML al contenitore
+        kanjiListAddedOnTrainGroup.insertAdjacentHTML('beforeend', htmlKanjiListTemplate);
+        console.log(kanjiListAddedOnTrainGroup);
+    }
+}
+
+async function RemoveKanjiListOnGroup() {
+    // Codice da eseguire quando il pulsante viene cliccato
+    console.log('Il pulsante buttonAddKanjiList è stato cliccato!');
+    let htmlKanjiListTemplate = ""; // Variabile per memorizzare il template HTML
+    // Itera attraverso l'array kanjiListJson
+    for (let i = 0; i < kanjiListJson.length; i++) {
+        const aKanjiListInfo = kanjiListJson[i]; // Ottieni l'elemento corrente
+        // Confronta il fileName con il valore selezionato
+        if (aKanjiListInfo.fileName === kanjiListSelectOptions.value) {
+            htmlKanjiListTemplate = await htmlBuilder.CreateHtmlKanjiListInfoByJsonKanjiList(aKanjiListInfo); // Crea il template HTML
+            break; // Esci dal ciclo una volta trovato l'elemento
+        }
+    }
+    // Se il template è vuoto, significa che non è stato trovato alcun elemento corrispondente
+    if (htmlKanjiListTemplate === "") {
+        console.log(`${htmlKanjiListTemplate} non trovato!`);
+    } else {
+        // Aggiungi il template HTML al contenitore
+        kanjiListAddedOnTrainGroup.insertAdjacentHTML('beforeend', htmlKanjiListTemplate);
+        console.log(kanjiListAddedOnTrainGroup);
+    }
+}
+// #end region Section-Kanji-Methods
