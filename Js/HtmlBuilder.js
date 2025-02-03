@@ -183,7 +183,6 @@ export default class HtmlBuilder {
     // #endregion Section-Kanji
 
     async CreateHtmlKanjiListInfoByJsonKanjiList(aKanjiListInfo) {
-        console.log(aKanjiListInfo);
         let htmlKanjiListInfo = await this.GetHtmlKanjiListInfo();
         let htmlKanjiListTemplate = HtmlBuilder.CreateHtmlListOfKanjiListAdded(htmlKanjiListInfo, aKanjiListInfo)
         return htmlKanjiListTemplate;
