@@ -551,6 +551,11 @@ function UpdateProgressBar() {
     kanjiProgressBarProgress.textContent = strProgressBar;
 }
 
+function ClearInputYomi() {
+    inputKunYomi.value = '';
+    inputOnYomi.value = '';
+}
+
 async function AddKanjiInLearnKanjiList() {
     // Codice da eseguire quando il pulsante viene cliccato
     console.log('Il pulsante buttonStartStopLearnKanji è stato cliccato!');
@@ -711,6 +716,7 @@ function AskNextKanji() {
                 EnableYomiCheckbox(true);
                 buttonCheckKanji.disabled = true;
             }
+            ClearInputYomi();
             UpdateProgressBar(); // Aggiorna la barra di progressione
         }
     }
