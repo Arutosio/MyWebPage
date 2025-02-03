@@ -2,64 +2,109 @@
   "kanji": [
     {
       "carattere": "一",
-      "on_yomi": "イチ, イツ (ichi, itsu)",
-      "kun_yomi": "ひと(つ) (hito(tsu))",
+      "on_yomi": [
+        { "hiragana": "イチ", "romaji": "ichi" },
+        { "hiragana": "イツ", "romaji": "itsu" }
+      ],
+      "kun_yomi": [
+        { "hiragana": "ひと(つ)", "romaji": "hito(tsu)" }
+      ],
       "significato": "uno"
     },
     {
       "carattere": "二",
-      "on_yomi": "ニ (ni)",
-      "kun_yomi": "ふた(つ) (futa(tsu))",
+      "on_yomi": [
+        { "hiragana": "ニ", "romaji": "ni" }
+      ],
+      "kun_yomi": [
+        { "hiragana": "ふた(つ)", "romaji": "futa(tsu)" }
+      ],
       "significato": "due"
     },
     {
       "carattere": "三",
-      "on_yomi": "サン (san)",
-      "kun_yomi": "みっ(つ) (mi(tsu))",
+      "on_yomi": [
+        { "hiragana": "サン", "romaji": "san" }
+      ],
+      "kun_yomi": [
+        { "hiragana": "みっ(つ)", "romaji": "mi(tsu)" }
+      ],
       "significato": "tre"
     },
     {
       "carattere": "四",
-      "on_yomi": "シ (shi)",
-      "kun_yomi": "よん, よっ(つ) (yon, yo(tsu))",
+      "on_yomi": [
+        { "hiragana": "シ", "romaji": "shi" }
+      ],
+      "kun_yomi": [
+        { "hiragana": "よん", "romaji": "yon" },
+        { "hiragana": "よっ(つ)", "romaji": "yo(tsu)" }
+      ],
       "significato": "quattro"
     },
     {
       "carattere": "五",
-      "on_yomi": "ゴ (go)",
-      "kun_yomi": "いつ(つ) (itsu(tsu))",
+      "on_yomi": [
+        { "hiragana": "ゴ", "romaji": "go" }
+      ],
+      "kun_yomi": [
+        { "hiragana": "いつ(つ)", "romaji": "itsu(tsu)" }
+      ],
       "significato": "cinque"
     },
     {
       "carattere": "六",
-      "on_yomi": "ロク (roku)",
-      "kun_yomi": "むっ(つ) (mu(tsu))",
+      "on_yomi": [
+        { "hiragana": "ロク", "romaji": "roku" }
+      ],
+      "kun_yomi": [
+        { "hiragana": "むっ(つ)", "romaji": "mu(tsu)" }
+      ],
       "significato": "sei"
     },
     {
       "carattere": "七",
-      "on_yomi": "シチ (shichi)",
-      "kun_yomi": "なな, なな(つ) (nana, nana(tsu))",
+      "on_yomi": [
+        { "hiragana": "シチ", "romaji": "shichi" }
+      ],
+      "kun_yomi": [
+        { "hiragana": "なな", "romaji": "nana" },
+        { "hiragana": "なな(つ)", "romaji": "nana(tsu)" }
+      ],
       "significato": "sette"
     },
     {
       "carattere": "八",
-      "on_yomi": "ハチ (hachi)",
-      "kun_yomi": "やっ(つ), よう (ya(tsu), you)",
+      "on_yomi": [
+        { "hiragana": "ハチ", "romaji": "hachi" }
+      ],
+      "kun_yomi": [
+        { "hiragana": "やっ(つ)", "romaji": "ya(tsu)" },
+        { "hiragana": "よう", "romaji": "you" }
+      ],
       "significato": "otto"
     },
     {
       "carattere": "九",
-      "on_yomi": "キュウ, ク (kyuu, ku)",
-      "kun_yomi": "ここの(つ) (kokono(tsu))",
+      "on_yomi": [
+        { "hiragana": "キュウ", "romaji": "kyuu" },
+        { "hiragana": "ク", "romaji": "ku" }
+      ],
+      "kun_yomi": [
+        { "hiragana": "ここの(つ)", "romaji": "kokono(tsu)" }
+      ],
       "significato": "nove"
     },
     {
       "carattere": "十",
-      "on_yomi": "ジュウ, ジッ (juu, jitsu)",
-      "kun_yomi": "とお (too)",
+      "on_yomi": [
+        { "hiragana": "ジュウ", "romaji": "juu" },
+        { "hiragana": "ジッ", "romaji": "jitsu" }
+      ],
+      "kun_yomi": [
+        { "hiragana": "とお", "romaji": "too" }
+      ],
       "significato": "dieci"
     }
   ]
 }
-  

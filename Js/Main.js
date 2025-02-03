@@ -43,21 +43,28 @@ var buttonStartStopLearnKanji;
 var buttonCheckKanji;
 var checkboxKunYomi;
 var checkboxOnYomi;
+var divInputKunYomi;
+var divInputOnYomi;
 var inputKunYomi;
 var inputOnYomi;
 var spanButtonCountDid;
 var spanButtonCountToDo;
+var kanjiProgressBar;
+var kanjiProgressBarProgress;
 var kanjiAsk;
-var kanjiToLearn;
+var kanjiToLearn = [];
 // Var Kanji Exexise
 var countKanjiAnswer = 0;
 
-
 // Var Notifications
-var toastTrigger;
-var toastLiveExample;
+var toastLiveNotificationContainer;
+var toastLiveNotification;
+var toastLiveNotificationTitle;
+var toastLiveNotificationMSG;
 // Istanza dei fuochi d'artificio
 var fireworks = new Fireworks();
+//Mostra il toast dopo 1 secondi
+setTimeout(ShowToast, 0);
 
 var x = await RequestJson.RequestMongoDB();
 document.addEventListener('DOMContentLoaded', function(event) {
@@ -126,25 +133,33 @@ async function StartUp() {
         { tabI: document.querySelector("#iKanji"), tabS: document.querySelector("#sKanji") },
     ];
     current = tabs[0];
-
+    //Crypto elements
     cryptoSelectOptions = document.querySelector('#cryptoSelectOptions');
     addressInfos = document.querySelectorAll(".chainList");
+    //Kanji elements
     kanjiListSelectOptions = document.querySelector('#kanjiListSelectOptions');
     kanjiListAddedOnTrainGroup = document.querySelector('#kanjiListAddedOnTrainGroup');
     buttonRemoveKanjiList = document.querySelector('#buttonRemoveKanjiList');
     buttonAddKanjiList = document.querySelector('#buttonAddKanjiList');
     buttonStartStopLearnKanji = document.querySelector('#buttonStartStopLearnKanji');
     buttonCheckKanji = document.querySelector('#buttonCheckKanji');
-    checkboxKunYomi = document.querySelector('#checkboxKunYomi');
-    checkboxOnYomi = document.querySelector('#checkboxOnYomi');
     spanButtonCountDid = document.querySelector('#spanButtonCountDid');
     spanButtonCountToDo = document.querySelector('#spanButtonCountToDo');
-    inputKunYomi = document.querySelector('#inputKunYomi');
-    inputOnYomi = document.querySelector('#inputOnYomi');
+    kanjiProgressBar = document.querySelector('#kanjiProgressBar');
+    kanjiProgressBarProgress = document.querySelector('#kanjiProgressBarProgress');
+    checkboxKunYomi = document.querySelector('#checkboxKunYomi');
+    checkboxOnYomi = document.querySelector('#checkboxOnYomi');
+    divInputKunYomi = document.querySelector('#divInputKunYomi');
+    divInputOnYomi = document.querySelector('#divInputOnYomi');
+    inputKunYomi = divInputKunYomi.querySelector('#inputKunYomi');
+    inputOnYomi = divInputOnYomi.querySelector('#inputOnYomi');
     kanjiAsk = document.querySelector('#kanjiAsk');
 
     // NotificationCenter
-    toastLiveExample = document.getElementById('liveToast')
+    toastLiveNotificationContainer = document.querySelector('#toastLiveNotificationContainer');
+    toastLiveNotification = toastLiveNotificationContainer.querySelector('#toastLiveNotification');
+    toastLiveNotificationTitle = toastLiveNotification.querySelector('#toastLiveNotificationTitle');
+    toastLiveNotificationMSG = toastLiveNotificationContainer.querySelector('#toastLiveNotificationMSG');
 
 
     //console.log(andressInfo);
@@ -419,12 +434,48 @@ fetch(apiUrl)
     });
 
 //Funzione per mostrare il toast automaticamente
-function ShowToast() {
-    const toast = new bootstrap.Toast(toastLiveExample);
+function ShowToast(title, msg) {
+    if(title) {
+        toastLiveNotificationTitle.textContent = title;
+    }
+    if(msg) {
+        toastLiveNotificationMSG.textContent = msg;
+    }
+    toastLiveNotification.classList.add('show'); // Apri il toast
+    const toast = new bootstrap.Toast(toastLiveNotification);
     toast.show();
 }
 
 // #region Section-Kanji-Methods
+function EnableDisableStartStopButton() {
+    const listItems = kanjiListAddedOnTrainGroup.querySelectorAll('li'); // Seleziona tutti gli elementi <li>
+    if (listItems.length >= 2) { // Verifica se ci sono almeno due elementi <li>
+      buttonStartStopLearnKanji.disabled = false; // Abilita il pulsante
+    } else {
+        buttonStartStopLearnKanji.disabled = true; // Disabilita il pulsante
+    }
+}
+
+function EnableAddRemoveButton(bool) {
+    if (bool) {
+        buttonAddKanjiList.disabled = false; 
+        buttonRemoveKanjiList.disabled = false;
+    } else {
+        buttonAddKanjiList.disabled = true; 
+        buttonRemoveKanjiList.disabled = true;
+    }
+}
+
+function EnableYomiCheckbox(bool) {
+    if (bool) {
+        checkboxKunYomi.disabled = false; 
+        checkboxOnYomi.disabled = false;
+    } else {
+        checkboxKunYomi.disabled = true; 
+        checkboxOnYomi.disabled = true;
+    }
+}
+
 async function AddKanjiListOnGroup() {
     // Codice da eseguire quando il pulsante viene cliccato
     console.log('Il pulsante buttonAddKanjiList è stato cliccato!');
@@ -449,6 +500,7 @@ async function AddKanjiListOnGroup() {
             kanjiListAddedOnTrainGroup.insertAdjacentHTML('beforeend', htmlKanjiListTemplate);
         }
     } else { console.log(`I kanji: ${kanjiListSelectOptions.value} sono gia presenti nel gruppo.`); }
+    EnableDisableStartStopButton(); // Aggiorna lo stato del pulsante.
 }
 
 async function RemoveKanjiListOnGroup() {
@@ -462,21 +514,22 @@ async function RemoveKanjiListOnGroup() {
     } else {
         console.log("Elemento da rimuovere non trovato.");
     }
+    EnableDisableStartStopButton(); // Aggiorna lo stato del pulsante.
 }
 
 function HiddenShowInputKunYomi() {
-    if (inputKunYomi.style.display === "none") {
-        inputKunYomi.style.display = "block"; // Mostra l'input
+    if (divInputKunYomi.style.display === "none") {
+        divInputKunYomi.style.display = "block"; // Mostra l'input
     } else {
-        inputKunYomi.style.display = "none"; // Nasconde l'input
+        divInputKunYomi.style.display = "none"; // Nasconde l'input
     }
 }
 
 function HiddenShowInputOnYomi() {
-    if (inputOnYomi.style.display === "none") {
-        inputOnYomi.style.display = "block"; // Mostra l'input
+    if (divInputOnYomi.style.display === "none") {
+        divInputOnYomi.style.display = "block"; // Mostra l'input
     } else {
-        inputOnYomi.style.display = "none"; // Nasconde l'input
+        divInputOnYomi.style.display = "none"; // Nasconde l'input
     }
 }
 
@@ -487,6 +540,14 @@ function UpdateKanjiAsk(kanji) {
     } else {
         console.error("Elemento con id 'kanjiAsk' non trovato!");
     }
+}
+
+function UpdateProgressBar() {
+    const percent = (countKanjiAnswer / kanjiToLearn.length) * 100;
+    const strProgressBar = `${percent}% ${countKanjiAnswer}/${kanjiToLearn.length}`;
+    kanjiProgressBar.dataset.ariaValuenow = percent
+    kanjiProgressBarProgress.dataset.style =`${percent}%`;
+    kanjiProgressBarProgress.textContent = strProgressBar;
 }
 
 async function AddKanjiInLearnKanjiList() {
@@ -533,23 +594,78 @@ async function AddKanjiInLearnKanjiList() {
     console.log("Kanji da imparare:", kanjiToLearn); // Stampa l'array finale (utile per debug)
 }
 
-function AskNextKanji() {
-    countKanjiAnswer++;
-    if(countKanjiAnswer < kanjiToLearn.length) {
-        spanButtonCountDid.textContent = countKanjiAnswer;
-        
-        console.log(kanjiToLearn[countKanjiAnswer].carattere);
-        UpdateKanjiAsk(kanjiToLearn[countKanjiAnswer]); //
+function IsKanjiAnswersCorrect() {
+    let isCorrect = true
+    // Codice da eseguire quando il pulsante CheckKanji viene cliccato
+    console.log('Eseguo IsKanjiAnswersCorrect.');
+    const kanji = kanjiToLearn[countKanjiAnswer];
+
+    // Controllo KunYomi
+    if(inputKunYomi.value) {
+        const arrayKunYomi = inputKunYomi.value.split(',');
+        if(arrayKunYomi.length == kanji.kun_yomi.length) {
+            for (const i_kun_yomi of arrayKunYomi) {
+                let trimei_kun_yomi = i_kun_yomi.trim();
+                let found = false;
+                for (const k_kun_yomi of kanji.kun_yomi) {
+                    console.log(trimei_kun_yomi);
+                    console.log(k_kun_yomi.hiragana);
+                    console.log(k_kun_yomi.hiragana === trimei_kun_yomi);
+                    if(k_kun_yomi.hiragana === trimei_kun_yomi) {
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found)
+                {
+                    isCorrect = false;
+                    ShowToast("Kun Yomi",`${trimei_kun_yomi} bagliato.`)
+                    break;
+                }
+            }
+        } else {
+            isCorrect = false;
+            ShowToast("Kun Yomi",`(Inseriti)${arrayKunYomi.length}/${kanji.kun_yomi.length}(Effettivi)`)
+        }
     } else {
-        console.log("Hai finito di imparare i kanji.");
+        isCorrect = false;
+        ShowToast("Kun Yomi","Il campo Kun Yomi è vuoto");
     }
+    
+    // TODO: controllare la risposta e restituire true se è corretta, false altrimenti
+    return isCorrect;
+}
+
+function AskNextKanji() {
+
+    if(countKanjiAnswer == -1 || IsKanjiAnswersCorrect())
+    {
+        countKanjiAnswer++;
+        if(kanjiToLearn.length !== undefined) {
+    
+            if(countKanjiAnswer < kanjiToLearn.length) {
+                spanButtonCountDid.textContent = countKanjiAnswer;
+                UpdateKanjiAsk(kanjiToLearn[countKanjiAnswer]); //
+            } else {
+                ShowToast("Finish!", "Lista di kanji conclusa.");
+                
+            }
+            UpdateProgressBar(); // Aggiorna la barra di progressione
+        }
+    }
+    // else { ShowToast("Wrong", "The Answers is incorrect."); }
 }
 
 async function StartStopLearnKanji() {
+    // Controlli
+
+    EnableAddRemoveButton(false); //
+    EnableYomiCheckbox(false)
     AddKanjiInLearnKanjiList();
     countKanjiAnswer = -1;
     spanButtonCountDid.textContent = 0;
     spanButtonCountToDo.textContent = kanjiToLearn.length; //
     AskNextKanji();
+    buttonCheckKanji.disabled = false;
 }
 // #end region Section-Kanji-Methods

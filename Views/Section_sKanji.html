@@ -32,7 +32,7 @@
                             <input id="checkboxOnYomi" type="checkbox" class="btn-check" autocomplete="off">
                             <label class="btn btn-outline-primary" for="checkboxOnYomi">On Yomi</label>
                           
-                            <button id="buttonStartStopLearnKanji" type="button" class="btn btn-outline-light">Start/Stop</button>
+                            <button id="buttonStartStopLearnKanji" type="button" class="btn btn-outline-light" disabled="true">Start/Stop</button>
                         </div>
                     </div>
                 </div>
@@ -57,8 +57,10 @@
         <div class="row align-items-start">
             <!-- ProgressBar -->
             <div class="row">
-                <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 75%">75% - 100/154</div>
+                <div id="kanjiProgressBar" class="progress" role="progressbar" aria-label="Animated Success striped example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    <div id="kanjiProgressBarProgress" class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 0%">
+                        50% - 100/154
+                    </div>
                 </div>                    
             </div>
 
@@ -113,13 +115,13 @@
 
             <!-- Input With Label -->
             <div class="row">
-                <div id="inputKunYomi" class="col">
+                <div id="divInputKunYomi" class="col">
                     <label for="formGroupExampleInput" class="form-label">Kun Yomi</label>
-                    <input type="text" class="form-control" placeholder="Kun Yomi" aria-label="Kun Yomi">
+                    <input id="inputKunYomi" type="text" class="form-control" placeholder="Kun Yomi" aria-label="Kun Yomi">
                 </div>
-                <div id="inputOnYomi" class="col">
+                <div id="divInputOnYomi" class="col">
                     <label for="formGroupExampleInput" class="form-label">On Yomi</label>
-                    <input type="text" class="form-control" placeholder="On Yomi" aria-label="On Yomi">
+                    <input id="inputOnYomi" type="text" class="form-control" placeholder="On Yomi" aria-label="On Yomi">
                 </div>
             </div>
         </div>
@@ -127,7 +129,7 @@
         <div class="row" style="margin-top: 2%"></div>
 
         <div class="row align-items-start">
-            <button id="buttonCheckKanji" type="button" class="btn btn-outline-warning">Check</button>
+            <button id="buttonCheckKanji" type="button" class="btn btn-outline-warning" disabled="true">Check</button>
         </div>
     </div>
 </div>

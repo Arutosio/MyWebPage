@@ -2,34 +2,57 @@
   "kanji": [
     {
       "carattere": "百",
-      "on_yomi": "ヒャク, ビャク, ピャク (hyaku, byaku, pyaku)",
-      "kun_yomi": "なし (nashi)",
+      "on_yomi": [
+        { "hiragana": "ヒャク", "romaji": "hyaku" },
+        { "hiragana": "ビャク", "romaji": "byaku" },
+        { "hiragana": "ピャク", "romaji": "pyaku" }
+      ],
+      "kun_yomi": [
+        { "hiragana": "なし", "romaji": "nashi" }
+      ],
       "significato": "cento"
     },
     {
       "carattere": "千",
-      "on_yomi": "セン, ゼン (sen, zen)",
-      "kun_yomi": "ち (chi)",
+      "on_yomi": [
+        { "hiragana": "セン", "romaji": "sen" },
+        { "hiragana": "ゼン", "romaji": "zen" }
+      ],
+      "kun_yomi": [
+        { "hiragana": "ち", "romaji": "chi" }
+      ],
       "significato": "mille"
     },
     {
       "carattere": "万",
-      "on_yomi": "マン, バン (man, ban)",
-      "kun_yomi": "なし (nashi)",
+      "on_yomi": [
+        { "hiragana": "マン", "romaji": "man" },
+        { "hiragana": "バン", "romaji": "ban" }
+      ],
+      "kun_yomi": [
+        { "hiragana": "なし", "romaji": "nashi" }
+      ],
       "significato": "diecimila"
     },
     {
       "carattere": "億",
-      "on_yomi": "オク (oku)",
-      "kun_yomi": "なし (nashi)",
+      "on_yomi": [
+        { "hiragana": "オク", "romaji": "oku" }
+      ],
+      "kun_yomi": [
+        { "hiragana": "なし", "romaji": "nashi" }
+      ],
       "significato": "cento milioni"
     },
     {
       "carattere": "兆",
-      "on_yomi": "チョウ (chou)",
-      "kun_yomi": "なし (nashi)",
+      "on_yomi": [
+        { "hiragana": "チョウ", "romaji": "chou" }
+      ],
+      "kun_yomi": [
+        { "hiragana": "なし", "romaji": "nashi" }
+      ],
       "significato": "un bilione"
     }
   ]
 }
-  
