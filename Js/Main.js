@@ -35,6 +35,7 @@ var current;
 var popoverTriggerList;
 var popoverList;
 var embed;
+var kanjiFileNames = ["Kanji_Number_Hiragana_pronunce", "Kanji_Numeri", "Kanji_NumeriOver", "Kanji_Prova"]
 
 // Var Notifications
 var toastLiveNotificationContainer;
@@ -102,7 +103,6 @@ async function StartUp() {
     let htmlSectionsDonate = await htmlBuilder.CreateSectionDonateView(jsonWalletDepositAddress);
     IndexManager.ReplaceHtmlContent("sDonate", htmlSectionsDonate);
 
-    let kanjiFileNames = ["Kanji_Numeri", "Kanji_NumeriOver", "Kanji_Prova"];
     kanji.kanjiListJson = await UtilityClass.GetJsonFilesFromFolder("Kanji_Json", kanjiFileNames);
     let htmlSectionsKanji = await htmlBuilder.CreateSectionKanjiView(kanji.kanjiListJson);
     IndexManager.ReplaceHtmlContent("sKanji", htmlSectionsKanji);

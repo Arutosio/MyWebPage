@@ -23,21 +23,21 @@ export default class DonateCrypto {
     }
 
     async InizializeComponent() {
-        //console.log("DonateCrypto.Start() getElmenti! Start");
-        //Crypto elements
+        // console.log("DonateCrypto.Start() getElmenti! Start");
+        // Crypto elements
         this.cryptoSelectOptions = document.querySelector('#cryptoSelectOptions');
         this.addressInfos = document.querySelectorAll(".chainList");
-        //console.log("DonateCrypto.Start() getElmenti! End");
+        // console.log("DonateCrypto.Start() getElmenti! End");
         return true;
     }
 
     AddEventListenerElements() {
-        //console.log("DonateCrypto.Start() AddEventsElements! Start");
+        // console.log("DonateCrypto.Start() AddEventsElements! Start");
         // Usa bind(this) per i metodi della classe
         this.cryptoSelectOptions.addEventListener("change", this.HiddenShowAddress.bind(this));
-        //this.cryptoSelectOptions.addEventListener("select", this.ShowAddressInfo.bind(this));
+        // this.cryptoSelectOptions.addEventListener("select", this.ShowAddressInfo.bind(this));
 
-        //console.log("DonateCrypto.Start() AddEventsElements! End");
+        // console.log("DonateCrypto.Start() AddEventsElements! End");
     }
 
     

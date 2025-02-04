@@ -25,6 +25,7 @@ export default class Kanji {
     kanjiAsk;
     kanjiToLearn = [];
     // Var Kanji Exexise
+    testIsStarted = false;
     countKanjiAnswer = 0;
 
     constructor(htmlBuilder, showToastFunction) { 
@@ -80,6 +81,8 @@ export default class Kanji {
         this.buttonCheckKanji.addEventListener('click', this.AskNextKanji.bind(this));
         this.checkboxKunYomi.addEventListener('change', this.HiddenShowInputKunYomi.bind(this));
         this.checkboxOnYomi.addEventListener('change', this.HiddenShowInputOnYomi.bind(this));
+        this.inputKunYomi.addEventListener('keydown', this.InputKunYomiOnPressEnther.bind(this));
+        this.inputOnYomi.addEventListener('keydown', this.InputOnYomiOnPressEnther.bind(this));
 
         //console.log("Kanji.Start() AddEventsElements! End");
     }
@@ -125,28 +128,32 @@ export default class Kanji {
     async AddKanjiListOnGroup() {
         // Codice da eseguire quando il pulsante viene cliccato
         //console.log('Il pulsante buttonAddKanjiList è stato cliccato!');
-
-        if (!this.kanjiListAddedOnTrainGroup.querySelector(`#added${this.kanjiListSelectOptions.value}`))
-        {
-            let htmlKanjiListTemplate = ""; // Variabile per memorizzare il template HTML
-            // Itera attraverso l'array kanjiListJson
-            for (let i = 0; i < this.kanjiListJson.length; i++) {
-                const aKanjiListInfo = this.kanjiListJson[i]; // Ottieni l'elemento corrente
-                // Confronta il fileName con il valore selezionato
-                if (aKanjiListInfo.fileName === this.kanjiListSelectOptions.value) {
-                    htmlKanjiListTemplate = await this.htmlBuilder.CreateHtmlKanjiListInfoByJsonKanjiList(aKanjiListInfo); // Crea il template HTML
-                    break; // Esci dal ciclo una volta trovato l'elemento
+        try {
+            if (!this.kanjiListAddedOnTrainGroup.querySelector(`#added${this.kanjiListSelectOptions.value}`))
+            {
+                let htmlKanjiListTemplate = ""; // Variabile per memorizzare il template HTML
+                // Itera attraverso l'array kanjiListJson
+                for (let i = 0; i < this.kanjiListJson.length; i++) {
+                    const aKanjiListInfo = this.kanjiListJson[i]; // Ottieni l'elemento corrente
+                    // Confronta il fileName con il valore selezionato
+                    if (aKanjiListInfo.fileName === this.kanjiListSelectOptions.value) {
+                        htmlKanjiListTemplate = await this.htmlBuilder.CreateHtmlKanjiListInfoByJsonKanjiList(aKanjiListInfo); // Crea il template HTML
+                        break; // Esci dal ciclo una volta trovato l'elemento
+                    }
                 }
-            }
-            // Se il template è vuoto, significa che non è stato trovato alcun elemento corrispondente
-            if (htmlKanjiListTemplate === "") {
-                console.log(`${htmlKanjiListTemplate} non trovato!`);
-            } else {
-                // Aggiungi il template HTML al contenitore
-                this.kanjiListAddedOnTrainGroup.insertAdjacentHTML('beforeend', htmlKanjiListTemplate);
-            }
-        } else { console.log(`I kanji: ${this.kanjiListSelectOptions.value} sono gia presenti nel gruppo.`); }
-        this.EnableDisableStartStopButton(); // Aggiorna lo stato del pulsante.
+                // Se il template è vuoto, significa che non è stato trovato alcun elemento corrispondente
+                if (htmlKanjiListTemplate === "") {
+                    console.log(`${htmlKanjiListTemplate} non trovato!`);
+                } else {
+                    // Aggiungi il template HTML al contenitore
+                    this.kanjiListAddedOnTrainGroup.insertAdjacentHTML('beforeend', htmlKanjiListTemplate);
+                }
+            } else { console.log(`I kanji: ${this.kanjiListSelectOptions.value} sono gia presenti nel gruppo.`); }
+            this.EnableDisableStartStopButton(); // Aggiorna lo stato del pulsante.
+        } catch (error) {
+            console.error("Errore: non esistono elementi #added:", error);
+            // Gestisci l'errore (mostra un messaggio all'utente, ecc.)
+        }
     }
 
     RemoveKanjiListOnGroup() {
@@ -176,6 +183,20 @@ export default class Kanji {
             this.divInputOnYomi.style.display = "block"; // Mostra l'input
         } else {
             this.divInputOnYomi.style.display = "none"; // Nasconde l'input
+        }
+    }
+
+    InputKunYomiOnPressEnther(event) {
+        // Codice da eseguire quando viene premuto il tasto invio
+        if (event.key === "Enter" && this.testIsStarted && !this.checkboxOnYomi.checked) {
+            this.buttonCheckKanji.click();
+        }
+    }
+
+    InputOnYomiOnPressEnther(event) {
+        // Codice da eseguire quando viene premuto il tasto invio
+        if (event.key === "Enter" && this.testIsStarted && !this.checkboxKunYomi.checked) {
+            this.buttonCheckKanji.click();
         }
     }
 
@@ -370,7 +391,7 @@ export default class Kanji {
 
     async StartStopLearnKanji() {
         // Controlli
-
+        this.testIsStarted = true;
         this.EnableAddRemoveButton(false);
         this.EnableYomiCheckbox(false);
         this.AddKanjiInLearnKanjiList();
