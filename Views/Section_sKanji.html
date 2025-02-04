@@ -23,7 +23,7 @@
 
                     <div class="row" style="margin-top: 2%"></div>
 
-                    <!-- Checkbox(Yomi) and Button(Start/Stop) -->
+                    <!-- Checkbox(Yomi) and (Start/Stop) -->
                     <div class="row">
                         <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
                             <input id="checkboxKunYomi" type="checkbox" class="btn-check" autocomplete="off" checked>
@@ -31,8 +31,9 @@
                           
                             <input id="checkboxOnYomi" type="checkbox" class="btn-check" autocomplete="off" checked>
                             <label class="btn btn-outline-primary" for="checkboxOnYomi">On Yomi</label>
-                          
-                            <button id="buttonStartStopLearnKanji" type="button" class="btn btn-outline-light" disabled="true">Start/Stop</button>
+                            
+                            <input id="checkboxStartStopLearnKanji" type="checkbox" class="btn-check" autocomplete="off" disabled="true">
+                            <label class="btn btn-outline-light" for="checkboxStartStopLearnKanji">Start/Stop</label>
                         </div>
                     </div>
                 </div>
@@ -66,39 +67,38 @@
             <div class="row" style="margin-top: 3%"></div>
 
             <!-- CountDid Kanji CountToDo ?Tooltip -->
-            <div class="row">
-                <div class="col">   
-                    <div class="container">
-                        <button type="button" class="btn btn-dark position-relative">
-                            <h1 class="display-4">✅</h1>
-                            <span id="spanButtonCountDid" class="position-absolute start-100 translate-middle badge rounded-pill bg-success fs-3">
-                                0
-                            </span>
-                        </button>                
-                    </div>
+            <div class="row d-flex justify-content-center align-items-center border rounded bg-dark m-0 p-1 gap-1 flex-nowrap" style="height: fit-content;">
+                <div class="col-auto"> 
+                    <button type="button" class="btn btn-dark position-relative p-1">
+                        <p id="btnXX" class="fs-3 m-0">📝</p>
+                        <span id="spanButtonCountKanjiAnswerDid" class="position-absolute start-100 translate-middle badge rounded-pill bg-secondary">0</span>
+                    </button>
                 </div>
-                <div class="col">
-                    <h1 class="display-2"><span id="kanjiAsk" class="badge text-bg-dark">無</span></h1>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-dark position-relative p-1">
+                        <p id="btnCross" class="m-0">❌</p>
+                        <span id="spanButtonCountKanjiAnswerWrong" class="position-absolute start-100 translate-middle badge rounded-pill bg-danger">0</span>
+                    </button>
                 </div>
-                <div class="col">
-                    <div class="container">
-                        <button type="button" class="btn btn-dark position-relative">
-                            <h1 class="display-4">❌</h1>
-                            <span id="spanButtonCountToDo" class="position-absolute start-100 translate-middle badge rounded-pill bg-danger fs-3">
-                                0
-                            </span>
-                        </button>                
-                    </div>
+                <!-- Kanji -->
+                <div class="col-auto">
+                    <h1 class="display-3 m-0">
+                        <span id="kanjiAsk" class="badge text-bg-dark m-0">無</span>
+                    </h1>
                 </div>
-                <!-- <div class="col">
-                    <div class="container">
-                        <button type="button" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top"
-                        data-bs-custom-class="custom-tooltip" data-bs-title="This top tooltip is themed via CSS variables.">
-                        ❔
-                        </button>            
-                    </div>
-                </div> -->
-            </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-dark position-relative p-1">
+                        <p id="btnCheck" class="m-0">✅</p>
+                        <span id="spanButtonCountKanjiAnswerCorrectly" class="position-absolute start-100 translate-middle badge rounded-pill bg-success">0</span>
+                    </button>
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-dark position-relative p-1">
+                        <p id="btnFile" class="m-0">📑</p>
+                        <span id="spanButtonCountKanjiAnswerToDo" class="position-absolute start-100 translate-middle badge rounded-pill bg-secondary">0</span>
+                    </button>
+                </div>
+            </div>            
             <div class="row" style="margin-top: 2%"></div>
 
             <!-- Input With Label in line -->

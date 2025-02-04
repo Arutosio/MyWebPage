@@ -8,7 +8,7 @@ export default class Kanji {
     kanjiListAddedOnTrainGroup;
     buttonRemoveKanjiList;
     buttonAddKanjiList;
-    buttonStartStopLearnKanji;
+    checkboxStartStopLearnKanji;
     buttonCheckKanji;
     checkboxKunYomi;
     checkboxOnYomi;
@@ -18,15 +18,19 @@ export default class Kanji {
     inputOnYomi;
     labelInputKunYomi;
     labelInputOnYomi;
-    spanButtonCountDid;
-    spanButtonCountToDo;
+    spanButtonCountKanjiAnswerToDo;
+    spanButtonCountKanjiAnswerDid;
+    spanButtonCountKanjiAnswerWrong;
+    spanButtonCountKanjiAnswerCorrectly;
     kanjiProgressBar;
     kanjiProgressBarProgress;
     kanjiAsk;
-    kanjiToLearn = [];
     // Var Kanji Exexise
+    kanjiToLearn = [];
     testIsStarted = false;
-    countKanjiAnswer = 0;
+    _countKanjiAnswerDid = 0;
+    _countKanjiAnswerCorrectly = new Set();
+    _countKanjiAnswerWrong = new Set();
 
     constructor(htmlBuilder, showToastFunction) { 
         this.htmlBuilder = htmlBuilder;
@@ -35,6 +39,25 @@ export default class Kanji {
         }
         this.ShowToast = showToastFunction;
     }
+
+    //#region Getters and Setters
+    get countKanjiAnswerDid() { return this._countKanjiAnswerDid; }
+    set countKanjiAnswerDid(value) {
+        this._countKanjiAnswerDid = value;
+        this.spanButtonCountKanjiAnswerDid.textContent = value;
+        this.UpdateProgressBar();
+    }
+    get countKanjiAnswerCorrectly() { return this._countKanjiAnswerCorrectly; }
+    set countKanjiAnswerCorrectly(value) {
+        this._countKanjiAnswerCorrectly = value;
+        this.spanButtonCountKanjiAnswerCorrectly.textContent = this.countKanjiAnswerCorrectly.size;
+    }
+    get countKanjiAnswerWrong() { return this._countKanjiAnswerWrong; }
+    set countKanjiAnswerWrong(value) {
+        this._countKanjiAnswerWrong = value;
+        this.spanButtonCountKanjiAnswerWrong.textContent = this.countKanjiAnswerWrong.size;
+    }
+    //#endregion Getters and Setters
 
     async Run() {
         if (this.kanjiListJson) {
@@ -52,10 +75,12 @@ export default class Kanji {
         this.kanjiListAddedOnTrainGroup = document.querySelector('#kanjiListAddedOnTrainGroup');
         this.buttonRemoveKanjiList = document.querySelector('#buttonRemoveKanjiList');
         this.buttonAddKanjiList = document.querySelector('#buttonAddKanjiList');
-        this.buttonStartStopLearnKanji = document.querySelector('#buttonStartStopLearnKanji');
+        this.checkboxStartStopLearnKanji = document.querySelector('#checkboxStartStopLearnKanji');
         this.buttonCheckKanji = document.querySelector('#buttonCheckKanji');
-        this.spanButtonCountDid = document.querySelector('#spanButtonCountDid');
-        this.spanButtonCountToDo = document.querySelector('#spanButtonCountToDo');
+        this.spanButtonCountKanjiAnswerToDo = document.querySelector('#spanButtonCountKanjiAnswerToDo');
+        this.spanButtonCountKanjiAnswerDid = document.querySelector('#spanButtonCountKanjiAnswerDid');
+        this.spanButtonCountKanjiAnswerWrong = document.querySelector('#spanButtonCountKanjiAnswerWrong');
+        this.spanButtonCountKanjiAnswerCorrectly = document.querySelector('#spanButtonCountKanjiAnswerCorrectly');
         this.kanjiProgressBar = document.querySelector('#kanjiProgressBar');
         this.kanjiProgressBarProgress = document.querySelector('#kanjiProgressBarProgress');
         this.checkboxKunYomi = document.querySelector('#checkboxKunYomi');
@@ -77,7 +102,7 @@ export default class Kanji {
         this.kanjiListSelectOptions.addEventListener("change", this.KanjiListSelectChange.bind(this));
         this.buttonAddKanjiList.addEventListener('click', this.AddKanjiListOnGroup.bind(this));
         this.buttonRemoveKanjiList.addEventListener('click', this.RemoveKanjiListOnGroup.bind(this));
-        this.buttonStartStopLearnKanji.addEventListener('click', this.StartStopLearnKanji.bind(this));
+        this.checkboxStartStopLearnKanji.addEventListener('click', this.StartStopLearnKanji.bind(this));
         this.buttonCheckKanji.addEventListener('click', this.AskNextKanji.bind(this));
         this.checkboxKunYomi.addEventListener('change', this.HiddenShowInputKunYomi.bind(this));
         this.checkboxOnYomi.addEventListener('change', this.HiddenShowInputOnYomi.bind(this));
@@ -99,9 +124,9 @@ export default class Kanji {
     EnableDisableStartStopButton() {
         const listItems = this.kanjiListAddedOnTrainGroup.querySelectorAll('li'); // Seleziona tutti gli elementi <li>
         if (listItems.length >= 2) { // Verifica se ci sono almeno due elementi <li>
-        this.buttonStartStopLearnKanji.disabled = false; // Abilita il pulsante
+        this.checkboxStartStopLearnKanji.disabled = false; // Abilita il pulsante
         } else {
-            this.buttonStartStopLearnKanji.disabled = true; // Disabilita il pulsante
+            this.checkboxStartStopLearnKanji.disabled = true; // Disabilita il pulsante
         }
     }
 
@@ -210,8 +235,8 @@ export default class Kanji {
     }
 
     UpdateProgressBar() {
-        const percent = (this.countKanjiAnswer / this.kanjiToLearn.length) * 100;
-        const strProgressBar = `${percent}% ${this.countKanjiAnswer}/${this.kanjiToLearn.length}`;
+        const percent = (this.countKanjiAnswerDid / this.kanjiToLearn.length) * 100;
+        const strProgressBar = `${percent}% ${this.countKanjiAnswerDid}/${this.kanjiToLearn.length}`;
         console.log(percent);
         this.kanjiProgressBar.setAttribute('aria-valuenow', percent); // oppure kanjiProgressBar.ariaValueNow = percent;
         this.kanjiProgressBarProgress.style.width = `${percent}%`; // Usa style.width
@@ -225,7 +250,7 @@ export default class Kanji {
 
     AddKanjiInLearnKanjiList() {
         // Codice da eseguire quando il pulsante viene cliccato
-        //console.log('Il pulsante buttonStartStopLearnKanji è stato cliccato!');
+        //console.log('Il pulsante checkboxStartStopLearnKanji è stato cliccato!');
         this.kanjiToLearn = []; // Svuota l'array prima di aggiungere nuovi elementi
         
         const elementiAdded = this.kanjiListAddedOnTrainGroup.querySelectorAll('[id^="added"]');
@@ -270,7 +295,7 @@ export default class Kanji {
     IsKanjiAnswersCorrect() {
         let isCorrect = true;
         //console.log('Eseguo IsKanjiAnswersCorrect.');
-        const kanji = this.kanjiToLearn[this.countKanjiAnswer];
+        const kanji = this.kanjiToLearn[this.countKanjiAnswerDid];
 
         if(this.checkboxKunYomi.checked) {
             // Controllo KunYomi
@@ -318,7 +343,6 @@ export default class Kanji {
             }
         }
 
-
         if(this.checkboxOnYomi.checked) {
             // Controllo OnYomi
             if (this.inputOnYomi.value) {
@@ -364,27 +388,40 @@ export default class Kanji {
                 this.ShowToast("On Yomi", "Il campo Kun Yomi è vuoto.");
             }
         }
+
+        if(isCorrect) {
+            if (!this.countKanjiAnswerCorrectly.has(kanji.carattere) && !this.countKanjiAnswerWrong.has(kanji.carattere)) {
+                this.countKanjiAnswerCorrectly.add(kanji.carattere);
+            }
+        } else {
+            if (!this.countKanjiAnswerWrong.has(kanji.carattere)) {
+                this.countKanjiAnswerWrong.add(kanji.carattere);
+            }
+        }
+        this.UpdateCountKanjiAnswerCorrectAndWrong();
         return isCorrect;
     }
 
+    UpdateCountKanjiAnswerCorrectAndWrong() {
+        this.spanButtonCountKanjiAnswerCorrectly.textContent = this.countKanjiAnswerCorrectly.size;
+        this.spanButtonCountKanjiAnswerWrong.textContent = this.countKanjiAnswerWrong.size;
+    }
+
     AskNextKanji() {
-        if(this.countKanjiAnswer == -1 || this.IsKanjiAnswersCorrect())
+        if(this.testIsStarted && this.IsKanjiAnswersCorrect())
         {
-            this.countKanjiAnswer++;
-            if(this.kanjiToLearn.length !== undefined) {
-        
-                if(this.countKanjiAnswer < this.kanjiToLearn.length) {
-                    this.spanButtonCountDid.textContent = this.countKanjiAnswer;
-                    this.UpdateKanjiAsk(this.kanjiToLearn[this.countKanjiAnswer]); //
-                } else {
-                    this.ShowToast("Finish!", "Lista di kanji conclusa.");
-                    this.EnableAddRemoveButton(true);
-                    this.EnableYomiCheckbox(true);
-                    this.buttonCheckKanji.disabled = true;
-                }
-                this.ClearInputYomi();
-                this.UpdateProgressBar(); // Aggiorna la barra di progressione
+            this.countKanjiAnswerDid++;
+            if(this.countKanjiAnswerDid < this.kanjiToLearn.length) {
+                this.UpdateKanjiAsk(this.kanjiToLearn[this.countKanjiAnswerDid]);
+                this.spanButtonCountKanjiAnswerDid.textContent = this.countKanjiAnswerDid;
+            } else if (this.countKanjiAnswerDid = this.kanjiToLearn.length) {
+                this.EnableAddRemoveButton(true);
+                this.EnableYomiCheckbox(true);
+                this.buttonCheckKanji.disabled = true;
+                this.testIsStarted = false;
+                this.ShowToast("Finish!", "Lista di kanji conclusa.");
             }
+            this.ClearInputYomi();
         }
         // else { this.ShowToast("Wrong", "The Answers is incorrect."); }
     }
@@ -406,15 +443,16 @@ export default class Kanji {
 
     async StartStopLearnKanji() {
         // Controlli
-        this.testIsStarted = true;
         this.EnableAddRemoveButton(false);
         this.EnableYomiCheckbox(false);
         this.AddKanjiInLearnKanjiList();
         this.RandomizzaKanjiToLearn();
-        this.countKanjiAnswer = -1;
-        this.spanButtonCountDid.textContent = 0;
-        this.spanButtonCountToDo.textContent = this.kanjiToLearn.length;
-        this.AskNextKanji();
+        this.countKanjiAnswerDid = 0;
+        this.countKanjiAnswerCorrectly = new Set();
+        this.countKanjiAnswerWrong = new Set();
+        this.spanButtonCountKanjiAnswerToDo.textContent = this.kanjiToLearn.length;
+        this.testIsStarted = true;
+        this.UpdateKanjiAsk(this.kanjiToLearn[this.countKanjiAnswerDid]);
         this.buttonCheckKanji.disabled = false;
     }
     // #end region Section-Kanji-Methods
