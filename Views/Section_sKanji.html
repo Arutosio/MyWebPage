@@ -97,7 +97,7 @@
 
             <!-- Input With Label in line -->
             <div class="row">
-                <div class="col">
+                <!-- <div class="col">
                     <label class="visually-hidden" for="autoSizingInputGroup">Kun Yomi</label>
                     <div class="input-group">
                         <div class="input-group-text">Kun Yomi</div>
@@ -110,17 +110,21 @@
                         <div class="input-group-text">On Yomi</div>
                         <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="On Yomi">
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <!-- Input With Label -->
             <div class="row">
                 <div id="divInputKunYomi" class="col">
-                    <label for="formGroupExampleInput" class="form-label">Kun Yomi</label>
+                    <label id="labelInputKunYomi" for="formGroupExampleInput" class="form-label">
+                        <strong>Kun Yomi:</strong>
+                    </label>
                     <input id="inputKunYomi" type="text" class="form-control" placeholder="Kun Yomi" aria-label="Kun Yomi">
                 </div>
                 <div id="divInputOnYomi" class="col">
-                    <label for="formGroupExampleInput" class="form-label">On Yomi</label>
+                    <label id="labelInputOnYomi" for="formGroupExampleInput" class="form-label">
+                        <strong>On Yomi:</strong>
+                    </label>
                     <input id="inputOnYomi" type="text" class="form-control" placeholder="On Yomi" aria-label="On Yomi">
                 </div>
             </div>

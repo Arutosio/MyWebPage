@@ -2,14 +2,16 @@ import IndexManager from "./IndexManager.js";
 import UtilityClass from "./UtilityClass.js";
 import HtmlBuilder from "./HtmlBuilder.js";
 import RequestJson from "./RequestJson.js";
+import Kanji from "./Kanji.js";
 import Fireworks from "./Effect/Fireworks.js";
-
 
 // import Fancybox from "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.esm.js";
 
-var requestJson = new RequestJson(null, "https://data.mongodb-api.com/app/data-ivdyd/endpoint/data/beta", null);
-var htmlBuilder = new HtmlBuilder("../Views");
-
+// Variabili di Istanze
+var requestJson;
+var htmlBuilder;
+var kanji;
+var fireworks;
 
 var partPath = window.location.hash
 console.log(partPath);
@@ -33,47 +35,34 @@ var addressInfos;
 var popoverTriggerList;
 var popoverList;
 var embed;
-// Variabili per Kanji Section
-var kanjiListJson
-var kanjiListSelectOptions;
-var kanjiListAddedOnTrainGroup;
-var buttonRemoveKanjiList;
-var buttonAddKanjiList;
-var buttonStartStopLearnKanji;
-var buttonCheckKanji;
-var checkboxKunYomi;
-var checkboxOnYomi;
-var divInputKunYomi;
-var divInputOnYomi;
-var inputKunYomi;
-var inputOnYomi;
-var spanButtonCountDid;
-var spanButtonCountToDo;
-var kanjiProgressBar;
-var kanjiProgressBarProgress;
-var kanjiAsk;
-var kanjiToLearn = [];
-// Var Kanji Exexise
-var countKanjiAnswer = 0;
 
 // Var Notifications
 var toastLiveNotificationContainer;
 var toastLiveNotification;
 var toastLiveNotificationTitle;
 var toastLiveNotificationMSG;
-// Istanza dei fuochi d'artificio
-var fireworks = new Fireworks();
-//Mostra il toast dopo 1 secondi
-setTimeout(ShowToast, 0);
 
-var x = await RequestJson.RequestMongoDB();
-document.addEventListener('DOMContentLoaded', function(event) {
+// var x = await RequestJson.RequestMongoDB();
+document.addEventListener('DOMContentLoaded', async function(event) {
 
     //var x = await requestJson.RequestMongoDB();
     //console.log(await requestJson.RequestMongoDB());
 
     //document.querySelector(window.location.hash).style.display.
-    StartUp();
+
+    // Istanziamento delle classi.
+    requestJson = new RequestJson(null, "https://data.mongodb-api.com/app/data-ivdyd/endpoint/data/beta", null);
+    htmlBuilder = new HtmlBuilder("../Views");
+    kanji = new Kanji(htmlBuilder, ShowToast);
+    fireworks = new Fireworks();
+
+    await StartUp(); // Usa await *qui* se StartUp è una funzione async
+
+    await kanji.Run();
+
+    //Mostra il toast dopo 1 secondi
+    //setTimeout(ShowToast, 0);
+
     // CreateVariables();
     // AppendEvents();
     // (Facoltativo) Ferma i fuochi d'artificio dopo un certo tempo
@@ -113,8 +102,8 @@ async function StartUp() {
     IndexManager.ReplaceHtmlContent("sDonate", htmlSectionsDonate);
 
     let kanjiFileNames = ["Kanji_Numeri", "Kanji_NumeriOver", "Kanji_Prova"];
-    kanjiListJson = await UtilityClass.GetJsonFilesFromFolder("Kanji_Json", kanjiFileNames);
-    let htmlSectionsKanji = await htmlBuilder.CreateSectionKanjiView(kanjiListJson);
+    kanji.kanjiListJson = await UtilityClass.GetJsonFilesFromFolder("Kanji_Json", kanjiFileNames);
+    let htmlSectionsKanji = await htmlBuilder.CreateSectionKanjiView(kanji.kanjiListJson);
     IndexManager.ReplaceHtmlContent("sKanji", htmlSectionsKanji);
 
     let htmlFooter = await htmlBuilder.CreateFooterViewById("iFooter");
@@ -133,27 +122,6 @@ async function StartUp() {
         { tabI: document.querySelector("#iKanji"), tabS: document.querySelector("#sKanji") },
     ];
     current = tabs[0];
-    //Crypto elements
-    cryptoSelectOptions = document.querySelector('#cryptoSelectOptions');
-    addressInfos = document.querySelectorAll(".chainList");
-    //Kanji elements
-    kanjiListSelectOptions = document.querySelector('#kanjiListSelectOptions');
-    kanjiListAddedOnTrainGroup = document.querySelector('#kanjiListAddedOnTrainGroup');
-    buttonRemoveKanjiList = document.querySelector('#buttonRemoveKanjiList');
-    buttonAddKanjiList = document.querySelector('#buttonAddKanjiList');
-    buttonStartStopLearnKanji = document.querySelector('#buttonStartStopLearnKanji');
-    buttonCheckKanji = document.querySelector('#buttonCheckKanji');
-    spanButtonCountDid = document.querySelector('#spanButtonCountDid');
-    spanButtonCountToDo = document.querySelector('#spanButtonCountToDo');
-    kanjiProgressBar = document.querySelector('#kanjiProgressBar');
-    kanjiProgressBarProgress = document.querySelector('#kanjiProgressBarProgress');
-    checkboxKunYomi = document.querySelector('#checkboxKunYomi');
-    checkboxOnYomi = document.querySelector('#checkboxOnYomi');
-    divInputKunYomi = document.querySelector('#divInputKunYomi');
-    divInputOnYomi = document.querySelector('#divInputOnYomi');
-    inputKunYomi = divInputKunYomi.querySelector('#inputKunYomi');
-    inputOnYomi = divInputOnYomi.querySelector('#inputOnYomi');
-    kanjiAsk = document.querySelector('#kanjiAsk');
 
     // NotificationCenter
     toastLiveNotificationContainer = document.querySelector('#toastLiveNotificationContainer');
@@ -161,9 +129,11 @@ async function StartUp() {
     toastLiveNotificationTitle = toastLiveNotification.querySelector('#toastLiveNotificationTitle');
     toastLiveNotificationMSG = toastLiveNotificationContainer.querySelector('#toastLiveNotificationMSG');
 
+    //Crypto elements
+    cryptoSelectOptions = document.querySelector('#cryptoSelectOptions');
+    addressInfos = document.querySelectorAll(".chainList");
 
     //console.log(andressInfo);
-
     
     // embed = new Twitch.Embed("twitch-embed", {
     //     width: "90%",
@@ -277,22 +247,6 @@ async function StartUp() {
             }
         }
     });
-
-    kanjiListSelectOptions.addEventListener("change", function(event) {
-        // Stampa il valore selezionato nella console
-        console.log('Valore selezionato:', kanjiListSelectOptions.value);
-        // Puoi anche ottenere il testo dell'opzione selezionata
-        const selectedText = kanjiListSelectOptions.options[kanjiListSelectOptions.selectedIndex].text;
-        console.log('Testo selezionato:', selectedText);
-    });
-
-    // Aggiungi un evento al click del pulsante
-    buttonAddKanjiList.addEventListener('click', AddKanjiListOnGroup);
-    buttonRemoveKanjiList.addEventListener('click', RemoveKanjiListOnGroup);
-    buttonStartStopLearnKanji.addEventListener('click', StartStopLearnKanji);
-    buttonCheckKanji.addEventListener('click', AskNextKanji);
-    checkboxKunYomi.addEventListener('change', HiddenShowInputKunYomi);
-    checkboxOnYomi.addEventListener('change', HiddenShowInputOnYomi);
 }
 
 function ChnageVideoSetup(tabS) {
@@ -445,294 +399,3 @@ function ShowToast(title, msg) {
     const toast = new bootstrap.Toast(toastLiveNotification);
     toast.show();
 }
-
-// #region Section-Kanji-Methods
-function EnableDisableStartStopButton() {
-    const listItems = kanjiListAddedOnTrainGroup.querySelectorAll('li'); // Seleziona tutti gli elementi <li>
-    if (listItems.length >= 2) { // Verifica se ci sono almeno due elementi <li>
-      buttonStartStopLearnKanji.disabled = false; // Abilita il pulsante
-    } else {
-        buttonStartStopLearnKanji.disabled = true; // Disabilita il pulsante
-    }
-}
-
-function EnableAddRemoveButton(bool) {
-    if (bool) {
-        buttonAddKanjiList.disabled = false; 
-        buttonRemoveKanjiList.disabled = false;
-    } else {
-        buttonAddKanjiList.disabled = true; 
-        buttonRemoveKanjiList.disabled = true;
-    }
-}
-
-function EnableYomiCheckbox(bool) {
-    if (bool) {
-        checkboxKunYomi.disabled = false; 
-        checkboxOnYomi.disabled = false;
-    } else {
-        checkboxKunYomi.disabled = true; 
-        checkboxOnYomi.disabled = true;
-    }
-}
-
-async function AddKanjiListOnGroup() {
-    // Codice da eseguire quando il pulsante viene cliccato
-    console.log('Il pulsante buttonAddKanjiList è stato cliccato!');
-
-    if (!kanjiListAddedOnTrainGroup.querySelector(`#added${kanjiListSelectOptions.value}`))
-    {
-        let htmlKanjiListTemplate = ""; // Variabile per memorizzare il template HTML
-        // Itera attraverso l'array kanjiListJson
-        for (let i = 0; i < kanjiListJson.length; i++) {
-            const aKanjiListInfo = kanjiListJson[i]; // Ottieni l'elemento corrente
-            // Confronta il fileName con il valore selezionato
-            if (aKanjiListInfo.fileName === kanjiListSelectOptions.value) {
-                htmlKanjiListTemplate = await htmlBuilder.CreateHtmlKanjiListInfoByJsonKanjiList(aKanjiListInfo); // Crea il template HTML
-                break; // Esci dal ciclo una volta trovato l'elemento
-            }
-        }
-        // Se il template è vuoto, significa che non è stato trovato alcun elemento corrispondente
-        if (htmlKanjiListTemplate === "") {
-            console.log(`${htmlKanjiListTemplate} non trovato!`);
-        } else {
-            // Aggiungi il template HTML al contenitore
-            kanjiListAddedOnTrainGroup.insertAdjacentHTML('beforeend', htmlKanjiListTemplate);
-        }
-    } else { console.log(`I kanji: ${kanjiListSelectOptions.value} sono gia presenti nel gruppo.`); }
-    EnableDisableStartStopButton(); // Aggiorna lo stato del pulsante.
-}
-
-async function RemoveKanjiListOnGroup() {
-    // Codice da eseguire quando il pulsante viene cliccato
-    console.log('Il pulsante buttonRemoveKanjiList è stato cliccato!');
-    // 2. Trova l'elemento da rimuovere (esempio: usando una classe)
-    let elementToRemove = kanjiListAddedOnTrainGroup.querySelector(`#added${kanjiListSelectOptions.value}`); // Selettore più specifico
-    // 3. Rimuovi l'elemento
-    if (elementToRemove) { // Verifica che l'elemento esista prima di rimuoverlo
-        elementToRemove.remove();
-    } else {
-        console.log("Elemento da rimuovere non trovato.");
-    }
-    EnableDisableStartStopButton(); // Aggiorna lo stato del pulsante.
-}
-
-function HiddenShowInputKunYomi() {
-    if (divInputKunYomi.style.display === "none") {
-        divInputKunYomi.style.display = "block"; // Mostra l'input
-    } else {
-        divInputKunYomi.style.display = "none"; // Nasconde l'input
-    }
-}
-
-function HiddenShowInputOnYomi() {
-    if (divInputOnYomi.style.display === "none") {
-        divInputOnYomi.style.display = "block"; // Mostra l'input
-    } else {
-        divInputOnYomi.style.display = "none"; // Nasconde l'input
-    }
-}
-
-function UpdateKanjiAsk(kanji) {
-    if (kanjiAsk) { // Importante: verifica che l'elemento esista!
-        // Rimpiazza solo il testo:
-        kanjiAsk.textContent = kanji.carattere;
-    } else {
-        console.error("Elemento con id 'kanjiAsk' non trovato!");
-    }
-}
-
-function UpdateProgressBar() {
-    const percent = (countKanjiAnswer / kanjiToLearn.length) * 100;
-    const strProgressBar = `${percent}% ${countKanjiAnswer}/${kanjiToLearn.length}`;
-    console.log(percent);
-    kanjiProgressBar.setAttribute('aria-valuenow', percent); // oppure kanjiProgressBar.ariaValueNow = percent;
-    kanjiProgressBarProgress.style.width = `${percent}%`; // Usa style.width
-    kanjiProgressBarProgress.textContent = strProgressBar;
-}
-
-function ClearInputYomi() {
-    inputKunYomi.value = '';
-    inputOnYomi.value = '';
-}
-
-async function AddKanjiInLearnKanjiList() {
-    // Codice da eseguire quando il pulsante viene cliccato
-    console.log('Il pulsante buttonStartStopLearnKanji è stato cliccato!');
-    kanjiToLearn = []; // Svuota l'array prima di aggiungere nuovi elementi
-    
-    const elementiAdded = kanjiListAddedOnTrainGroup.querySelectorAll('[id^="added"]');
-    
-    if (elementiAdded.length > 0) { // Verifica se ci sono elementi prima di iterare (più efficiente)
-        for (const elemento of elementiAdded) { // Usa for...of per iterare sugli elementi (più moderno e leggibile)
-            const nameKanjiList = elemento.dataset.nameKanjiList; // Ottieni il dataset una sola volta per elemento
-            
-            if (nameKanjiList) { // Verifica che l'attributo data-name-kanji-list esista (gestione errori)
-                for (const kanjiList of kanjiListJson) { // Usa for...of per iterare su kanjiListJson
-                    if (nameKanjiList === kanjiList.fileName) {
-                        const kanjitoAdd = kanjiList.data.kanji;
-                        
-                        if (Array.isArray(kanjitoAdd)) { // Verifica se kanjitoAdd è un array (gestione errori)
-                            for (const kanji of kanjitoAdd) {
-                                const kanjiEsistente = kanjiToLearn.find(k => k.carattere === kanji.carattere);
-                                if (!kanjiEsistente) {
-                                    kanjiToLearn.push(kanji);
-                                }
-                            }
-                        } else if (kanjitoAdd) { // Gestisci il caso in cui kanjitoAdd è un singolo oggetto kanji
-                            const kanjiEsistente = kanjiToLearn.find(k => k.carattere === kanjitoAdd.carattere);
-                            if (!kanjiEsistente) {
-                                kanjiToLearn.push(kanjitoAdd);
-                            }
-                        } else {
-                            console.warn(`Nessun kanji trovato per ${nameKanjiList}`); // Avviso se non ci sono kanji
-                        }
-                        break; // Esci dal ciclo interno dopo aver trovato la corrispondenza (ottimizzazione)
-                    }
-                }
-            } else {
-                console.warn(`L'elemento con id ${elemento.id} non ha l'attributo data-name-kanji-list.`);
-            }
-        }
-    } else {
-        console.log("Nessun elemento aggiunto al gruppo.");
-    }
-    console.log("Kanji da imparare:", kanjiToLearn); // Stampa l'array finale (utile per debug)
-}
-
-function IsKanjiAnswersCorrect() {
-    let isCorrect = true;
-    console.log('Eseguo IsKanjiAnswersCorrect.');
-    const kanji = kanjiToLearn[countKanjiAnswer];
-
-    if(checkboxKunYomi.checked) {
-        // Controllo KunYomi
-        if (inputKunYomi.value) {
-            const arrayKunYomi = inputKunYomi.value.split('、');
-            if (arrayKunYomi.length === kanji.kun_yomi.length) {
-
-                console.log(arrayKunYomi.length +' '+ kanji.kun_yomi.length);
-
-                let allKunYomiCorrect = true; // Flag per le kun'yomi
-
-                for (let i = 0; i < arrayKunYomi.length; i++) {
-                    const trimmedKunYomi = arrayKunYomi[i].trim();
-                    let kunYomiFound = false;
-                    for (const k_kun_yomi of kanji.kun_yomi) {
-                        // if(!isHiraganaContingOFF) {
-
-                        // }
-                        // const hiraganaN = str.replace(/\(.*?\)/g, '');
-                        console.log(trimmedKunYomi +' '+ k_kun_yomi.hiragana);
-
-                        if (k_kun_yomi.hiragana === trimmedKunYomi) {
-                            kunYomiFound = true;
-                            break;
-                        }
-                    }
-
-                    if (!kunYomiFound) {
-                        isCorrect = false; // isCorrect è definita esternamente
-                        allKunYomiCorrect = false;
-                        ShowToast("Kun Yomi", `${trimmedKunYomi} errato.`);
-                    }
-                }
-
-                if (!allKunYomiCorrect) { // Se almeno una kun'yomi è sbagliata, isCorrect = false
-                    isCorrect = false;
-                }
-            } else {
-                isCorrect = false;
-                ShowToast("Kun Yomi", `Inseriti ${arrayKunYomi.length} / ${kanji.kun_yomi.length} (effettivi).`);
-            }
-        } else if (kanji.kun_yomi.length > 0) { // Gestisci il caso in cui il campo è vuoto ma ci sono kun'yomi
-            isCorrect = false;
-            ShowToast("Kun Yomi", "Il campo Kun Yomi è vuoto.");
-        }
-    }
-
-
-    if(checkboxOnYomi.checked) {
-        // Controllo OnYomi
-        if (inputOnYomi.value) {
-            const arrayOnYomi = inputOnYomi.value.split('、');
-            if (arrayOnYomi.length === kanji.on_yomi.length) {
-
-                console.log(arrayOnYomi.length +' '+ kanji.on_yomi.length);
-
-                let allOnYomiCorrect = true; // Flag per le kun'yomi
-
-                for (let i = 0; i < arrayOnYomi.length; i++) {
-                    const trimmedOnYomi = arrayOnYomi[i].trim();
-                    let onYomiFound = false;
-                    for (const k_on_yomi of kanji.on_yomi) {
-                        // if(!isHiraganaContingOFF) {
-
-                        // }
-                        // const hiraganaN = str.replace(/\(.*?\)/g, '');
-                        console.log(trimmedOnYomi +' '+ k_on_yomi.hiragana);
-
-                        if (k_on_yomi.hiragana === trimmedOnYomi) {
-                            onYomiFound = true;
-                            break;
-                        }
-                    }
-
-                    if (!onYomiFound) {
-                        isCorrect = false; // isCorrect è definita esternamente
-                        allOnYomiCorrect = false;
-                        ShowToast("On Yomi", `${trimmedOnYomi} errato.`);
-                    }
-                }
-
-                if (!allOnYomiCorrect) { // Se almeno una kun'yomi è sbagliata, isCorrect = false
-                    isCorrect = false;
-                }
-            } else {
-                isCorrect = false;
-                ShowToast("On Yomi", `Inseriti ${arrayOnYomi.length} / ${kanji.on_yomi.length} (effettivi).`);
-            }
-        } else if (kanji.on_yomi.length > 0) { // Gestisci il caso in cui il campo è vuoto ma ci sono kun'yomi
-            isCorrect = false;
-            ShowToast("On Yomi", "Il campo Kun Yomi è vuoto.");
-        }
-    }
-    return isCorrect;
-}
-
-function AskNextKanji() {
-
-    if(countKanjiAnswer == -1 || IsKanjiAnswersCorrect())
-    {
-        countKanjiAnswer++;
-        if(kanjiToLearn.length !== undefined) {
-    
-            if(countKanjiAnswer < kanjiToLearn.length) {
-                spanButtonCountDid.textContent = countKanjiAnswer;
-                UpdateKanjiAsk(kanjiToLearn[countKanjiAnswer]); //
-            } else {
-                ShowToast("Finish!", "Lista di kanji conclusa.");
-                EnableAddRemoveButton(true);
-                EnableYomiCheckbox(true);
-                buttonCheckKanji.disabled = true;
-            }
-            ClearInputYomi();
-            UpdateProgressBar(); // Aggiorna la barra di progressione
-        }
-    }
-    // else { ShowToast("Wrong", "The Answers is incorrect."); }
-}
-
-async function StartStopLearnKanji() {
-    // Controlli
-
-    EnableAddRemoveButton(false);
-    EnableYomiCheckbox(false);
-    AddKanjiInLearnKanjiList();
-    countKanjiAnswer = -1;
-    spanButtonCountDid.textContent = 0;
-    spanButtonCountToDo.textContent = kanjiToLearn.length;
-    AskNextKanji();
-    buttonCheckKanji.disabled = false;
-}
-// #end region Section-Kanji-Methods
