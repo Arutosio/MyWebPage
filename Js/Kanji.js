@@ -1,5 +1,3 @@
-import UtilityClass from './UtilityClass.js';
-
 export default class Kanji {
     //static miaProprieta; // Dichiarazione senza inizializzazione
     htmlBuilder
@@ -35,7 +33,6 @@ export default class Kanji {
             throw new Error('Il parametro showToastFunction deve essere una funzione.');
         }
         this.ShowToast = showToastFunction;
-        //this.kanjiListJson = inKanjiListJson;
     }
 
     async Run() {
@@ -48,7 +45,7 @@ export default class Kanji {
     }
 
     async InizializeComponent() {
-        console.log("Kanji.Start() getElmenti! Start");
+        //console.log("Kanji.Start() getElmenti! Start");
         //Kanji elements
         this.kanjiListSelectOptions = document.querySelector('#kanjiListSelectOptions');
         this.kanjiListAddedOnTrainGroup = document.querySelector('#kanjiListAddedOnTrainGroup');
@@ -69,12 +66,12 @@ export default class Kanji {
         this.labelInputKunYomi = this.divInputKunYomi.querySelector('#labelInputKunYomi');
         this.labelInputOnYomi = this.divInputKunYomi.querySelector('#labelInputOnYomi');
         this.kanjiAsk = document.querySelector('#kanjiAsk');
-        console.log("Kanji.Start() getElmenti! End");
+        //console.log("Kanji.Start() getElmenti! End");
         return true;
     }
 
     AddEventListenerElements() {
-        console.log("Kanji.Start() AddEventsElements! Start");
+        //console.log("Kanji.Start() AddEventsElements! Start");
         // Usa bind(this) per i metodi della classe
         this.kanjiListSelectOptions.addEventListener("change", this.KanjiListSelectChange.bind(this));
         this.buttonAddKanjiList.addEventListener('click', this.AddKanjiListOnGroup.bind(this));
@@ -84,15 +81,15 @@ export default class Kanji {
         this.checkboxKunYomi.addEventListener('change', this.HiddenShowInputKunYomi.bind(this));
         this.checkboxOnYomi.addEventListener('change', this.HiddenShowInputOnYomi.bind(this));
 
-        console.log("Kanji.Start() AddEventsElements! End");
+        //console.log("Kanji.Start() AddEventsElements! End");
     }
 
     KanjiListSelectChange(event) {
         // Stampa il valore selezionato nella console
-        console.log('Valore selezionato:', this.kanjiListSelectOptions.value);
+        //console.log('Valore selezionato:', this.kanjiListSelectOptions.value);
         // Puoi anche ottenere il testo dell'opzione selezionata
         const selectedText = this.kanjiListSelectOptions.options[this.kanjiListSelectOptions.selectedIndex].text;
-        console.log('Testo selezionato:', selectedText);
+        //console.log('Testo selezionato:', selectedText);
     }
 
     // #region Section-Kanji-Methods
@@ -127,7 +124,7 @@ export default class Kanji {
 
     async AddKanjiListOnGroup() {
         // Codice da eseguire quando il pulsante viene cliccato
-        console.log('Il pulsante buttonAddKanjiList è stato cliccato!');
+        //console.log('Il pulsante buttonAddKanjiList è stato cliccato!');
 
         if (!this.kanjiListAddedOnTrainGroup.querySelector(`#added${this.kanjiListSelectOptions.value}`))
         {
@@ -154,7 +151,7 @@ export default class Kanji {
 
     RemoveKanjiListOnGroup() {
         // Codice da eseguire quando il pulsante viene cliccato
-        console.log('Il pulsante buttonRemoveKanjiList è stato cliccato!');
+        //console.log('Il pulsante buttonRemoveKanjiList è stato cliccato!');
         // 2. Trova l'elemento da rimuovere (esempio: usando una classe)
         let elementToRemove = this.kanjiListAddedOnTrainGroup.querySelector(`#added${this.kanjiListSelectOptions.value}`); // Selettore più specifico
         // 3. Rimuovi l'elemento
@@ -207,7 +204,7 @@ export default class Kanji {
 
     AddKanjiInLearnKanjiList() {
         // Codice da eseguire quando il pulsante viene cliccato
-        console.log('Il pulsante buttonStartStopLearnKanji è stato cliccato!');
+        //console.log('Il pulsante buttonStartStopLearnKanji è stato cliccato!');
         this.kanjiToLearn = []; // Svuota l'array prima di aggiungere nuovi elementi
         
         const elementiAdded = this.kanjiListAddedOnTrainGroup.querySelectorAll('[id^="added"]');
@@ -251,7 +248,7 @@ export default class Kanji {
 
     IsKanjiAnswersCorrect() {
         let isCorrect = true;
-        console.log('Eseguo IsKanjiAnswersCorrect.');
+        //console.log('Eseguo IsKanjiAnswersCorrect.');
         const kanji = this.kanjiToLearn[this.countKanjiAnswer];
 
         if(this.checkboxKunYomi.checked) {

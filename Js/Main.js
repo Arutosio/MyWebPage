@@ -2,6 +2,7 @@ import IndexManager from "./IndexManager.js";
 import UtilityClass from "./UtilityClass.js";
 import HtmlBuilder from "./HtmlBuilder.js";
 import RequestJson from "./RequestJson.js";
+import DonateCrypto from "./DonateCrypto.js";
 import Kanji from "./Kanji.js";
 import Fireworks from "./Effect/Fireworks.js";
 
@@ -10,6 +11,7 @@ import Fireworks from "./Effect/Fireworks.js";
 // Variabili di Istanze
 var requestJson;
 var htmlBuilder;
+var donateCrypto;
 var kanji;
 var fireworks;
 
@@ -30,8 +32,6 @@ var eleVideoBG;
 var eleSorceVideoBG;
 var tabs;
 var current;
-var cryptoSelectOptions;
-var addressInfos;
 var popoverTriggerList;
 var popoverList;
 var embed;
@@ -53,11 +53,12 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     // Istanziamento delle classi.
     requestJson = new RequestJson(null, "https://data.mongodb-api.com/app/data-ivdyd/endpoint/data/beta", null);
     htmlBuilder = new HtmlBuilder("../Views");
+    donateCrypto = new DonateCrypto(htmlBuilder, ShowToast);
     kanji = new Kanji(htmlBuilder, ShowToast);
     fireworks = new Fireworks();
 
-    await StartUp(); // Usa await *qui* se StartUp è una funzione async
-
+    await StartUp();
+    await donateCrypto.Run();
     await kanji.Run();
 
     //Mostra il toast dopo 1 secondi
@@ -128,12 +129,6 @@ async function StartUp() {
     toastLiveNotification = toastLiveNotificationContainer.querySelector('#toastLiveNotification');
     toastLiveNotificationTitle = toastLiveNotification.querySelector('#toastLiveNotificationTitle');
     toastLiveNotificationMSG = toastLiveNotificationContainer.querySelector('#toastLiveNotificationMSG');
-
-    //Crypto elements
-    cryptoSelectOptions = document.querySelector('#cryptoSelectOptions');
-    addressInfos = document.querySelectorAll(".chainList");
-
-    //console.log(andressInfo);
     
     // embed = new Twitch.Embed("twitch-embed", {
     //     width: "90%",
@@ -145,8 +140,6 @@ async function StartUp() {
     //     // Only needed if this page is going to be embedded on other websites
     //     parent: ["embed.example.com", "othersite.example.com"]
     // });
-
-    eleVideoBG.style.opacity = '1';
 
     // EVENTI!!!!
     document.addEventListener('click', function(event) 
@@ -235,140 +228,12 @@ async function StartUp() {
     //     var player = embed.getPlayer();
     //     player.play();
     // });
-
-    cryptoSelectOptions.addEventListener("change", function(event) {
-        for (let i = 0; i < addressInfos.length; i++) {
-            let address = addressInfos[i];
-            if (i == this.value) {
-                address.style.display = "flex";
-            }
-            else {
-                address.style.display = "none";
-            }
-        }
-    });
-}
-
-function ChnageVideoSetup(tabS) {
-    tabs[4].tabS.style.display = "flex";
-    eleVideoBG.style.display = "inline-flex";
-    eleSorceVideoBG.setAttribute('src', '../Files/Videos_webm/Toaru-Kagaku-no-Accelerator.webm');
-}
-
-
-//CREAZIONE DI TUTTE LE VARIABILI NECESARIE UTILIZZATI DALLE FUNZIONI
-function CreateVariables()
-{
-    //Delcare Costant
-    eleVideoBG = document.querySelector("#videoBG");
-    eleSorceVideoBG = document.querySelector("#sorceVideoBG");
-
-    tabs = [
-    { tabI: document.querySelector("#iHome"), tabS: document.querySelector("#sHome") },
-    { tabI: document.querySelector("#iAboutMe"), tabS: document.querySelector("#sAboutMe") },
-    { tabI: document.querySelector("#iFeatures"), tabS: document.querySelector("#sFeatures") },
-    { tabI: document.querySelector("#iDev"), tabS: document.querySelector("#sDev") },
-    { tabI: document.querySelector("#iDonate"), tabS: document.querySelector("#sDonate") },
-    { tabI: document.querySelector("#iKanji"), tabS: document.querySelector("#sKanji") },
-    ];
-    current = tabs[0];
-    cryptoSelectOptions = document.getElementById('#cryptoSelectOptions');
-    andressInfo = document.querySelector("#addressInfo");
-    //console.log(andressInfo);
-
-    
-    // embed = new Twitch.Embed("twitch-embed", {
-    //     width: "90%",
-    //     height: "60%",
-    //     theme: "dark",
-    //     // layout: "video",
-    //     autoplay: false,
-    //     channel: "arutosio",
-    //     // Only needed if this page is going to be embedded on other websites
-    //     parent: ["embed.example.com", "othersite.example.com"]
-    // });
-}
-
-//CREAZIONI ASSOCIAGIONE AGLI EVENTI DEGLI ELEMENTI
-function AppendEvents() {
-    
-    //#region EVENT LISTENERS
-    //document.body.querySelector("#Selections").addEventListener("click", ShowSelection(x));
-    document.addEventListener('click', function( event ) 
-    {
-        // console.log(tabScenaries[Object.keys(tabScenaries)]);
-        if (event.target.getAttribute("class") != "nav-link active" && tabs.find(t => t.tabI == event.target)) 
-        {
-            switch(event.target) {
-                case tabs[0].tabI:
-                    tabs[0].tabS.style.display = "flex";
-                    //eleVideoBG.style.display = "inline-flex";
-                    eleSorceVideoBG.setAttribute('src', '../Files/Videos_webm/Toaru-Kagaku-no-Accelerator.webm');
-                    eleVideoBG.load();
-                    eleVideoBG.play();
-                    tabs[0].tabI.classList.add("active");
-                    break;
-                case tabs[1].tabI:
-                    tabs[1].tabS.style.display = "flex";
-                    //eleVideoBG.style.display = "inline-flex";
-                    eleSorceVideoBG.setAttribute('src', '../Files/Videos_webm/Toaru-Kagaku-no-Railgun.webm');
-                    eleVideoBG.load();
-                    eleVideoBG.play();
-                    tabs[1].tabI.classList.add("active");
-                    break;
-                case tabs[2].tabI:
-                    tabs[2].tabS.style.display = "flex";
-                    //eleVideoBG.style.display = "inline-flex";
-                    eleSorceVideoBG.setAttribute('src', '../Files/Videos_webm/Toaru-Majutsu-no-Index2.webm');
-                    eleVideoBG.load();
-                    eleVideoBG.play();
-                    tabs[2].tabI.classList.add("active");
-                    break;
-                case tabs[3].tabI:
-                    tabs[3].tabS.style.display = "flex";
-                    //eleVideoBG.style.display = "inline-flex";
-                    eleSorceVideoBG.setAttribute('src', '../Files/Videos_webm/Toaru-Majutsu-no-Index1.webm');
-                    eleVideoBG.load();
-                    eleVideoBG.play();
-                    tabs[3].tabI.classList.add("active");
-                    break;
-                case tabs[4].tabI:
-                    tabs[4].tabS.style.display = "flex";
-                    //eleVideoBG.style.display = "inline-flex";
-                    eleSorceVideoBG.setAttribute('src', '../Files/Videos_webm/Toaru-Kagaku-no-Accelerator.webm');
-                    eleVideoBG.load();
-                    eleVideoBG.play();
-                    tabs[4].tabI.classList.add("active");
-                    break;
-                default:
-                    console.log(`NON RICONOSCIUTO! - ${event.target}`);
-            }
-
-            current.tabS.style.display = "none";
-            current.tabI.classList.remove("active");
-            current = tabs.find(t => t.tabI == event.target);
-            fetchGitHubRepoInfo("AnimeWorldDownloader")
-        }
-    });
-
-    // Example: Enable popovers everywhere
-    popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-    popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-        return new bootstrap.Popover(popoverTriggerEl)
-    });
-
-    // embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
-    //     var player = embed.getPlayer();
-    //     player.play();
-    // });
-
-    cryptoSelectOptions.addEventListener("select", ShowAddressInfo());
 }
 
 //METODI SECONDARI
-function ShowAddressInfo() {
-    cryptoSelectOptions
-}
+// function ShowAddressInfo() {
+//     cryptoSelectOptions
+// }
 
 const repoName = 'AnimeWorldDownloader'; // Sostituisci con il nome del tuo repository
 const apiUrl = `https://api.github.com/repos/${repoName}`;
