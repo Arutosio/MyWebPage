@@ -389,12 +389,28 @@ export default class Kanji {
         // else { this.ShowToast("Wrong", "The Answers is incorrect."); }
     }
 
+    RandomizzaKanjiToLearn() {
+        if (!this.kanjiToLearn || this.kanjiToLearn.length === 0) {
+            console.warn("L'array kanjiToLearn è vuoto o non definito.");
+            return; // Non fare nulla se l'array è vuoto
+        }
+
+        // Algoritmo di Fisher-Yates (modificato) per randomizzare l'array
+        for (let i = this.kanjiToLearn.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [this.kanjiToLearn[i], this.kanjiToLearn[j]] = [this.kanjiToLearn[j], this.kanjiToLearn[i]];
+        }
+        console.log("Array kanjiToLearn randomizzato:", this.kanjiToLearn);
+    }
+    
+
     async StartStopLearnKanji() {
         // Controlli
         this.testIsStarted = true;
         this.EnableAddRemoveButton(false);
         this.EnableYomiCheckbox(false);
         this.AddKanjiInLearnKanjiList();
+        this.RandomizzaKanjiToLearn();
         this.countKanjiAnswer = -1;
         this.spanButtonCountDid.textContent = 0;
         this.spanButtonCountToDo.textContent = this.kanjiToLearn.length;
