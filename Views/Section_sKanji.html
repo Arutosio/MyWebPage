@@ -71,20 +71,20 @@
                     <div class="container">
                         <button type="button" class="btn btn-dark position-relative">
                             <h1 class="display-4">✅</h1>
-                            <span id="spanButtonCountDid" class="position-absolute start-100 translate-middle badge rounded-pill bg-success">
+                            <span id="spanButtonCountDid" class="position-absolute start-100 translate-middle badge rounded-pill bg-success fs-3">
                                 0
                             </span>
                         </button>                
                     </div>
                 </div>
                 <div class="col">
-                    <h1 class="display-2"><span id="kanjiAsk" class="badge text-bg-dark">日</span></h1>
+                    <h1 class="display-2"><span id="kanjiAsk" class="badge text-bg-dark">無</span></h1>
                 </div>
                 <div class="col">
                     <div class="container">
                         <button type="button" class="btn btn-dark position-relative">
                             <h1 class="display-4">❌</h1>
-                            <span id="spanButtonCountToDo" class="position-absolute start-100 translate-middle badge rounded-pill bg-danger">
+                            <span id="spanButtonCountToDo" class="position-absolute start-100 translate-middle badge rounded-pill bg-danger fs-3">
                                 0
                             </span>
                         </button>                
@@ -122,25 +122,28 @@
             <!-- Input With Label -->
             <div class="row">
                 <div id="divInputKunYomi" class="col">
-                    <label id="labelInputKunYomi" for="formGroupExampleInput" class="form-label">
+                    <label id="labelInputKunYomi" for="formGroupExampleInput" class="form-label fs-3">
                         <strong>Kun Yomi:</strong>
                     </label>
-                    <input id="inputKunYomi" type="text" class="form-control" placeholder="Kun Yomi" aria-label="Kun Yomi">
+                    <input id="inputKunYomi" type="text" class="form-control fs-3" placeholder="Kun Yomi" aria-label="Kun Yomi">
                 </div>
+
                 <div id="divInputOnYomi" class="col">
-                    <label id="labelInputOnYomi" for="formGroupExampleInput" class="form-label">
+                    <label id="labelInputOnYomi" for="formGroupExampleInput" class="form-label fs-3">
                         <strong>On Yomi:</strong>
                     </label>
-                    <input id="inputOnYomi" type="text" class="form-control" placeholder="On Yomi" aria-label="On Yomi">
+                    <input id="inputOnYomi" type="text" class="form-control fs-3" placeholder="On Yomi" aria-label="On Yomi">
                 </div>
             </div>
         </div>
         <div class="row" style="margin-top: 2%"></div>
 
+        <!-- Check Button -->
         <div class="row align-items-start">
             <button id="buttonCheckKanji" type="button" class="btn btn-outline-warning" disabled="true">Check</button>
         </div>
 
+        <!-- Descriptions -->
         <div class="row align-items-start">
             <div class="container mt-5">
                 <div class="card">
