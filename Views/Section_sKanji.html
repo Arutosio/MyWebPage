@@ -65,38 +65,38 @@
             <div class="row" style="margin-top: 3%"></div>
 
             <!-- CountDid Kanji CountToDo ?Tooltip -->
-            <div class="row d-flex justify-content-center align-items-center border rounded bg-dark m-0 p-1 gap-1 flex-nowrap" style="height: fit-content;">
+            <div class="row d-flex justify-content-center align-items-center border rounded bg-dark m-0 p-0" style="height: fit-content;">
                 <div class="col-auto"> 
-                    <button type="button" class="btn btn-dark position-relative p-1">
+                    <button type="button" class="btn btn-dark position-relative p-0">
                         <p id="btnXX" class="fs-3 m-0">📝</p>
                         <span id="spanButtonCountKanjiAnswerDid" class="position-absolute start-100 translate-middle badge rounded-pill bg-secondary">0</span>
                     </button>
                 </div>
                 <div class="col-auto">
-                    <button type="button" class="btn btn-dark position-relative p-1">
+                    <button type="button" class="btn btn-dark position-relative p-0">
                         <p id="btnCross" class="m-0">❌</p>
                         <span id="spanButtonCountKanjiAnswerWrong" class="position-absolute start-100 translate-middle badge rounded-pill bg-danger">0</span>
                     </button>
                 </div>
                 <!-- Kanji -->
                 <div class="col-auto">
-                    <h1 class="display-3 m-0">
-                        <span id="kanjiAsk" class="badge text-bg-dark m-0">無</span>
+                    <h1 class="display-3 m-0 p-0">
+                        <span id="kanjiAsk" class="badge text-bg-dark m-0 p-0">無</span>
                     </h1>
                 </div>
                 <div class="col-auto">
-                    <button type="button" class="btn btn-dark position-relative p-1">
+                    <button type="button" class="btn btn-dark position-relative p-0">
                         <p id="btnCheck" class="m-0">✅</p>
                         <span id="spanButtonCountKanjiAnswerCorrectly" class="position-absolute start-100 translate-middle badge rounded-pill bg-success">0</span>
                     </button>
                 </div>
                 <div class="col-auto">
-                    <button type="button" class="btn btn-dark position-relative p-1">
+                    <button type="button" class="btn btn-dark position-relative p-0">
                         <p id="btnFile" class="m-0">📑</p>
                         <span id="spanButtonCountKanjiAnswerToDo" class="position-absolute start-100 translate-middle badge rounded-pill bg-secondary">0</span>
                     </button>
                 </div>
-            </div>            
+            </div>     
             <div class="row" style="margin-top: 2%"></div>
 
             <!-- Input With Label in line -->
@@ -164,9 +164,10 @@
                                         <ul>
                                             <li>Select a Kanji list from the dropdown menu.</li>
                                             <li>Click <strong>"Add"</strong> to include the Kanji set in your learning session.</li>
+                                            <li>With <strong>KunYomi</strong> or <strong>OnYomi</strong> buttons you can enable or disable them.</li>
                                             <li>Press <strong>"Start/Stop"</strong> to begin or end a practice session.</li>
-                                            <li>Type the correct Kun Yomi or On Yomi in the input fields and press <strong>Enter</strong>.</li>
-                                            <li>The progress bar in the center tracks your learning progress.</li>
+                                            <li>Type the correct Kun Yomi or On Yomi in the input fields and press <strong>Enter</strong> or click <strong>Check</strong>.</li>
+                                            <li>The progress bar and the icons in the center tracks your learning progress.</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -186,6 +187,24 @@
                                         <br><br>
                                         It is designed for those who want a structured yet flexible way to study Kanji, track progress,  
                                         and focus on Kun Yomi and On Yomi pronunciations efficiently.
+                                    </div>
+                                </div>
+                            </div>
+                             <!-- Bug and Report? -->
+                             <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                                        Did you found a Bug or want a new features?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        If you've found a bug or have a suggestion for a new feature,
+                                        please let me know by opening an issue on the website's
+                                        GitHub repository: 
+                                        <a href="https://github.com/Arutosio/MyWebPage." class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Arutosio WebPage</a> 
+                                        <br>
+                                        This is the best way to ensure your feedback is tracked and addressed.  Thank you for your help in making the website better!
                                     </div>
                                 </div>
                             </div>

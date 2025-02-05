@@ -35,7 +35,7 @@ var current;
 var popoverTriggerList;
 var popoverList;
 var embed;
-var kanjiFileNames = ["Kanji_Number_Hiragana_pronunce", "Kanji_Numeri", "Kanji_NumeriOver", "Kanji_Prova"]
+var kanjiFileNames = ["Kanji_Number_Hiragana_pronunce", "Kanji_Numeri", "Kanji_NumeriOver", "Kanji_Prova", "test1Kanji"]
 
 // Var Notifications
 var toastLiveNotificationContainer;
@@ -65,19 +65,15 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     //Mostra il toast dopo 1 secondi
     //setTimeout(ShowToast, 0);
 
-    // CreateVariables();
-    // AppendEvents();
-    // (Facoltativo) Ferma i fuochi d'artificio dopo un certo tempo
-
     // Avvia i fuochi d'artificio
     if (currentDate.getDate() === birthDate.getDate() && currentDate.getMonth() === birthDate.getMonth()) 
-        {
-            console.log("Oggi è il tuo compleanno! 🎉");
-            fireworks.start();
-            //fireworks.stop();
-        } else { 
-            console.log("Oggi NON è il tuo compleanno.");
-        }
+    {
+        console.log("Oggi è il tuo compleanno! 🎉");
+        fireworks.start();
+        // fireworks.stop();
+    } else { 
+        console.log("Oggi NON è il tuo compleanno.");
+    }
 });
 
 //CREAZIONE DI TUTTO IL CONTENUTO HTML
