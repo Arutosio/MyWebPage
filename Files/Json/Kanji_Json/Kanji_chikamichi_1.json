@@ -1,0 +1,149 @@
+{
+    "kanji": [
+      {
+        "char": "木",
+        "on_yomi": [
+          { "katakana": "モク", "romaji": "moku" },
+          { "katakana": "ボク", "romaji": "boku" }
+        ],
+        "kun_yomi": [
+          { "hiragana": "き", "romaji": "ki" },
+          { "hiragana": "こ", "romaji": "ko" }
+        ],
+        "meanings": { "Eng": ["tree", "wood"], "Ita": ["albero", "legno"] }
+      },
+      {
+        "char": "林",
+        "on_yomi": [
+          { "katakana": "リン", "romaji": "rin" }
+        ],
+        "kun_yomi": [
+          { "hiragana": "はやし", "romaji": "hayashi" }
+        ],
+        "meanings": { "Eng": ["grove", "small forest"], "Ita": ["bosco"] }
+      },
+      {
+        "char": "森",
+        "on_yomi": [
+          { "katakana": "シン", "romaji": "shin" }
+        ],
+        "kun_yomi": [
+          { "hiragana": "もり", "romaji": "mori" }
+        ],
+        "meanings": { "Eng": ["forest"], "Ita": ["foresta"] }
+      },
+      {
+        "char": "火",
+        "on_yomi": [
+          { "katakana": "カ", "romaji": "ka" }
+        ],
+        "kun_yomi": [
+          { "hiragana": "ひ", "romaji": "hi" }
+        ],
+        "meanings": { "Eng": ["fire"], "Ita": ["fuoco"] }
+      },
+      {
+        "char": "山",
+        "on_yomi": [
+          { "katakana": "サン", "romaji": "san" }
+        ],
+        "kun_yomi": [
+          { "hiragana": "やま", "romaji": "yama" }
+        ],
+        "meanings": { "Eng": ["mountain"], "Ita": ["montagna"] }
+      },
+      {
+        "char": "人",
+        "on_yomi": [
+          { "katakana": "ジン", "romaji": "jin" },
+          { "katakana": "ニン", "romaji": "nin" }
+        ],
+        "kun_yomi": [
+          { "hiragana": "ひと", "romaji": "hito" }
+        ],
+        "meanings": { "Eng": ["person", "human"], "Ita": ["persona", "essere umano"] }
+      },
+      {
+        "char": "手",
+        "on_yomi": [
+          { "katakana": "シュ", "romaji": "shu" }
+        ],
+        "kun_yomi": [
+          { "hiragana": "て", "romaji": "te" }
+        ],
+        "meanings": { "Eng": ["hand"], "Ita": ["mano"] }
+      },
+      {
+        "char": "女",
+        "on_yomi": [
+          { "katakana": "ジョ", "romaji": "jo" }
+        ],
+        "kun_yomi": [
+          { "hiragana": "おんな", "romaji": "onna" }
+        ],
+        "meanings": { "Eng": ["woman", "female"], "Ita": ["donna", "sesso femminile"] }
+      },
+      {
+        "char": "田",
+        "on_yomi": [
+          { "katakana": "デン", "romaji": "den" }
+        ],
+        "kun_yomi": [
+          { "hiragana": "た", "romaji": "ta" }
+        ],
+        "meanings": { "Eng": ["rice field"], "Ita": ["risaia"] }
+      },
+      {
+        "char": "川",
+        "on_yomi": [
+          { "katakana": "セン", "romaji": "sen" }
+        ],
+        "kun_yomi": [
+          { "hiragana": "かわ", "romaji": "kawa" }
+        ],
+        "meanings": { "Eng": ["river"], "Ita": ["fiume"] }
+      },
+      {
+        "char": "大",
+        "on_yomi": [
+          { "katakana": "ダイ", "romaji": "dai" },
+          { "katakana": "タイ", "romaji": "tai" }
+        ],
+        "kun_yomi": [
+          { "hiragana": "おお", "romaji": "oo" }
+        ],
+        "meanings": { "Eng": ["big", "large"], "Ita": ["grande"] }
+      },
+      {
+        "char": "小",
+        "on_yomi": [
+          { "katakana": "ショウ", "romaji": "shou" }
+        ],
+        "kun_yomi": [
+          { "hiragana": "ちいさい", "romaji": "chiisai" }
+        ],
+        "meanings": { "Eng": ["small", "little"], "Ita": ["piccolo"] }
+      },
+      {
+        "char": "本",
+        "on_yomi": [
+          { "katakana": "ホン", "romaji": "hon" }
+        ],
+        "kun_yomi": [
+          { "hiragana": "もと", "romaji": "moto" }
+        ],
+        "meanings": { "Eng": ["book", "origin"], "Ita": ["libro", "origine"] }
+      },
+      {
+        "char": "友",
+        "on_yomi": [
+          { "katakana": "ユウ", "romaji": "yuu" }
+        ],
+        "kun_yomi": [
+          { "hiragana": "とも", "romaji": "tomo" }
+        ],
+        "meanings": { "Eng": ["friend"], "Ita": ["amico"] }
+      }
+    ]
+  }
+  

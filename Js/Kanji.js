@@ -8,8 +8,9 @@ export default class Kanji {
     kanjiListAddedOnTrainGroup;
     buttonRemoveKanjiList;
     buttonAddKanjiList;
-    checkboxStartStopLearnKanji;
     buttonCheckKanji;
+    buttonSolutionKanji;
+    checkboxStartStopLearnKanji;
     checkboxKunYomi;
     checkboxOnYomi;
     checkboxSwitchMeanings;
@@ -81,8 +82,9 @@ export default class Kanji {
         this.kanjiListAddedOnTrainGroup = document.querySelector('#kanjiListAddedOnTrainGroup');
         this.buttonRemoveKanjiList = document.querySelector('#buttonRemoveKanjiList');
         this.buttonAddKanjiList = document.querySelector('#buttonAddKanjiList');
-        this.checkboxStartStopLearnKanji = document.querySelector('#checkboxStartStopLearnKanji');
         this.buttonCheckKanji = document.querySelector('#buttonCheckKanji');
+        this.buttonSolutionKanji = document.querySelector('#buttonSolutionKanji');
+        this.checkboxStartStopLearnKanji = document.querySelector('#checkboxStartStopLearnKanji');
         this.spanButtonCountKanjiAnswerToDo = document.querySelector('#spanButtonCountKanjiAnswerToDo');
         this.spanButtonCountKanjiAnswerDid = document.querySelector('#spanButtonCountKanjiAnswerDid');
         this.spanButtonCountKanjiAnswerWrong = document.querySelector('#spanButtonCountKanjiAnswerWrong');
@@ -111,8 +113,9 @@ export default class Kanji {
         this.selectOptionsKanjiList.addEventListener("change", this.selectOptionsKanjiListSelectChange.bind(this));
         this.buttonAddKanjiList.addEventListener('click', this.AddKanjiListOnGroup.bind(this));
         this.buttonRemoveKanjiList.addEventListener('click', this.RemoveKanjiListOnGroup.bind(this));
-        this.checkboxStartStopLearnKanji.addEventListener('click', this.StartStopLearnKanji.bind(this));
         this.buttonCheckKanji.addEventListener('click', this.AskNextKanji.bind(this));
+        this.buttonSolutionKanji.addEventListener('click', this.ShowSolutionKanji.bind(this));
+        this.checkboxStartStopLearnKanji.addEventListener('click', this.StartStopLearnKanji.bind(this));
         this.checkboxKunYomi.addEventListener('change', this.InputKunYomiHiddenShow.bind(this));
         this.checkboxOnYomi.addEventListener('change', this.InputOnYomiHiddenShow.bind(this));
         this.checkboxSwitchMeanings.addEventListener('change', this.SwitchMeanings.bind(this));
@@ -230,6 +233,22 @@ export default class Kanji {
         this.EnableDisableStartStopButton(); // Aggiorna lo stato del pulsante.
     }
 
+    ShowSolutionKanji() {
+        if (this.isTestStarted) {
+            const kanji = this.kanjiToLearn[this.countKanjiAnswerDid];
+            if (!this.countKanjiAnswerWrong.has(kanji.char)) {
+                this.countKanjiAnswerWrong.add(kanji.char);
+            }
+            this.UpdateCountKanjiAnswerCorrectAndWrong();
+            this.inputKunYomi.value = this.GetKunYomiHiraganaString(kanji);
+            this.inputOnYomi.value = this.GetOnYomiKatakanaString(kanji);
+            this.IsKanjiAnswersCorrect();
+        } 
+        else {
+            console.log('Il test non è iniziato!');
+        }
+    }
+
     // #region Methods Input Kun/On Yomi
     InputKunYomiHiddenShow() {
         if (this.divInputKunYomi.style.display === "none") {
@@ -277,7 +296,7 @@ export default class Kanji {
 
     InputKunYomiSetColorGreenRed(bool) {
         if (bool) {
-            this.inputKunYomi.style.color = 'green';
+            this.inputKunYomi.style.color = "#00FF00";
             this.inputKunYomi.disabled = true;
         } else { 
             this.inputKunYomi.style.color = 'red';
@@ -286,7 +305,7 @@ export default class Kanji {
 
     InputOnYomiSetColorGreenRed(bool) {
         if (bool) {
-            this.inputOnYomi.style.color = 'green';
+            this.inputOnYomi.style.color = "#00FF00";
             this.inputOnYomi.disabled = true;
         } else { 
             this.inputOnYomi.style.color = 'red';
@@ -573,12 +592,56 @@ export default class Kanji {
             this.NumberOfYomiRefresShow();
             this.InputKOYomiEnable(true);
             this.buttonCheckKanji.disabled = false;
+            this.buttonSolutionKanji.disabled = false;
         } else {
             this.isTestStarted = false;
             this.InputKOYomiEnable(false);
             this.EnableAddRemoveButton(true);
             this.EnableYomiCheckbox(true);
             this.buttonCheckKanji.disabled = true;
+            this.buttonSolutionKanji.disabled = true;
+        }
+    }
+
+    GetKunYomiHiraganaString(kanji) {
+        // Verifica se l'array kun_yomi esiste e non è vuoto
+        if (kanji && kanji.kun_yomi && kanji.kun_yomi.length > 0) {
+            let hiraganaValues = [];
+        
+            // Itera sull'array kun_yomi usando un ciclo for tradizionale
+            for (let i = 0; i < kanji.kun_yomi.length; i++) {
+                hiraganaValues.push(kanji.kun_yomi[i].hiragana);
+            }
+        
+            // Gestisci la separazione con "、"
+            if (hiraganaValues.length > 1) {
+                return hiraganaValues.join("、");
+            } else {
+                return hiraganaValues.join(""); // Nessun separatore se c'è un solo elemento
+            }
+        } else {
+          return ""; // Restituisci una stringa vuota se kun_yomi non è presente o è vuoto
+        }
+    }
+
+    GetOnYomiKatakanaString(kanji) {
+        // Verifica se l'array kun_yomi esiste e non è vuoto
+        if (kanji && kanji.on_yomi && kanji.on_yomi.length > 0) {
+            let katakanaValues = [];
+        
+            // Itera sull'array kun_yomi usando un ciclo for tradizionale
+            for (let i = 0; i < kanji.on_yomi.length; i++) {
+                katakanaValues.push(kanji.on_yomi[i].katakana);
+            }
+        
+            // Gestisci la separazione con "、"
+            if (katakanaValues.length > 1) {
+                return katakanaValues.join("、");
+            } else {
+                return katakanaValues.join(""); // Nessun separatore se c'è un solo elemento
+            }
+        } else {
+          return ""; // Restituisci una stringa vuota se kun_yomi non è presente o è vuoto
         }
     }
 }

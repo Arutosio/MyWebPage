@@ -3,56 +3,44 @@
     {
       "char": "百",
       "on_yomi": [
-        { "hiragana": "ヒャク", "romaji": "hyaku" },
-        { "hiragana": "ビャク", "romaji": "byaku" },
-        { "hiragana": "ピャク", "romaji": "pyaku" }
+        { "katakana": "ヒャク", "romaji": "hyaku" },
+        { "katakana": "ビャク", "romaji": "byaku" },
+        { "katakana": "ピャク", "romaji": "pyaku" }
       ],
-      "kun_yomi": [
-        { "hiragana": "なし", "romaji": "nashi" }
-      ],
-      "significato": "cento"
+      "meanings": { "Eng": ["hundred"], "Ita": ["cento"] }
     },
     {
       "char": "千",
       "on_yomi": [
-        { "hiragana": "セン", "romaji": "sen" },
-        { "hiragana": "ゼン", "romaji": "zen" }
+        { "katakana": "セン", "romaji": "sen" },
+        { "katakana": "ゼン", "romaji": "zen" }
       ],
       "kun_yomi": [
         { "hiragana": "ち", "romaji": "chi" }
       ],
-      "significato": "mille"
+      "meanings": { "Eng": ["thousand"], "Ita": ["mille"] }
     },
     {
       "char": "万",
       "on_yomi": [
-        { "hiragana": "マン", "romaji": "man" },
-        { "hiragana": "バン", "romaji": "ban" }
+        { "katakana": "マン", "romaji": "man" },
+        { "katakana": "バン", "romaji": "ban" }
       ],
-      "kun_yomi": [
-        { "hiragana": "なし", "romaji": "nashi" }
-      ],
-      "significato": "diecimila"
+      "meanings": { "Eng": ["ten thousand"], "Ita": ["diecimila"] }
     },
     {
       "char": "億",
       "on_yomi": [
-        { "hiragana": "オク", "romaji": "oku" }
+        { "katakana": "オク", "romaji": "oku" }
       ],
-      "kun_yomi": [
-        { "hiragana": "なし", "romaji": "nashi" }
-      ],
-      "significato": "cento milioni"
+      "meanings": { "Eng": ["hundred million"], "Ita": ["cento milioni"] }
     },
     {
       "char": "兆",
       "on_yomi": [
-        { "hiragana": "チョウ", "romaji": "chou" }
+        { "katakana": "チョウ", "romaji": "chou" }
       ],
-      "kun_yomi": [
-        { "hiragana": "なし", "romaji": "nashi" }
-      ],
-      "significato": "un bilione"
+      "meanings": { "Eng": ["one trillion"], "Ita": ["un bilione"] }
     }
   ]
 }

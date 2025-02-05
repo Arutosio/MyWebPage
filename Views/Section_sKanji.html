@@ -42,11 +42,11 @@
                     <!-- Checkbox(Yomi) and (Start/Stop) -->
                     <div class="row">
                         <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                            <input id="checkboxKunYomi" type="checkbox" class="btn-check" autocomplete="off" checked>
-                            <label class="btn btn-outline-primary" for="checkboxKunYomi">Kun Yomi</label>
-                          
                             <input id="checkboxOnYomi" type="checkbox" class="btn-check" autocomplete="off" checked>
                             <label class="btn btn-outline-primary" for="checkboxOnYomi">On Yomi</label>
+                            
+                            <input id="checkboxKunYomi" type="checkbox" class="btn-check" autocomplete="off" checked>
+                            <label class="btn btn-outline-primary" for="checkboxKunYomi">Kun Yomi</label>
                             
                             <input id="checkboxStartStopLearnKanji" type="checkbox" class="btn-check" autocomplete="off" disabled="true">
                             <label class="btn btn-outline-light" for="checkboxStartStopLearnKanji">Start/Stop</label>
@@ -97,7 +97,7 @@
                 <!-- Kanji -->
                 <div class="col-auto">
                     <h1 class="display-3 m-0 p-0">
-                        <span id="kanjiAsk" class="badge text-bg-dark m-0 p-0">無</span>
+                        <span id="kanjiAsk" class="badge text-bg-dark m-0 p-0" style="font-family: initial;">無</span>
                     </h1>
                 </div>
                 <div class="col-auto">
@@ -118,26 +118,36 @@
             <!-- Label Meanings -->
             <div class="row">
                 <div class="col">
+                    <label id="labelInputOnYomi" for="formGroupExampleInput" class="form-label">
+                        <strong class="fs-3">On Yomi⬎</strong>
+                    </label>
+                </div>
+                <div class="col">
                     <strong>
                         <label id="labelMeanings" for="formGroupExampleInput" class="form-label">
                         </label>
                     </strong>
                 </div>
+                <div class="col">
+                    <label id="labelInputKunYomi" for="formGroupExampleInput" class="form-label">
+                        <strong class="fs-3">⬐Kun Yomi</strong>
+                    </label>
+                </div>
             </div>
             <!-- Input With Label in line -->
             <div class="row">
-                <div id="divInputKunYomi" class="col">
-                    <label class="visually-hidden" for="autoSizingInputGroup">Kun Yomi</label>
-                    <div class="input-group">
-                        <div id="numOfKunYomi" class="input-group-text"></div>
-                        <input id="inputKunYomi" type="text" class="form-control" id="autoSizingInputGroup" placeholder="Kun Yomi">
-                    </div>
-                </div>
                 <div id="divInputOnYomi" class="col">
                     <label class="visually-hidden" for="autoSizingInputGroup">On Yomi</label>
                     <div class="input-group">
                         <div id="numOfOnYomi" class="input-group-text"></div>
                         <input id="inputOnYomi" type="text" class="form-control" id="autoSizingInputGroup" placeholder="On Yomi">
+                    </div>
+                </div>
+                <div id="divInputKunYomi" class="col">
+                    <label class="visually-hidden" for="autoSizingInputGroup">Kun Yomi</label>
+                    <div class="input-group">
+                        <div id="numOfKunYomi" class="input-group-text"></div>
+                        <input id="inputKunYomi" type="text" class="form-control" id="autoSizingInputGroup" placeholder="Kun Yomi">
                     </div>
                 </div>
             </div>
@@ -163,7 +173,12 @@
 
         <!-- Check Button -->
         <div class="row align-items-start">
-            <button id="buttonCheckKanji" type="button" class="btn btn-outline-warning" disabled="true">Check</button>
+            <div class="col">
+                <button id="buttonSolutionKanji" type="button" class="btn btn-outline-secondary" disabled="true">Solution</button>
+            </div>
+            <div class="col">
+                <button id="buttonCheckKanji" type="button" class="btn btn-outline-warning" disabled="true">Check</button>
+            </div>
         </div>
 
         <!-- Descriptions -->
