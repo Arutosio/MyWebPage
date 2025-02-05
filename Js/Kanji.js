@@ -292,11 +292,11 @@ export default class Kanji {
                     break;
                 }
             }
-            if(this.checkboxKunYomi.checked != thereIsKunYomi){
+            if(this.checkboxKunYomi.checked && (this.checkboxKunYomi.checked != thereIsKunYomi)){
                 //console.log("CheckOn " + this.checkboxOnYomi.checked);
                 this.checkboxKunYomi.click();
             }
-            if (this.checkboxOnYomi.checked != thereIsOnYomi) {
+            if (this.checkboxOnYomi.checked && (this.checkboxOnYomi.checked != thereIsOnYomi)) {
                 //console.log("CheckOn " + this.checkboxOnYomi.checked);
                 this.checkboxOnYomi.click();
             }
