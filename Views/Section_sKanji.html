@@ -59,9 +59,7 @@
             <!-- ProgressBar -->
             <div class="row">
                 <div id="kanjiProgressBar" class="progress" role="progressbar" aria-label="Animated Success striped example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                    <div id="kanjiProgressBarProgress" class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 0%">
-                        50% - 100/154
-                    </div>
+                    <div id="kanjiProgressBarProgress" class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 0%"></div>
                 </div>                    
             </div>
             <div class="row" style="margin-top: 3%"></div>
@@ -103,24 +101,24 @@
 
             <!-- Input With Label in line -->
             <div class="row">
-                <!-- <div class="col">
+                <div id="divInputKunYomi" class="col">
                     <label class="visually-hidden" for="autoSizingInputGroup">Kun Yomi</label>
                     <div class="input-group">
-                        <div class="input-group-text">Kun Yomi</div>
-                        <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="Kun Yomi">
+                        <div id="numOfKunYomi" class="input-group-text"></div>
+                        <input id="inputKunYomi" type="text" class="form-control" id="autoSizingInputGroup" placeholder="Kun Yomi">
                     </div>
                 </div>
-                <div class="col">
+                <div id="divInputOnYomi" class="col">
                     <label class="visually-hidden" for="autoSizingInputGroup">On Yomi</label>
                     <div class="input-group">
-                        <div class="input-group-text">On Yomi</div>
-                        <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="On Yomi">
+                        <div id="numOfOnYomi" class="input-group-text"></div>
+                        <input id="inputOnYomi" type="text" class="form-control" id="autoSizingInputGroup" placeholder="On Yomi">
                     </div>
-                </div> -->
+                </div>
             </div>
 
             <!-- Input With Label -->
-            <div class="row">
+            <!-- <div class="row">
                 <div id="divInputKunYomi" class="col">
                     <label id="labelInputKunYomi" for="formGroupExampleInput" class="form-label fs-3">
                         <strong>Kun Yomi:</strong>
@@ -134,7 +132,7 @@
                     </label>
                     <input id="inputOnYomi" type="text" class="form-control fs-3" placeholder="On Yomi" aria-label="On Yomi">
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="row" style="margin-top: 2%"></div>
 
