@@ -274,6 +274,35 @@ export default class Kanji {
         }
     }
 
+    EnableJustNecessaryInputYomi() {
+        let thereIsKunYomi = false;
+        let thereIsOnYomi = false;
+        if (this.kanjiToLearn.length > 0) {
+            for (let index = 0; index < this.kanjiToLearn.length; index++) {
+                if (!thereIsKunYomi) {
+                    thereIsKunYomi = (this.kanjiToLearn[index].kun_yomi !== undefined && this.kanjiToLearn[index].kun_yomi.length > 0);
+                    //console.log("Kun " + thereIsKunYomi);
+                }
+                if (!thereIsOnYomi) {
+                    thereIsOnYomi = (this.kanjiToLearn[index].on_yomi !== undefined && this.kanjiToLearn[index].on_yomi.length > 0);
+                    //console.log("On " + thereIsOnYomi);
+                }
+                if (thereIsKunYomi && thereIsOnYomi) {
+                    //console.log("GO OUT!!!");
+                    break;
+                }
+            }
+            if(this.checkboxKunYomi.checked != thereIsKunYomi){
+                //console.log("CheckOn " + this.checkboxOnYomi.checked);
+                this.checkboxKunYomi.click();
+            }
+            if (this.checkboxOnYomi.checked != thereIsOnYomi) {
+                //console.log("CheckOn " + this.checkboxOnYomi.checked);
+                this.checkboxOnYomi.click();
+            }
+        }
+    }
+
     // #endregion Methods Input Kun/On Yomi
     UpdateKanjiAsk() {
         if (this.kanjiToLearn[this.countKanjiAnswerDid]) { // Importante: verifica che l'elemento esista!
@@ -507,9 +536,10 @@ export default class Kanji {
         {
             this.isTestStarted = true;
             this.EnableAddRemoveButton(false);
-            this.EnableYomiCheckbox(false);
             this.AddKanjiInLearnKanjiList();
             this.RandomizzaKanjiToLearn();
+            this.EnableJustNecessaryInputYomi();
+            this.EnableYomiCheckbox(false);
             this.countKanjiAnswerDid = 0;
             this.countKanjiAnswerCorrectly = new Set();
             this.countKanjiAnswerWrong = new Set();
