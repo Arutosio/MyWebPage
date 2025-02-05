@@ -35,7 +35,7 @@ var current;
 var popoverTriggerList;
 var popoverList;
 var embed;
-var kanjiFileNames = ["Kanji_Number_Hiragana_pronunce", "Kanji_Numeri", "Kanji_NumeriOver", "Kanji_Prova", "test1Kanji"]
+var kanjiFileNames = ["Kanji_Number_Hiragana_pronunce", "Kanji_Numeri", "Kanji_NumeriOver", "Kanji_Prova", "testKanjiSoloKunYomi", "testKanjiSoloOnYomi"]
 
 // Var Notifications
 var toastLiveNotificationContainer;

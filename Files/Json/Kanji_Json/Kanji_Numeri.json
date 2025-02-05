@@ -1,110 +1,110 @@
 {
   "kanji": [
     {
-      "carattere": "一",
+      "char": "一",
       "on_yomi": [
-        { "hiragana": "イチ", "romaji": "ichi" },
-        { "hiragana": "イツ", "romaji": "itsu" }
+        { "katakana": "イチ", "romaji": "ichi", "hiragana": "いち" },
+        { "katakana": "イツ", "romaji": "itsu", "hiragana": "いつ" }
       ],
       "kun_yomi": [
-        { "hiragana": "ひと", "romaji": "hito", "josuushi": "つ", "josuushi_romanji": "tsu" }
+        { "hiragana": "ひと", "romaji": "hito", "josuushi_hiragana": "つ", "josuushi_romanji": "tsu" }
       ],
-      "significato": "uno"
+      "meanings": { "Eng": ["one"], "Ita": ["uno"] }
     },
     {
-      "carattere": "二",
+      "char": "二",
       "on_yomi": [
-        { "hiragana": "ニ", "romaji": "ni" }
+        { "katakana": "ニ", "romaji": "ni", "hiragana": "に" }
       ],
       "kun_yomi": [
-        { "hiragana": "ふた", "romaji": "futa", "josuushi": "つ", "josuushi_romanji": "tsu" }
+        { "hiragana": "ふた", "romaji": "futa", "josuushi_hiragana": "つ", "josuushi_romanji": "tsu" }
       ],
-      "significato": "due"
+      "meanings": { "Eng": ["two"], "Ita": ["due"] }
     },
     {
-      "carattere": "三",
+      "char": "三",
       "on_yomi": [
-        { "hiragana": "サン", "romaji": "san" }
+        { "katakana": "サン", "romaji": "san", "hiragana": "さん" }
       ],
       "kun_yomi": [
-        { "hiragana": "みっ", "romaji": "mi", "josuushi": "つ", "josuushi_romanji": "tsu" }
+        { "hiragana": "みっ", "romaji": "mi", "josuushi_hiragana": "つ", "josuushi_romanji": "tsu" }
       ],
-      "significato": "tre"
+      "meanings": { "Eng": ["three"], "Ita": ["tre"] }
     },
     {
-      "carattere": "四",
+      "char": "四",
       "on_yomi": [
-        { "hiragana": "シ", "romaji": "shi" }
+        { "katakana": "シ", "romaji": "shi", "hiragana": "し" }
       ],
       "kun_yomi": [
         { "hiragana": "よん", "romaji": "yon" },
-        { "hiragana": "よっ", "romaji": "yo", "josuushi": "つ", "josuushi_romanji": "tsu" }
+        { "hiragana": "よっ", "romaji": "yo", "josuushi_hiragana": "つ", "josuushi_romanji": "tsu" }
       ],
-      "significato": "quattro"
+      "meanings": { "Eng": ["four"], "Ita": ["quattro"] }
     },
     {
-      "carattere": "五",
+      "char": "五",
       "on_yomi": [
-        { "hiragana": "ゴ", "romaji": "go" }
+        { "katakana": "ゴ", "romaji": "go", "hiragana": "ご" }
       ],
       "kun_yomi": [
-        { "hiragana": "いつ", "romaji": "itsu", "josuushi": "つ", "josuushi_romanji": "tsu" }
+        { "hiragana": "いつ", "romaji": "itsu", "josuushi_hiragana": "つ", "josuushi_romanji": "tsu" }
       ],
-      "significato": "cinque"
+      "meanings": { "Eng": ["five"], "Ita": ["cinque"] }
     },
     {
-      "carattere": "六",
+      "char": "六",
       "on_yomi": [
-        { "hiragana": "ロク", "romaji": "roku" }
+        { "katakana": "ロク", "romaji": "roku", "hiragana": "ろく" }
       ],
       "kun_yomi": [
-        { "hiragana": "むっ", "romaji": "mu", "josuushi": "つ", "josuushi_romanji": "tsu" }
+        { "hiragana": "むっ", "romaji": "mu", "josuushi_hiragana": "つ", "josuushi_romanji": "tsu" }
       ],
-      "significato": "sei"
+      "meanings": { "Eng": ["six"], "Ita": ["sei"] }
     },
     {
-      "carattere": "七",
+      "char": "七",
       "on_yomi": [
-        { "hiragana": "シチ", "romaji": "shichi" }
+        { "katakana": "シチ", "romaji": "shichi", "hiragana": "しち" }
       ],
       "kun_yomi": [
         { "hiragana": "なな", "romaji": "nana" },
-        { "hiragana": "なな", "romaji": "nana", "josuushi": "つ", "josuushi_romanji": "tsu" }
+        { "hiragana": "なな", "romaji": "nana", "josuushi_hiragana": "つ", "josuushi_romanji": "tsu" }
       ],
-      "significato": "sette"
+      "meanings": { "Eng": ["seven"], "Ita": ["sette"] }
     },
     {
-      "carattere": "八",
+      "char": "八",
       "on_yomi": [
-        { "hiragana": "ハチ", "romaji": "hachi" }
+        { "katakana": "ハチ", "romaji": "hachi", "hiragana": "はち" }
       ],
       "kun_yomi": [
-        { "hiragana": "やっ", "romaji": "ya", "josuushi": "つ", "josuushi_romanji": "tsu" },
+        { "hiragana": "やっ", "romaji": "ya", "josuushi_hiragana": "つ", "josuushi_romanji": "tsu" },
         { "hiragana": "よう", "romaji": "you" }
       ],
-      "significato": "otto"
+      "meanings": { "Eng": ["eight"], "Ita": ["otto"] }
     },
     {
-      "carattere": "九",
+      "char": "九",
       "on_yomi": [
-        { "hiragana": "キュウ", "romaji": "kyuu" },
-        { "hiragana": "ク", "romaji": "ku" }
+        { "katakana": "キュウ", "romaji": "kyuu", "hiragana": "きゅう" },
+        { "katakana": "ク", "romaji": "ku", "hiragana": "く" }
       ],
       "kun_yomi": [
-        { "hiragana": "ここの", "romaji": "kokono", "josuushi": "つ", "josuushi_romanji": "tsu" }
+        { "hiragana": "ここの", "romaji": "kokono", "josuushi_hiragana": "つ", "josuushi_romanji": "tsu" }
       ],
-      "significato": "nove"
+      "meanings": { "Eng": ["nine"], "Ita": ["nove"] }
     },
     {
-      "carattere": "十",
+      "char": "十",
       "on_yomi": [
-        { "hiragana": "ジュウ", "romaji": "juu" },
-        { "hiragana": "ジッ", "romaji": "jitsu" }
+        { "katakana": "ジュウ", "romaji": "juu", "hiragana": "じゅう" },
+        { "katakana": "ジッ", "romaji": "jitsu", "hiragana": "じっ" }
       ],
       "kun_yomi": [
         { "hiragana": "とお", "romaji": "too" }
       ],
-      "significato": "dieci"
+      "meanings": { "Eng": ["ten"], "Ita": ["dieci"] }
     }
   ]
 }

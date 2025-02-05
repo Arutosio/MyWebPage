@@ -1,7 +1,7 @@
 {
   "kanji": [
     {
-      "carattere": "百",
+      "char": "百",
       "on_yomi": [
         { "hiragana": "ヒャク", "romaji": "hyaku" },
         { "hiragana": "ビャク", "romaji": "byaku" },
@@ -13,7 +13,7 @@
       "significato": "cento"
     },
     {
-      "carattere": "千",
+      "char": "千",
       "on_yomi": [
         { "hiragana": "セン", "romaji": "sen" },
         { "hiragana": "ゼン", "romaji": "zen" }
@@ -24,7 +24,7 @@
       "significato": "mille"
     },
     {
-      "carattere": "万",
+      "char": "万",
       "on_yomi": [
         { "hiragana": "マン", "romaji": "man" },
         { "hiragana": "バン", "romaji": "ban" }
@@ -35,7 +35,7 @@
       "significato": "diecimila"
     },
     {
-      "carattere": "億",
+      "char": "億",
       "on_yomi": [
         { "hiragana": "オク", "romaji": "oku" }
       ],
@@ -45,7 +45,7 @@
       "significato": "cento milioni"
     },
     {
-      "carattere": "兆",
+      "char": "兆",
       "on_yomi": [
         { "hiragana": "チョウ", "romaji": "chou" }
       ],

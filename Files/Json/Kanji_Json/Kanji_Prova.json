@@ -1,113 +1,113 @@
 {
   "kanji": [
     {
-      "carattere": "日",
+      "char": "日",
       "on_yomi": [
-        { "hiragana": "ニチ", "romaji": "nichi" },
-        { "hiragana": "ジツ", "romaji": "jitsu" }
+        { "katakana": "ニチ", "romaji": "nichi" },
+        { "katakana": "ジツ", "romaji": "jitsu" }
       ],
       "kun_yomi": [
         { "hiragana": "ひ", "romaji": "hi" },
         { "hiragana": "か", "romaji": "ka" }
       ],
-      "significato": "giorno, sole"
+      "meanings": { "Eng": ["day", "sun"], "Ita": ["giorno", "sole"] }
     },
     {
-      "carattere": "月",
+      "char": "月",
       "on_yomi": [
-        { "hiragana": "ゲツ", "romaji": "getsu" },
-        { "hiragana": "ガツ", "romaji": "gatsu" }
+        { "katakana": "ゲツ", "romaji": "getsu" },
+        { "katakana": "ガツ", "romaji": "gatsu" }
       ],
       "kun_yomi": [
         { "hiragana": "つき", "romaji": "tsuki" }
       ],
-      "significato": "mese, luna"
+      "meanings": { "Eng": ["month", "moon"], "Ita": ["mese", "luna"] }
     },
     {
-      "carattere": "山",
+      "char": "山",
       "on_yomi": [
-        { "hiragana": "サン", "romaji": "san" }
+        { "katakana": "サン", "romaji": "san" }
       ],
       "kun_yomi": [
         { "hiragana": "やま", "romaji": "yama" }
       ],
-      "significato": "montagna"
+      "meanings": { "Eng": ["mountain"], "Ita": ["montagna"] }
     },
     {
-      "carattere": "水",
+      "char": "水",
       "on_yomi": [
-        { "hiragana": "スイ", "romaji": "sui" }
+        { "katakana": "スイ", "romaji": "sui" }
       ],
       "kun_yomi": [
         { "hiragana": "みず", "romaji": "mizu" }
       ],
-      "significato": "acqua"
+      "meanings": { "Eng": ["water"], "Ita": ["acqua"] }
     },
     {
-      "carattere": "火",
+      "char": "火",
       "on_yomi": [
-        { "hiragana": "カ", "romaji": "ka" }
+        { "katakana": "カ", "romaji": "ka" }
       ],
       "kun_yomi": [
         { "hiragana": "ひ", "romaji": "hi" }
       ],
-      "significato": "fuoco"
+      "meanings": { "Eng": ["fire"], "Ita": ["fuoco"] }
     },
     {
-      "carattere": "木",
+      "char": "木",
       "on_yomi": [
-        { "hiragana": "モク", "romaji": "moku" },
-        { "hiragana": "ボク", "romaji": "boku" }
+        { "katakana": "モク", "romaji": "moku" },
+        { "katakana": "ボク", "romaji": "boku" }
       ],
       "kun_yomi": [
         { "hiragana": "き", "romaji": "ki" },
         { "hiragana": "こ", "romaji": "ko" }
       ],
-      "significato": "albero, legno"
+      "meanings": { "Eng": ["tree", "wood"], "Ita": ["albero", "legno"] }
     },
     {
-      "carattere": "金",
+      "char": "金",
       "on_yomi": [
-        { "hiragana": "キン", "romaji": "kin" },
-        { "hiragana": "コン", "romaji": "kon" }
+        { "katakana": "キン", "romaji": "kin" },
+        { "katakana": "コン", "romaji": "kon" }
       ],
       "kun_yomi": [
         { "hiragana": "かね", "romaji": "kane" }
       ],
-      "significato": "oro, denaro"
+      "meanings": { "Eng": ["gold", "money"], "Ita": ["oro", "denaro"] }
     },
     {
-      "carattere": "土",
+      "char": "土",
       "on_yomi": [
-        { "hiragana": "ド", "romaji": "do" },
-        { "hiragana": "ト", "romaji": "to" }
+        { "katakana": "ド", "romaji": "do" },
+        { "katakana": "ト", "romaji": "to" }
       ],
       "kun_yomi": [
         { "hiragana": "つち", "romaji": "tsuchi" }
       ],
-      "significato": "terra"
+      "meanings": { "Eng": ["earth", "soil"], "Ita": ["terra"] }
     },
     {
-      "carattere": "人",
+      "char": "人",
       "on_yomi": [
-        { "hiragana": "ジン", "romaji": "jin" },
-        { "hiragana": "ニン", "romaji": "nin" }
+        { "katakana": "ジン", "romaji": "jin" },
+        { "katakana": "ニン", "romaji": "nin" }
       ],
       "kun_yomi": [
         { "hiragana": "ひと", "romaji": "hito" }
       ],
-      "significato": "persona"
+      "meanings": { "Eng": ["person", "human"], "Ita": ["persona", "essere umano"] }
     },
     {
-      "carattere": "大",
+      "char": "大",
       "on_yomi": [
-        { "hiragana": "ダイ", "romaji": "dai" },
-        { "hiragana": "タイ", "romaji": "tai" }
+        { "katakana": "ダイ", "romaji": "dai" },
+        { "katakana": "タイ", "romaji": "tai" }
       ],
       "kun_yomi": [
         { "hiragana": "おお(きい)", "romaji": "oo(kii)" }
       ],
-      "significato": "grande"
+      "meanings": { "Eng": ["big", "large"], "Ita": ["grande"] }
     }
   ]
 }

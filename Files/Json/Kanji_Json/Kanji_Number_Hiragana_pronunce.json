@@ -1,61 +1,61 @@
 {
     "kanji": [
       {
-        "carattere": "一",
+        "char": "一",
         "kun_yomi": [
           { "hiragana": "いち" }
         ]
       },
       {
-        "carattere": "二",
+        "char": "二",
         "kun_yomi": [
           { "hiragana": "に" }
         ]
       },
       {
-        "carattere": "三",
+        "char": "三",
         "kun_yomi": [
           { "hiragana": "さん" }
         ]
       },
       {
-        "carattere": "四",
+        "char": "四",
         "kun_yomi": [
           { "hiragana": "よん" }
         ]
       },
       {
-        "carattere": "五",
+        "char": "五",
         "kun_yomi": [
           { "hiragana": "ご" }
         ]
       },
       {
-        "carattere": "六",
+        "char": "六",
         "kun_yomi": [
           { "hiragana": "ろく" }
         ]
       },
       {
-        "carattere": "七",
+        "char": "七",
         "kun_yomi": [
           { "hiragana": "なな" }
         ]
       },
       {
-        "carattere": "八",
+        "char": "八",
         "kun_yomi": [
           { "hiragana": "はち" }
         ]
       },
       {
-        "carattere": "九",
+        "char": "九",
         "kun_yomi": [
           { "hiragana": "きゅう" }
         ]
       },
       {
-        "carattere": "十",
+        "char": "十",
         "kun_yomi": [
           { "hiragana": "じゅう" }
         ]

@@ -1,0 +1,11 @@
+{
+    "kanji": [
+        {
+            "char": "六",
+            "kun_yomi": [
+                { "hiragana": "むっ", "romaji": "mu", "josuushi_hiragana": "つ", "josuushi_romanji": "tsu" }
+            ],
+            "meaning": { "Eng": ["six"], "Ita": ["sei"] }
+        }
+    ]
+}

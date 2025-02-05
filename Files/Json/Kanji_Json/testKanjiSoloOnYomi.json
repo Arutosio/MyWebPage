@@ -1,0 +1,11 @@
+{
+    "kanji": [
+        {
+            "char": "六",
+            "on_yomi": [
+                { "katakana": "ロク", "romaji": "roku", "hiragana": "ろく" }
+            ],
+            "meaning": { "Eng": ["six"], "Ita": ["sei"] }
+        }
+    ]
+}
