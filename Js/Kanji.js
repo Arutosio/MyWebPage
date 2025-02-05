@@ -505,6 +505,7 @@ export default class Kanji {
     async StartStopLearnKanji() {
         if(this.checkboxStartStopLearnKanji.checked)
         {
+            this.ClearInputYomi();
             this.InputKOYomiEnable(false);
             this.EnableAddRemoveButton(true);
             this.EnableYomiCheckbox(true);
