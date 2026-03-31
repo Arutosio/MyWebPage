@@ -1,37 +1,18 @@
 <div class="col-md-6 col-lg-4">
-    <div class="repo-card">
-        <div class="repo-card-header">
+    <a href=":|§repoUrl§|:" target="_blank" class="repo-card">
+        <div class="repo-card-top">
             <h5>:|§repoName§|:</h5>
+            <span class="repo-updated">:|§repoUpdated§|:</span>
         </div>
         <p class="repo-card-desc">:|§repoDescription§|:</p>
-
         <div class="repo-lang-bar" id="lang-bar-:|§repoName§|:"></div>
-        <div class="repo-lang-labels" id="lang-labels-:|§repoName§|:"></div>
-
-        <div class="repo-stats-grid">
-            <div class="repo-stat">
-                <span class="repo-stat-value">:|§repoStars§|:</span>
-                <span class="repo-stat-label">stars</span>
-            </div>
-            <div class="repo-stat">
-                <span class="repo-stat-value">:|§repoForks§|:</span>
-                <span class="repo-stat-label">forks</span>
-            </div>
-            <div class="repo-stat">
-                <span class="repo-stat-value">:|§repoCommits§|:</span>
-                <span class="repo-stat-label">commits</span>
-            </div>
-            <div class="repo-stat">
-                <span class="repo-stat-value">:|§repoIssues§|:</span>
-                <span class="repo-stat-label">issues</span>
+        <div class="repo-card-bottom">
+            <div class="repo-lang-labels" id="lang-labels-:|§repoName§|:"></div>
+            <div class="repo-stats">
+                <span>&#9733; :|§repoStars§|:</span>
+                <span>&#9906; :|§repoForks§|:</span>
+                <span>&#9678; :|§repoCommits§|:</span>
             </div>
         </div>
-
-        <div class="repo-topics">:|§repoTopics§|:</div>
-
-        <div class="repo-footer">
-            <span class="repo-updated">:|§repoUpdated§|:</span>
-            <a href=":|§repoUrl§|:" target="_blank" class="repo-view-link">View &rarr;</a>
-        </div>
-    </div>
+    </a>
 </div>

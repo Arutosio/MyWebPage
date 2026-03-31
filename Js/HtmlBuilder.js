@@ -126,17 +126,8 @@ export default class HtmlBuilder {
         html = HtmlBuilder.RepleaceAllKey(html, "repoStars", repoData.stargazers_count || 0);
         html = HtmlBuilder.RepleaceAllKey(html, "repoForks", repoData.forks_count || 0);
         html = HtmlBuilder.RepleaceAllKey(html, "repoCommits", repoData._commitCount != null ? repoData._commitCount : "—");
-        html = HtmlBuilder.RepleaceAllKey(html, "repoIssues", repoData.open_issues_count || 0);
         html = HtmlBuilder.RepleaceAllKey(html, "repoUrl", repoData.html_url || "#");
         html = HtmlBuilder.RepleaceAllKey(html, "repoUpdated", repoData._updatedRelative || "");
-
-        // Topics
-        let topicsHtml = "";
-        if (repoData.topics && repoData.topics.length > 0) {
-            topicsHtml = repoData.topics.map(t => `<span class="repo-topic">#${t}</span>`).join("");
-        }
-        html = HtmlBuilder.RepleaceAllKey(html, "repoTopics", topicsHtml);
-
         return html;
     }
     // #endregion Section-Features
