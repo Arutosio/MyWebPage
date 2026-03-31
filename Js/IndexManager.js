@@ -19,12 +19,6 @@ export default class IndexManager
         }
         return retBool
     }
-    static InjecMarkdown(insideIn, markdownStr) 
-    {
-        let retBool = false
-        return retBool
-    }
-
     static ReplaceHtmlContent(elementId, content) 
     {
         let retBool = true;
@@ -40,14 +34,5 @@ export default class IndexManager
         return retBool
     }
 
-    static GetValuesFromNewPostDetail() 
-    {
-        document.getElementById(elementId).innerHTML =content;
-    }
-    
-    static GetValuesFromNewComment() 
-    {
-
-    }
 }
 

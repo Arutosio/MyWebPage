@@ -1,22 +1,14 @@
 <tr>
-    <th scope="row">
-        :|§indexNum§|:
-    </th>
+    <th scope="row">:|§indexNum§|:</th>
+    <td><strong>:|§nameSymbolChain§|:</strong> (:|§nameChain§|:)</td>
     <td>
-        <strong>:|§nameSymbolChain§|:</strong> (:|§nameChain§|:)
-    </td>
-    <td>
-        <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover"
+        <button type="button" class="btn btn-sm btn-address" data-bs-container="body" data-bs-toggle="popover"
             data-bs-placement="bottom" data-bs-content=":|§addressDepositText§|:">
-            <strong>Address Text</strong>
+            Show Address
         </button>
     </td>
     <td>
-        <!-- <a href=":|§qrcDepositImgQRC§|:" class="img-fluid bg-light" data-fancybox=":|§addressDepositText§|:"
-            data-caption=":|§addressDepositText§|:"> -->
-        <a class="badge bg-light text-dark" href=":|§qrcDepositImgQRC§|:" data-fancybox=":|§addressDepositText§|:"
-            data-caption=":|§addressDepositText§|:"><strong>Show QRC</strong>
-            <!-- <img src="/Files/img/icons/qr-code-scan.svg" class="rounded mx-auto d-block" max-height="10%"> -->
-        </a>
+        <a class="btn btn-sm btn-qrc" href=":|§qrcDepositImgQRC§|:" data-fancybox=":|§addressDepositText§|:"
+            data-caption=":|§addressDepositText§|:">Show QR</a>
     </td>
 </tr>

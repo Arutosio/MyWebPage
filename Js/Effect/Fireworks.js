@@ -154,11 +154,14 @@ class Firework {
     }
 }
 
+const hslToRgbCache = new Map();
+
 class Particle {
     constructor(x, y, color, manager) {
         this.x = x;
         this.y = y;
         this.color = color;
+        this.rgbColor = Particle.hslToRgb(color);
         this.speed = manager.random(1, 3);
         this.direction = manager.random(0, Math.PI * 2);
         this.radius = manager.random(2, 4);
@@ -175,16 +178,19 @@ class Particle {
     draw(ctx) {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${this.hslToRgb(this.color)}, ${this.alpha})`;
+        ctx.fillStyle = `rgba(${this.rgbColor}, ${this.alpha})`;
         ctx.fill();
     }
 
-    hslToRgb(hsl) {
+    static hslToRgb(hsl) {
+        if (hslToRgbCache.has(hsl)) return hslToRgbCache.get(hsl);
         const a = document.createElement("div");
         a.style.color = hsl;
         document.body.appendChild(a);
         const rgb = window.getComputedStyle(a).color;
         document.body.removeChild(a);
-        return rgb.match(/\d+/g).slice(0, 3).join(",");
+        const result = rgb.match(/\d+/g).slice(0, 3).join(",");
+        hslToRgbCache.set(hsl, result);
+        return result;
     }
 }

@@ -6,29 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Arutosio Website</title>
-    <link rel="shortcut icon" href="../Files/img/icons/ArutosioIcon.ico">
-    <!-- OLD -->
+    <link rel="shortcut icon" href="./Files/img/icons/ArutosioIcon.ico">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
-    <!-- latest -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/> -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <!-- Prevent theme flash -->
+    <script>
+        (function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);document.documentElement.setAttribute('data-bs-theme',t)})();
+    </script>
 </head>
 
-<body data-bs-theme="dark">
+<body data-bs-theme="dark" data-theme="dark">
     <video id="videoBG" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop"
         class="collapse multi-collapse box show">
         <source id="sorceVideoBG" src="../Files/Videos_webm/Toaru-Kagaku-no-Accelerator.webm" type="video/webm">
         Your browser does not support HTML5 video.
     </video>
-    <!-- Visual Effect -->
-    <div class="mainDivCanvasdiv">
-        <canvas class="mainCanvas"></canvas>
-    </div>
     <header>
-        <!-- Navbar Menu di navigazione -->
-        <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark bg-secondary-subtle"></nav>
+        <!-- Navbar -->
+        <nav id="mainNavbar" class="navbar navbar-expand-lg"></nav>
     </header>
     <div class="d-flex flex-column min-vh-100">
         <main class="flex-grow-1">
@@ -46,30 +43,20 @@
             </section>
 
             <!-- Section 4 -->
-            <section class="jumbotron" id="sDev">
-            </section>
-
-            <!-- Section 5 -->
             <section class="jumbotron" id="sDonate">
             </section>
 
-            <!-- Section 6 -->
-            <section class="jumbotron" id="sKanji">
-            </section>
-
-            <!-- Under_Section -->
-
-            <!-- NotificationCenter. -->
-            <div id="toastLiveNotificationContainer" class="toast-container position-fixed bottom-0 end-0 p-3"> 
+            <!-- NotificationCenter -->
+            <div id="toastLiveNotificationContainer" class="toast-container position-fixed bottom-0 end-0 p-3">
                 <div id="toastLiveNotification" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="toast-header">      <img src="..." class="rounded me-2" alt="...">
-                        <strong id="toastLiveNotificationTitle" class="me-auto">NotificationCenter</strong>
+                    <div class="toast-header">
+                        <strong id="toastLiveNotificationTitle" class="me-auto">Notification</strong>
                         <small>Just now</small>
                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                     </div>
-                <div id="toastLiveNotificationMSG" class="toast-body">Hello, world! This is a toast message.</div>
+                    <div id="toastLiveNotificationMSG" class="toast-body">Hello, world! This is a toast message.</div>
+                </div>
             </div>
-            <!-- End of NotificationCenter. -->
         </main>
     </div>
     <!-- Footer -->
@@ -79,17 +66,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script type="module">
         import { Fancybox } from "https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.esm.js";
-        
-        // import { Fancybox } from "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.esm.js";
-        // Inizializzazione di Fancybox su tutti gli elementi con la classe 'fancybox'
-        // $(document).ready(function() {
-        // $('[data-fancybox]').fancybox();
-        // });
     </script>
-    <!-- latest -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script> -->
-    <!-- Load the Twitch embed JavaScript file -->
-    <!-- <script src="https://embed.twitch.tv/embed/v1.js"></script> -->
     <script src="./Js/Main.js" type="module"></script>
 </body>
 

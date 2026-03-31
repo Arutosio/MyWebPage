@@ -117,92 +117,31 @@ export default class HtmlBuilder {
     
     // #endregion Section-Donate
 
-    // #region Section-Kanji
+    // #region Section-Features (GitHub Repos)
+    async CreateRepoCardView(repoData) {
+        let path = `${this.pathTemplate}/Section_sFeatures_Ele/RepoCard.html`;
+        let html = await UtilityClass.GetTextFromFile(path);
+        html = HtmlBuilder.RepleaceAllKey(html, "repoName", repoData.name || "Unnamed");
+        html = HtmlBuilder.RepleaceAllKey(html, "repoDescription", repoData.description || "No description available.");
+        html = HtmlBuilder.RepleaceAllKey(html, "repoStars", repoData.stargazers_count || 0);
+        html = HtmlBuilder.RepleaceAllKey(html, "repoForks", repoData.forks_count || 0);
+        html = HtmlBuilder.RepleaceAllKey(html, "repoCommits", repoData._commitCount != null ? repoData._commitCount : "—");
+        html = HtmlBuilder.RepleaceAllKey(html, "repoIssues", repoData.open_issues_count || 0);
+        html = HtmlBuilder.RepleaceAllKey(html, "repoUrl", repoData.html_url || "#");
+        html = HtmlBuilder.RepleaceAllKey(html, "repoUpdated", repoData._updatedRelative || "");
 
-    async CreateSectionKanjiView(jsonKanjiList) {
-        let pathFileTemplate = `${this.pathTemplate}/Section_sKanji.html`;
-        let htmlsKanji = await UtilityClass.GetTextFromFile(pathFileTemplate);
-
-        // START-APROCCIO 1
-        //html Option_Select
-        let htmlOptionSelects = await this.CreateHtmlKanjiListOptionSelects(jsonKanjiList);
-        htmlsKanji = HtmlBuilder.RepleaceAllKey(htmlsKanji, "Option_Select", htmlOptionSelects);
-        //html htmlListOfKanjiListAdded
-        // let htmlListOfKanjiListAdded = await this.CreateHtmlAddedKanjiLists(jsonKanjiList);
-        // htmlsKanji = HtmlBuilder.RepleaceAllKey(htmlsKanji, "ListKanjiList", htmlListOfKanjiListAdded);
-        // END-APROCCIO 1
-
-        // START-APROCCIO 2
-        // let htmlKanjiListInfoTemplate = await this.GetHtmlKanjiListInfo();
-        // let htmlListOfKanjiListAdded = "";
-        // for (let i = 0; i < jsonKanjiList.length; i++) {
-        //     const aKanjiListInfo = jsonKanjiList[i]; // Ottieni l'elemento corrente
-
-        //     htmlListOfKanjiListAdded += await this.CreateHtmlListOfKanjiListAdded(htmlKanjiListInfoTemplate, aKanjiListInfo);
-        // }
-        // htmlsKanji = HtmlBuilder.RepleaceAllKey(htmlsKanji, "ListKanjiList", htmlListOfKanjiListAdded);
-        // END-APROCCIO 2
-        return htmlsKanji;
-    }
-    
-    async CreateHtmlKanjiListOptionSelects(jsonKanjiList) {
-        let htmlOptionSelects = "";
-        for (let i = 0; i < jsonKanjiList.length; i++) {
-            const aKanjiListInfo = jsonKanjiList[i]; // Ottieni l'elemento corrente
-            htmlOptionSelects += await this.CreateHtmlKanjiOptionSelect(aKanjiListInfo.fileName, i);
+        // Topics
+        let topicsHtml = "";
+        if (repoData.topics && repoData.topics.length > 0) {
+            topicsHtml = repoData.topics.map(t => `<span class="repo-topic">#${t}</span>`).join("");
         }
-        return htmlOptionSelects;
+        html = HtmlBuilder.RepleaceAllKey(html, "repoTopics", topicsHtml);
+
+        return html;
     }
+    // #endregion Section-Features
 
-    
-    async CreateHtmlKanjiOptionSelect(kanjiFileName, index) {
-        let pathOptionSelectTemplateHtml = `${this.pathTemplate}/Section_sKanji_Ele/Kanji_Option_Select.html`;
-        let htmlOptionSelect = await UtilityClass.GetTextFromFile(pathOptionSelectTemplateHtml);
-        htmlOptionSelect = HtmlBuilder.RepleaceAllKey(htmlOptionSelect, "indexNum", index);
-        htmlOptionSelect = HtmlBuilder.RepleaceAllKey(htmlOptionSelect, "nameKanjiList", kanjiFileName);
-        return htmlOptionSelect;
-    }
-
-    async CreateHtmlAddedKanjiLists(jsonKanjiList) {
-        let htmlListOfKanjiListAdded = "";
-        for (let i = 0; i < jsonKanjiList.length; i++) {
-            const aKanjiListInfo = jsonKanjiList[i]; // Ottieni l'elemento corrente
-            htmlListOfKanjiListAdded += await this.CreateHtmlKanjiListInfoAdded(aKanjiListInfo);
-        }
-        return htmlListOfKanjiListAdded;
-    }
-
-    async CreateHtmlKanjiListInfoAdded(aKanjiListInfo) {
-        let pathlKanjiListInfoTemplateHtml = `${this.pathTemplate}/Section_sKanji_Ele/Kanji_List-group-item.html`;
-        let htmlKanjiListTemplate = await UtilityClass.GetTextFromFile(pathlKanjiListInfoTemplateHtml);
-        htmlKanjiListTemplate = HtmlBuilder.RepleaceAllKey(htmlKanjiListTemplate, "nameKanjiList", aKanjiListInfo.fileName);
-        htmlKanjiListTemplate = HtmlBuilder.RepleaceAllKey(htmlKanjiListTemplate, "countKanjiList", aKanjiListInfo.data.kanji.length);
-        return htmlKanjiListTemplate;
-    }
-
-    // #endregion Section-Kanji
-
-    async CreateHtmlKanjiListInfoByJsonKanjiList(aKanjiListInfo) {
-        let htmlKanjiListInfo = await this.GetHtmlKanjiListInfo();
-        let htmlKanjiListTemplate = HtmlBuilder.CreateHtmlListOfKanjiListAdded(htmlKanjiListInfo, aKanjiListInfo)
-        return htmlKanjiListTemplate;
-    }
-    // #region Section-Kanji-APROCCIO-2
-
-    async GetHtmlKanjiListInfo() {
-        let pathlKanjiListInfoTemplateHtml = `${this.pathTemplate}/Section_sKanji_Ele/Kanji_List-group-item.html`;
-        let htmlKanjiListInfo = await UtilityClass.GetTextFromFile(pathlKanjiListInfoTemplateHtml);
-        return htmlKanjiListInfo;
-    }
-
-    static CreateHtmlListOfKanjiListAdded(htmlKanjiListTemplate, aKanjiListInfo) {
-        htmlKanjiListTemplate = HtmlBuilder.RepleaceAllKey(htmlKanjiListTemplate, "nameKanjiList", aKanjiListInfo.fileName);
-        htmlKanjiListTemplate = HtmlBuilder.RepleaceAllKey(htmlKanjiListTemplate, "countKanjiList", aKanjiListInfo.data.kanji.length);
-        return htmlKanjiListTemplate;
-    }
-    // #endregion Section-Kanji-APROCCIO-2
-
-    // #region Utility-Methods 
+    // #region Utility-Methods
     static RepleaceKey(mainStr, keyword, replaceStr) {
         let htmlEdit;
         let keywordAdapted = `:|§${keyword}§|:`;
