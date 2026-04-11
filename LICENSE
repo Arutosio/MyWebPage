@@ -1,0 +1,100 @@
+arutOS — PROPRIETARY LICENSE
+Copyright (c) 2020–2026 Arutosio. All rights reserved.
+
+This software and its accompanying source code, documentation, design,
+copy, configuration, build artifacts and assets (collectively, the "Work")
+are the exclusive property of the copyright holder listed above.
+
+The Work is made publicly readable on GitHub solely for transparency and
+as a showcase of personal work. Its public visibility does NOT imply any
+license or permission for reuse.
+
+1. NO LICENSE GRANTED
+
+   No license — express, implied, statutory, or otherwise — is granted to
+   any person or legal entity to use, copy, modify, merge, publish,
+   distribute, sublicense, adapt, translate, train machine-learning models
+   on, or create derivative works of the Work, in whole or in part,
+   without the PRIOR WRITTEN PERMISSION of the copyright holder.
+
+2. PERMITTED ACTS
+
+   Subject to section 1, the following are permitted without the need for
+   written permission:
+
+   (a) Reading the Work privately for personal study or curiosity.
+   (b) Quoting short, clearly-attributed excerpts for educational or
+       journalistic purposes, with a visible credit and link back to the
+       original repository.
+   (c) Opening issues and submitting pull requests against the original
+       repository. By submitting a pull request, you agree that any code
+       or content you contribute is subject to the same terms and that
+       the copyright holder may incorporate it into the Work without
+       further obligation.
+
+3. PROHIBITED ACTS
+
+   Without limiting the generality of section 1, the following acts are
+   expressly prohibited without prior written permission:
+
+   (a) Forking, cloning, or mirroring this repository for the purpose of
+       publishing, hosting, or deploying a site that reproduces the whole
+       or any substantial part of the Work.
+   (b) Copying the visual design, layout, component structure, or any
+       recognisable part of the Work into another project (commercial or
+       personal).
+   (c) Reusing any portion of the source code in other public or private
+       projects.
+   (d) Using the Work, in whole or in part, to train machine-learning
+       models or as input to automated systems that generate derivative
+       works.
+   (e) Deploying the Work or a derivative of it to any domain other than
+       those owned by the copyright holder.
+   (f) Removing, altering, or obscuring this license, the copyright
+       notices, or attribution of third-party assets.
+
+4. THIRD-PARTY ASSETS
+
+   Some media displayed inside the Work — notably short video clips found
+   under `Files/Videos_webm/` — are excerpts from animated works whose
+   copyright belongs to their respective owners. They are included in
+   the Work as a personal, non-commercial homage. This license does not
+   purport to grant any rights in those third-party assets. If you
+   represent a rights holder and want material removed, please open an
+   issue on the repository.
+
+   Third-party software dependencies (including but not limited to
+   React, Vite, Tailwind CSS, react-rnd, Zustand, Framer Motion, and
+   lucide-react) are covered by their own respective licenses, which
+   remain in force.
+
+5. NO WARRANTY
+
+   THE WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NONINFRINGEMENT. IN NO
+   EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR
+   OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+   ARISING FROM, OUT OF OR IN CONNECTION WITH THE WORK OR THE USE OR
+   OTHER DEALINGS IN THE WORK.
+
+6. TERMINATION
+
+   Any permission granted under this license terminates automatically if
+   you fail to comply with any of its terms. Upon termination, you must
+   cease all use of the Work and destroy all copies in your possession.
+
+7. GOVERNING LAW
+
+   This license shall be governed by and construed in accordance with
+   the laws applicable in the jurisdiction of residence of the copyright
+   holder, without regard to its conflict of law provisions.
+
+8. CONTACT
+
+   For licensing inquiries, permission requests, or takedown notices,
+   contact the copyright holder through GitHub issues at
+   https://github.com/Arutosio, or via the channels linked inside the
+   published site.
+
+END OF LICENSE
