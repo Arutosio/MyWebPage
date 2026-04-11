@@ -1,37 +1,47 @@
-## Welcome to GitHub Pages
+# arutOS
 
-You can use the [editor on GitHub](https://github.com/Arutosio/MainWebPage/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Personal site for [Arutosio](https://github.com/Arutosio) built as a browser-based desktop environment
+inspired by Hyprland ricing. Windows you can drag, resize, minimize and stack.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Stack
 
-### Markdown
+- **React 19** + **TypeScript 5** — strongly-typed window state
+- **Vite 6** — dev server + build
+- **Tailwind CSS 4** — design tokens in CSS, Catppuccin Mocha palette
+- **react-rnd** — battle-tested drag + resize for windows
+- **Zustand** — tiny store for window manager state
+- **Framer Motion** — window open/close animations
+- **lucide-react** — icon set
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Scripts
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```bash
+npm install      # one-time setup (or after pulling new deps)
+npm run dev      # Vite dev server — hot reload at http://localhost:5173
+npm run build    # Type-check + production build → dist/
+npm run preview  # Serve the built dist/ locally
+npm run typecheck
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## Project layout
 
-### Jekyll Themes
+```
+Files/              # static assets (videos, images, fonts, icons) — served at site root via Vite publicDir
+src/
+  App.tsx           # root shell
+  main.tsx          # React entry
+  index.css         # Tailwind 4 @theme tokens + base reset
+  components/       # reusable UI: Wallpaper, Window, Taskbar, StartMenu, …
+  apps/             # window content per "app" (Home, Bio, Projects, Donate)
+  store/            # Zustand stores (window manager, settings, …)
+  lib/              # pure helpers (time slots, github fetchers, …)
+  types/            # shared TypeScript types
+index.html          # Vite entry point
+vite.config.ts
+tsconfig*.json
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Arutosio/MainWebPage/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+## Wallpaper
 
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Four `.webm` clips rotate by hour of day (dawn / noon / sunset / night).
+Files live in `Files/Videos_webm/` and are resolved via Vite `publicDir`.
