@@ -20,7 +20,11 @@ interface WindowStore {
     togglePhaseLock: (id: string) => void;
     refreshLivePhases: (currentPhase: PhaseName) => void;
 
-    /** Clamp every window so it stays inside the current viewport (called on resize). */
+    /**
+     * Clamp every window so it stays inside the current viewport.
+     * Arguments are in LOGICAL (pre-zoom) pixels and represent the full
+     * Desktop root (not the bounds container).
+     */
     clampToViewport: (vw: number, vh: number, topSafe: number) => void;
 
     toggleStartMenu: () => void;
@@ -30,11 +34,27 @@ interface WindowStore {
 let zCounter = 10;
 let idCounter = 0;
 
-const TASKBAR_SAFE = 72;
+/**
+ * Height reserved at the top for the system bar. MUST match the
+ * `TOP_BAR_SAFE` constant in `src/components/Desktop.tsx` — they are the
+ * same logical offset: the top of the bounds container (where windows live).
+ */
+const TOP_BAR_SAFE = 68;
 
 function currentPhase(): PhaseName {
     return getSlotForHour(new Date().getHours()).name;
 }
+
+/**
+ * Window coordinates are in **bounds-container space**, i.e. relative to
+ * the div that wraps react-rnd (which itself starts at `top: TOP_BAR_SAFE`
+ * within the Desktop root). That means:
+ *   - x = 0   → left edge of bounds container
+ *   - y = 0   → top edge of bounds container (right under the top bar)
+ *   - boundsW = logical viewport width
+ *   - boundsH = logical viewport height − TOP_BAR_SAFE
+ * Any code that computes or clamps x/y MUST stay inside this space.
+ */
 
 export const useWindowStore = create<WindowStore>((set) => ({
     windows: [],
@@ -65,34 +85,43 @@ export const useWindowStore = create<WindowStore>((set) => ({
             const vh = window.innerHeight / scale;
             const isMobile = vw < 640;
             const MARGIN = isMobile ? 10 : 16;
-            const availH = vh - TASKBAR_SAFE - MARGIN;
 
-            // Clamp default size so the window always fits the viewport,
-            // including narrow mobile screens where desktop defaults would overflow.
-            let width = Math.min(app.defaultWidth, vw - 2 * MARGIN);
+            // Bounds container dimensions (where windows are placed)
+            const boundsW = vw;
+            const boundsH = vh - TOP_BAR_SAFE;
+            const availW = boundsW - 2 * MARGIN;
+            const availH = boundsH - 2 * MARGIN;
+
+            // Clamp default size so the window always fits the bounds container.
+            let width = Math.min(app.defaultWidth, availW);
             let height = Math.min(app.defaultHeight, availH);
-            width = Math.max(Math.min(app.minWidth, vw - 2 * MARGIN), width);
+            width = Math.max(Math.min(app.minWidth, availW), width);
             height = Math.max(Math.min(app.minHeight, availH), height);
 
-            // "Natural" size — what the window would look like when the user
-            // un-maximizes it. We remember this in prevBounds on mobile.
+            // "Natural" size — what the window looks like when the user
+            // un-maximizes it. Kept in prevBounds for mobile + native maximize.
             const naturalW = width;
             const naturalH = height;
-            const naturalX = Math.max(MARGIN, (vw - naturalW) / 2);
-            const naturalY = Math.max(TASKBAR_SAFE + MARGIN, TASKBAR_SAFE + (availH - naturalH) / 2);
+            const naturalX = Math.max(MARGIN, (boundsW - naturalW) / 2);
+            const naturalY = Math.max(MARGIN, (boundsH - naturalH) / 2);
 
-            // Mobile: spawn already MAXIMIZED so touch users don't fight tiny draggable boxes.
+            // Mobile: spawn already MAXIMIZED so touch users don't fight small boxes.
             if (isMobile) {
-                width = vw - 2 * MARGIN;
+                width = availW;
                 height = availH;
             }
 
-            // Offset cascade + clamp position to viewport bounds.
+            // Desktop cascade offset (center-biased, capped by clamp below)
             const offset = (state.windows.length % 6) * (isMobile ? 0 : 24);
-            let x = isMobile ? MARGIN : (vw - width) / 2 + offset;
-            let y = isMobile ? TASKBAR_SAFE : TASKBAR_SAFE + (availH - height) / 2 + offset;
-            x = Math.min(Math.max(MARGIN, x), vw - width - MARGIN);
-            y = Math.min(Math.max(TASKBAR_SAFE, y), vh - height - MARGIN);
+
+            // Starting position — ALL in bounds-container space (y=0 is the top
+            // of the bounds container, NOT the viewport).
+            let x = isMobile ? MARGIN : (boundsW - width) / 2 + offset;
+            let y = isMobile ? MARGIN : (boundsH - height) / 2 + offset;
+
+            // Clamp: keep the whole window inside the bounds container with margin.
+            x = Math.min(Math.max(MARGIN, x), boundsW - width - MARGIN);
+            y = Math.min(Math.max(MARGIN, y), boundsH - height - MARGIN);
 
             const win: WindowState = {
                 id: `win-${idCounter}`,
@@ -165,31 +194,40 @@ export const useWindowStore = create<WindowStore>((set) => ({
         }),
 
     toggleMaximize: (id) =>
-        set((state) => ({
-            windows: state.windows.map((w) => {
-                if (w.id !== id) return w;
-                if (w.maximized && w.prevBounds) {
+        set((state) => {
+            const scale = useSettings.getState().fontScale || 1;
+            const vw = window.innerWidth / scale;
+            const vh = window.innerHeight / scale;
+            const boundsW = vw;
+            const boundsH = vh - TOP_BAR_SAFE;
+            const MARGIN = 10;
+
+            return {
+                windows: state.windows.map((w) => {
+                    if (w.id !== id) return w;
+                    if (w.maximized && w.prevBounds) {
+                        return {
+                            ...w,
+                            maximized: false,
+                            x: w.prevBounds.x,
+                            y: w.prevBounds.y,
+                            width: w.prevBounds.width,
+                            height: w.prevBounds.height,
+                            prevBounds: undefined,
+                        };
+                    }
                     return {
                         ...w,
-                        maximized: false,
-                        x: w.prevBounds.x,
-                        y: w.prevBounds.y,
-                        width: w.prevBounds.width,
-                        height: w.prevBounds.height,
-                        prevBounds: undefined,
+                        maximized: true,
+                        prevBounds: { x: w.x, y: w.y, width: w.width, height: w.height },
+                        x: MARGIN,
+                        y: MARGIN,
+                        width: boundsW - 2 * MARGIN,
+                        height: boundsH - 2 * MARGIN,
                     };
-                }
-                return {
-                    ...w,
-                    maximized: true,
-                    prevBounds: { x: w.x, y: w.y, width: w.width, height: w.height },
-                    x: 16,
-                    y: 16,
-                    width: window.innerWidth - 32,
-                    height: window.innerHeight - TASKBAR_SAFE - 16,
-                };
-            }),
-        })),
+                }),
+            };
+        }),
 
     updateBounds: (id, bounds) =>
         set((state) => ({
@@ -226,33 +264,37 @@ export const useWindowStore = create<WindowStore>((set) => ({
 
     clampToViewport: (vw, vh, topSafe) =>
         set((state) => {
-            const availableH = vh - topSafe;
+            const boundsW = vw;
+            const boundsH = vh - topSafe;
             const MARGIN = 8;
             let changed = false;
+
             const windows = state.windows.map((w) => {
-                const minW = Math.min(w.minWidth, vw - 2 * MARGIN);
-                const minH = Math.min(w.minHeight, availableH - 2 * MARGIN);
-                const maxW = Math.max(minW, vw - 2 * MARGIN);
-                const maxH = Math.max(minH, availableH - 2 * MARGIN);
+                // Shrink the window if it's too big for the bounds container.
+                const minW = Math.min(w.minWidth, boundsW - 2 * MARGIN);
+                const minH = Math.min(w.minHeight, boundsH - 2 * MARGIN);
+                const maxW = Math.max(minW, boundsW - 2 * MARGIN);
+                const maxH = Math.max(minH, boundsH - 2 * MARGIN);
 
                 let width = Math.min(w.width, maxW);
                 let height = Math.min(w.height, maxH);
                 width = Math.max(minW, width);
                 height = Math.max(minH, height);
 
+                // Position is in bounds-container space: y in [0, boundsH].
                 let x = w.x;
                 let y = w.y;
-                if (x + width > vw - MARGIN) x = vw - width - MARGIN;
-                if (y + height > vh - MARGIN) y = vh - height - MARGIN;
+                if (x + width > boundsW - MARGIN) x = boundsW - width - MARGIN;
+                if (y + height > boundsH - MARGIN) y = boundsH - height - MARGIN;
                 if (x < MARGIN) x = MARGIN;
-                if (y < topSafe) y = topSafe;
+                if (y < MARGIN) y = MARGIN;
 
                 if (w.maximized) {
-                    // Always re-fit a maximized window to the new viewport.
-                    x = MARGIN * 2;
-                    y = topSafe;
-                    width = vw - 4 * MARGIN;
-                    height = availableH - 2 * MARGIN;
+                    // Re-fit a maximized window to the new bounds.
+                    x = MARGIN;
+                    y = MARGIN;
+                    width = boundsW - 2 * MARGIN;
+                    height = boundsH - 2 * MARGIN;
                 }
 
                 if (
