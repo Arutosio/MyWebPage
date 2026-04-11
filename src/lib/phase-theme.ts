@@ -20,6 +20,18 @@ export const PHASE_COLORS: Record<PhaseName, PhaseVisual> = {
 };
 
 /**
+ * Shorthand — phase → hex only. Used by places that just need the color value
+ * (ClockPopover timeline, Settings picker dot, etc.) without the metadata.
+ * Single source of truth, no duplication across files.
+ */
+export const PHASE_COLOR_HEX: Record<PhaseName, string> = {
+    dawn:   PHASE_COLORS.dawn.hex,
+    noon:   PHASE_COLORS.noon.hex,
+    sunset: PHASE_COLORS.sunset.hex,
+    night:  PHASE_COLORS.night.hex,
+};
+
+/**
  * Phase → system accent color mapping (used when `accentFollowsPhase` is true).
  * Picked so each phase gets a visually coordinated UI chrome: pink for dawn's
  * magenta skies, peach for the warm sun of noon, mauve for twilight, and sky

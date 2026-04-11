@@ -36,8 +36,11 @@ export default function Donate() {
                 const first = Object.keys(data)[0];
                 if (first) setSelected(first);
             })
-            .catch(() => {
-                if (!cancelled) setError(true);
+            .catch((err) => {
+                if (!cancelled) {
+                    console.warn('[Donate] wallet JSON fetch failed:', err);
+                    setError(true);
+                }
             });
         return () => {
             cancelled = true;
@@ -58,7 +61,7 @@ export default function Donate() {
             <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-subtext">
                 // crypto_wallet
             </div>
-            <h1 className="font-display text-2xl font-bold uppercase tracking-wider text-mauve drop-shadow-[0_0_14px_rgba(var(--accent-rgb),0.4)]">
+            <h1 className="font-display text-2xl font-bold uppercase tracking-wider text-mauve drop-shadow-[0_0_10px_rgba(var(--accent-rgb),0.35)]">
                 [ RESOURCE TRANSFER ]
             </h1>
             <p className="text-[13px] leading-relaxed text-subtext">

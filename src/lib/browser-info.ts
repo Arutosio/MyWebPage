@@ -157,7 +157,9 @@ export function useBrowserInfo(): BrowserInfo {
             onBatChange();
             bat.addEventListener?.('levelchange', onBatChange);
             bat.addEventListener?.('chargingchange', onBatChange);
-        }).catch(() => {});
+        }).catch((err) => {
+            console.warn('[browser-info] Battery API unavailable:', err);
+        });
 
         return () => {
             window.removeEventListener('online', syncOnline);

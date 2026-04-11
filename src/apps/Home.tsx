@@ -17,7 +17,7 @@ export default function Home() {
     return (
         <div className="space-y-4">
             <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-subtext">// welcome.sh</div>
-            <h1 className="font-display text-4xl font-bold leading-none text-mauve drop-shadow-[0_0_18px_rgba(var(--accent-rgb),0.45)]">
+            <h1 className="font-display text-4xl font-bold leading-none text-mauve drop-shadow-[0_0_10px_rgba(var(--accent-rgb),0.35)]">
                 ~/arutosio
             </h1>
             <div className="h-px bg-gradient-to-r from-mauve/60 via-pink/30 to-transparent" />

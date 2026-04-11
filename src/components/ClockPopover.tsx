@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { SLOTS, getSlotForHour, type PhaseName, type Slot } from '@/lib/time-slots';
+import { PHASE_COLOR_HEX } from '@/lib/phase-theme';
 
 interface Props {
     open: boolean;
@@ -8,12 +9,8 @@ interface Props {
     anchorRight: number;
 }
 
-const PHASE_COLORS: Record<PhaseName, string> = {
-    dawn: '#ff3aa8',   // pink
-    noon: '#ffd000',   // yellow
-    sunset: '#ff8a40', // peach
-    night: '#4477ff',  // blue
-};
+// Single source of truth lives in `src/lib/phase-theme.ts`.
+const PHASE_COLORS = PHASE_COLOR_HEX;
 
 const PHASE_VIDEO: Record<PhaseName, string> = {
     dawn: 'railgun',
@@ -118,7 +115,7 @@ export default function ClockPopover({ open, onClose, anchorRight }: Props) {
                         exit={{ opacity: 0, y: -6, scale: 0.98 }}
                         transition={{ duration: 0.18, ease: [0.2, 0.8, 0.2, 1] }}
                         style={{ right: anchorRight }}
-                        className="fixed top-[60px] z-[90] w-[340px] overflow-hidden rounded-lg border border-mauve/60 bg-base/95 shadow-[0_0_60px_rgba(var(--accent-rgb),0.4),0_20px_56px_rgba(0,0,0,0.65)] backdrop-blur-md"
+                        className="fixed top-[60px] z-[90] w-[340px] overflow-hidden rounded-lg border-2 border-mauve/60 bg-base/95 shadow-[0_0_16px_rgba(var(--accent-rgb),0.3),0_6px_12px_rgba(0,0,0,0.5)] backdrop-blur-md"
                     >
                         {/* Header */}
                         <div className="flex items-center justify-between border-b border-surface0/80 bg-mantle/90 px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.18em]">

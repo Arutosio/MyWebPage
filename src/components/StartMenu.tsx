@@ -43,7 +43,7 @@ export default function StartMenu() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -6, scale: 0.98 }}
                         transition={{ duration: 0.18, ease: [0.2, 0.8, 0.2, 1] }}
-                        className="fixed left-3 top-[60px] z-[85] w-[320px] overflow-hidden rounded-lg border border-mauve/60 bg-base/95 shadow-[0_0_60px_rgba(var(--accent-rgb),0.4),0_20px_56px_rgba(0,0,0,0.65)] backdrop-blur-md"
+                        className="fixed left-3 top-[60px] z-[85] w-[320px] overflow-hidden rounded-lg border-2 border-mauve/60 bg-base/95 shadow-[0_0_16px_rgba(var(--accent-rgb),0.3),0_6px_12px_rgba(0,0,0,0.5)] backdrop-blur-md"
                     >
                         {/* Header */}
                         <div className="flex items-center justify-between border-b border-surface0/80 bg-mantle/90 px-4 py-2.5">

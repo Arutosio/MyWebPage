@@ -83,7 +83,7 @@ export default function SysInfoPopover({ open, onClose, anchorRight }: Props) {
                         exit={{ opacity: 0, y: -6, scale: 0.98 }}
                         transition={{ duration: 0.18, ease: [0.2, 0.8, 0.2, 1] }}
                         style={{ right: anchorRight }}
-                        className="fixed top-[60px] z-[90] w-[320px] overflow-hidden rounded-lg border-2 border-mauve/60 bg-base/95 shadow-[0_0_28px_rgba(var(--accent-rgb),0.35),0_8px_22px_rgba(0,0,0,0.55)] backdrop-blur-md"
+                        className="fixed top-[60px] z-[90] w-[320px] overflow-hidden rounded-lg border-2 border-mauve/60 bg-base/95 shadow-[0_0_14px_rgba(var(--accent-rgb),0.3),0_4px_10px_rgba(0,0,0,0.45)] backdrop-blur-md"
                     >
                         <div className="flex items-center justify-between border-b-2 border-surface0/80 bg-mantle/90 px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.18em]">
                             <span className="text-mauve">// sys.info</span>

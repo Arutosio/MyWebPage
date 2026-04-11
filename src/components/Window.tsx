@@ -13,26 +13,26 @@ interface Props {
 export default function Window({ win }: Props) {
     const focus = useWindowStore((s) => s.focus);
     const updateBounds = useWindowStore((s) => s.updateBounds);
-    const focusedId = useWindowStore((s) => s.focusedId);
+    // Derived boolean selector — this component only re-renders when ITS own
+    // focused-ness flips, not every time ANY window's focusedId changes.
+    const isFocused = useWindowStore((s) => s.focusedId === win.id);
     // Fetch scale so react-rnd knows its parent is visually zoomed.
     // (The `zoom` itself is applied in Desktop.tsx so the WHOLE UI scales,
     // not only the window content.)
     const fontScale = useSettings((s) => s.fontScale);
-
-    const isFocused = focusedId === win.id;
     const app = APPS[win.appId];
     const Content = app.component;
 
     if (win.minimized) return null;
 
-    // Tighter, more compact shadows. The accent ring uses `var(--accent-rgb)`
-    // which is written at runtime by `useApplyAccent()` — so when the accent
-    // changes (either manually or via the phase follower), the window glow
-    // re-paints automatically without component-level work.
+    // Tight, crisp UI shadows. The accent ring uses `var(--accent-rgb)` which
+    // is written at runtime by `useApplyAccent()` — so when the accent changes
+    // (either manually or via the phase follower), the window glow repaints
+    // automatically without component-level work.
     const baseShadow = isFocused
-        ? '0 0 18px rgba(var(--accent-rgb, 184, 96, 255), 0.42), 0 6px 16px rgba(0,0,0,0.55)'
-        : '0 0 10px rgba(var(--accent-rgb, 184, 96, 255), 0.18), 0 4px 12px rgba(0,0,0,0.5)';
-    const phaseShadow = phaseGlow(win.phase, isFocused ? 0.35 : 0.18, isFocused ? 14 : 10);
+        ? '0 0 10px rgba(var(--accent-rgb, 184, 96, 255), 0.35), 0 3px 8px rgba(0,0,0,0.45)'
+        : '0 0 6px rgba(var(--accent-rgb, 184, 96, 255), 0.15), 0 2px 6px rgba(0,0,0,0.4)';
+    const phaseShadow = phaseGlow(win.phase, isFocused ? 0.28 : 0.14, isFocused ? 8 : 6);
     const combinedShadow = `${baseShadow}, ${phaseShadow}`;
     const phaseHex = phaseDotColor(win.phase);
 

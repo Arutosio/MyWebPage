@@ -26,7 +26,7 @@ export default function Bio() {
             <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-subtext">
                 // personnel_file
             </div>
-            <h1 className="font-display text-2xl font-bold uppercase tracking-wider text-mauve drop-shadow-[0_0_14px_rgba(var(--accent-rgb),0.4)]">
+            <h1 className="font-display text-2xl font-bold uppercase tracking-wider text-mauve drop-shadow-[0_0_10px_rgba(var(--accent-rgb),0.35)]">
                 [ PERSONNEL FILE ]
             </h1>
 

@@ -8,6 +8,7 @@ import {
     type AccentColor,
 } from '@/store/settings';
 import { SLOTS, type PhaseName } from '@/lib/time-slots';
+import { PHASE_COLOR_HEX } from '@/lib/phase-theme';
 
 const ACCENTS: { id: AccentColor; hex: string; name: string }[] = [
     { id: 'mauve', hex: '#cba6f7', name: 'mauve' },
@@ -18,12 +19,9 @@ const ACCENTS: { id: AccentColor; hex: string; name: string }[] = [
     { id: 'sky', hex: '#89dceb', name: 'sky' },
 ];
 
-const PHASE_COLORS: Record<PhaseName, string> = {
-    dawn: '#f5c2e7',
-    noon: '#fab387',
-    sunset: '#cba6f7',
-    night: '#89b4fa',
-};
+// Single source of truth lives in `src/lib/phase-theme.ts`.
+// Was previously duplicated AND used stale Catppuccin hex values — both fixed now.
+const PHASE_COLORS = PHASE_COLOR_HEX;
 
 const PHASE_VIDEO: Record<PhaseName, string> = {
     dawn: 'RAILGUN',
@@ -57,7 +55,7 @@ export default function Settings() {
             <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-subtext">
                 // system_settings
             </div>
-            <h1 className="font-display text-2xl font-bold uppercase tracking-wider text-mauve drop-shadow-[0_0_14px_rgba(var(--accent-rgb),0.4)]">
+            <h1 className="font-display text-2xl font-bold uppercase tracking-wider text-mauve drop-shadow-[0_0_10px_rgba(var(--accent-rgb),0.35)]">
                 [ SYSTEM PREFERENCES ]
             </h1>
             <p className="text-[12px] text-subtext">

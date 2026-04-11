@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Star, GitFork, Zap } from 'lucide-react';
+import { relativeTime } from '@/lib/time';
 
 interface Repo {
     id: number;
@@ -10,22 +11,6 @@ interface Repo {
     forks_count: number;
     pushed_at: string;
     language: string | null;
-}
-
-function relativeTime(dateStr: string): string {
-    const now = new Date();
-    const date = new Date(dateStr);
-    const diffMs = now.getTime() - date.getTime();
-    const diffMin = Math.floor(diffMs / 60000);
-    const diffHr = Math.floor(diffMin / 60);
-    const diffDay = Math.floor(diffHr / 24);
-    const diffMo = Math.floor(diffDay / 30);
-    const diffYr = Math.floor(diffDay / 365);
-    if (diffYr > 0) return `${diffYr}y`;
-    if (diffMo > 0) return `${diffMo}mo`;
-    if (diffDay > 0) return `${diffDay}d`;
-    if (diffHr > 0) return `${diffHr}h`;
-    return `${diffMin}m`;
 }
 
 const LANG_COLORS: Record<string, string> = {
@@ -58,8 +43,11 @@ export default function Projects() {
             .then((data: Repo[]) => {
                 if (!cancelled) setRepos(data);
             })
-            .catch(() => {
-                if (!cancelled) setError(true);
+            .catch((err) => {
+                if (!cancelled) {
+                    console.warn('[Projects] GitHub API fetch failed:', err);
+                    setError(true);
+                }
             });
         return () => {
             cancelled = true;
@@ -71,7 +59,7 @@ export default function Projects() {
             <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-subtext">
                 // github_uplink
             </div>
-            <h1 className="font-display text-2xl font-bold uppercase tracking-wider text-mauve drop-shadow-[0_0_14px_rgba(var(--accent-rgb),0.4)]">
+            <h1 className="font-display text-2xl font-bold uppercase tracking-wider text-mauve drop-shadow-[0_0_10px_rgba(var(--accent-rgb),0.35)]">
                 [ CAPABILITY BANKS ]
             </h1>
 

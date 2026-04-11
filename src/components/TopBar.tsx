@@ -86,7 +86,7 @@ export default function TopBar() {
 
     return (
         <>
-            <div className="pointer-events-auto fixed top-2 left-2 right-2 z-[70] flex h-11 items-center gap-1.5 rounded-xl border-2 border-mauve/40 bg-base/70 px-1.5 shadow-[0_4px_18px_rgba(0,0,0,0.4),0_0_22px_rgba(var(--accent-rgb),0.22)] backdrop-blur-md sm:left-3 sm:right-3 sm:gap-2 sm:px-2">
+            <div className="pointer-events-auto fixed top-2 left-2 right-2 z-[70] flex h-11 items-center gap-1.5 rounded-xl border-2 border-mauve/40 bg-base/70 px-1.5 shadow-[0_2px_8px_rgba(0,0,0,0.45),0_0_10px_rgba(var(--accent-rgb),0.2)] backdrop-blur-md sm:left-3 sm:right-3 sm:gap-2 sm:px-2">
                 {/* Start button — icon only, universally readable as "apps" */}
                 <button
                     type="button"
@@ -94,8 +94,8 @@ export default function TopBar() {
                     title="arutOS menu"
                     className={`flex h-8 w-9 shrink-0 items-center justify-center rounded-md border transition-all ${
                         startMenuOpen
-                            ? 'border-mauve bg-mauve/25 text-pink shadow-[0_0_10px_rgba(var(--accent-rgb),0.55)]'
-                            : 'border-mauve/50 bg-mauve/10 text-mauve hover:bg-mauve/20 hover:shadow-[0_0_8px_rgba(var(--accent-rgb),0.5)]'
+                            ? 'border-mauve bg-mauve/25 text-pink shadow-[0_0_8px_rgba(var(--accent-rgb),0.35)]'
+                            : 'border-mauve/50 bg-mauve/10 text-mauve hover:bg-mauve/20 hover:shadow-[0_0_6px_rgba(var(--accent-rgb),0.35)]'
                     }`}
                     aria-label="Start menu"
                 >
@@ -192,7 +192,7 @@ export default function TopBar() {
                         onClick={handleClockClick}
                         className={`flex h-8 items-center gap-1 rounded-md border px-2 font-display tabular-nums transition-all sm:gap-2 sm:px-3 ${
                             clockOpen
-                                ? 'border-mauve bg-mauve/25 text-pink shadow-[0_0_10px_rgba(var(--accent-rgb),0.5)]'
+                                ? 'border-mauve bg-mauve/25 text-pink shadow-[0_0_8px_rgba(var(--accent-rgb),0.35)]'
                                 : 'border-mauve/50 bg-mauve/10 text-mauve hover:bg-mauve/20'
                         }`}
                         aria-label="Clock and phase"
