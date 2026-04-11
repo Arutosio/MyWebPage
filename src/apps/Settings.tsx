@@ -1,5 +1,12 @@
-import { Palette, Image, Clock, Trash2 } from 'lucide-react';
-import { useSettings, type AccentColor } from '@/store/settings';
+import { useEffect, useState } from 'react';
+import { Palette, Image, Clock, Trash2, Type } from 'lucide-react';
+import {
+    useSettings,
+    FONT_SCALE_MIN,
+    FONT_SCALE_MAX,
+    FONT_SCALE_STEP,
+    type AccentColor,
+} from '@/store/settings';
 import { SLOTS, type PhaseName } from '@/lib/time-slots';
 
 const ACCENTS: { id: AccentColor; hex: string; name: string }[] = [
@@ -29,16 +36,20 @@ export default function Settings() {
     const wallpaperMode = useSettings((s) => s.wallpaperMode);
     const manualPhase = useSettings((s) => s.manualPhase);
     const accentColor = useSettings((s) => s.accentColor);
+    const accentFollowsPhase = useSettings((s) => s.accentFollowsPhase);
     const hour24 = useSettings((s) => s.hour24);
     const showSeconds = useSettings((s) => s.showSeconds);
     const reducedBlur = useSettings((s) => s.reducedBlur);
+    const fontScale = useSettings((s) => s.fontScale);
 
     const setWallpaperMode = useSettings((s) => s.setWallpaperMode);
     const setManualPhase = useSettings((s) => s.setManualPhase);
     const setAccentColor = useSettings((s) => s.setAccentColor);
+    const setAccentFollowsPhase = useSettings((s) => s.setAccentFollowsPhase);
     const setHour24 = useSettings((s) => s.setHour24);
     const setShowSeconds = useSettings((s) => s.setShowSeconds);
     const setReducedBlur = useSettings((s) => s.setReducedBlur);
+    const setFontScale = useSettings((s) => s.setFontScale);
     const reset = useSettings((s) => s.reset);
 
     return (
@@ -46,7 +57,7 @@ export default function Settings() {
             <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-subtext">
                 // system_settings
             </div>
-            <h1 className="font-display text-2xl font-bold uppercase tracking-wider text-mauve drop-shadow-[0_0_14px_rgba(203,166,247,0.4)]">
+            <h1 className="font-display text-2xl font-bold uppercase tracking-wider text-mauve drop-shadow-[0_0_14px_rgba(var(--accent-rgb),0.4)]">
                 [ SYSTEM PREFERENCES ]
             </h1>
             <p className="text-[12px] text-subtext">
@@ -77,7 +88,7 @@ export default function Settings() {
                                     onClick={() => setManualPhase(slot.name)}
                                     className={`group flex items-center gap-2 rounded border px-3 py-2 text-left font-mono text-[10px] uppercase tracking-wider transition-all ${
                                         active
-                                            ? 'border-mauve bg-mauve/15 text-pink shadow-[0_0_12px_rgba(203,166,247,0.4)]'
+                                            ? 'border-mauve bg-mauve/15 text-pink shadow-[0_0_12px_rgba(var(--accent-rgb),0.4)]'
                                             : 'border-surface1/50 bg-mantle/30 text-subtext hover:border-mauve/60 hover:text-text'
                                     }`}
                                 >
@@ -96,15 +107,23 @@ export default function Settings() {
 
             {/* Appearance */}
             <Section icon={<Palette className="h-4 w-4" />} title="Appearance">
-                <FieldRow label="Accent" hint="used for window borders, highlights, controls">
-                    <div className="flex flex-wrap gap-2">
+                <FieldRow label="Follow phase" hint="accent derives from time of day (pink/peach/mauve/sky)">
+                    <Toggle value={accentFollowsPhase} onChange={setAccentFollowsPhase} />
+                </FieldRow>
+
+                <FieldRow
+                    label="Accent"
+                    hint={accentFollowsPhase ? 'locked — turn off Follow phase to pick manually' : 'used for window borders, highlights, controls'}
+                >
+                    <div className={`flex flex-wrap gap-2 ${accentFollowsPhase ? 'pointer-events-none opacity-40' : ''}`}>
                         {ACCENTS.map((a) => {
-                            const active = accentColor === a.id;
+                            const active = accentColor === a.id && !accentFollowsPhase;
                             return (
                                 <button
                                     key={a.id}
                                     type="button"
                                     onClick={() => setAccentColor(a.id)}
+                                    disabled={accentFollowsPhase}
                                     className={`group flex items-center gap-2 rounded border px-2.5 py-1.5 font-mono text-[10px] uppercase transition-all ${
                                         active
                                             ? 'border-current text-text'
@@ -126,6 +145,11 @@ export default function Settings() {
                 <FieldRow label="Reduced blur" hint="turn off heavy backdrop blurs for perf">
                     <Toggle value={reducedBlur} onChange={setReducedBlur} />
                 </FieldRow>
+            </Section>
+
+            {/* Typography */}
+            <Section icon={<Type className="h-4 w-4" />} title="Typography">
+                <FontScaleRow fontScale={fontScale} setFontScale={setFontScale} />
             </Section>
 
             {/* Clock */}
@@ -152,7 +176,7 @@ export default function Settings() {
                     onClick={() => {
                         if (confirm('Reset all settings to defaults?')) reset();
                     }}
-                    className="rounded border border-red/50 bg-red/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wide text-red transition-all hover:bg-red/20 hover:shadow-[0_0_12px_rgba(243,139,168,0.5)]"
+                    className="rounded border border-red/50 bg-red/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wide text-red transition-all hover:bg-red/20 hover:shadow-[0_0_12px_rgba(255, 53, 80,0.5)]"
                 >
                     [ FACTORY RESET ]
                 </button>
@@ -162,6 +186,80 @@ export default function Settings() {
 }
 
 /* ---------- subcomponents ---------- */
+
+/**
+ * Font scale slider — uses LOCAL state while the user is dragging, and
+ * commits to the global store only on release. Without this, every onChange
+ * rewrites the store, which re-zooms the whole desktop (including this very
+ * window), the slider thumb gets repositioned under the still-pressed mouse,
+ * and the value jitters in a feedback loop.
+ */
+function FontScaleRow({
+    fontScale,
+    setFontScale,
+}: {
+    fontScale: number;
+    setFontScale: (v: number) => void;
+}) {
+    const [local, setLocal] = useState(fontScale);
+    const [dragging, setDragging] = useState(false);
+
+    // When the store value changes from elsewhere (e.g. reset button), sync
+    // the local preview — but NOT while the user is actively dragging.
+    useEffect(() => {
+        if (!dragging) setLocal(fontScale);
+    }, [fontScale, dragging]);
+
+    const commit = () => {
+        // Only commit when an actual drag / keyboard interaction was in progress.
+        // Without this guard, a stray blur (e.g. clicking elsewhere in the window
+        // after the slider had been tabbed into) would re-write the store with a
+        // possibly stale local value, reverting the user's previous change.
+        if (!dragging) return;
+        setDragging(false);
+        if (local !== fontScale) setFontScale(local);
+    };
+
+    return (
+        <FieldRow label="Font size" hint={`${Math.round(local * 100)}% · scales the whole system`}>
+            <div className="flex items-center gap-3">
+                <span className="font-mono text-[10px] text-subtext">A</span>
+                <input
+                    type="range"
+                    min={FONT_SCALE_MIN}
+                    max={FONT_SCALE_MAX}
+                    step={FONT_SCALE_STEP}
+                    value={local}
+                    onChange={(e) => {
+                        setDragging(true);
+                        setLocal(parseFloat(e.target.value));
+                    }}
+                    onPointerUp={commit}
+                    onPointerCancel={commit}
+                    onMouseUp={commit}
+                    onTouchEnd={commit}
+                    onKeyUp={commit}
+                    onBlur={commit}
+                    className="rg-slider flex-1"
+                    aria-label="Font size"
+                />
+                <span className="font-mono text-[16px] text-mauve">A</span>
+                <button
+                    type="button"
+                    onClick={() => {
+                        setDragging(false);
+                        setLocal(1);
+                        setFontScale(1);
+                    }}
+                    className="rounded border border-surface1/60 bg-mantle/30 px-2 py-0.5 font-mono text-[9px] uppercase text-subtext transition-all hover:border-mauve/60 hover:text-text"
+                    title="Reset to 100%"
+                >
+                    reset
+                </button>
+            </div>
+        </FieldRow>
+    );
+}
 
 function Section({
     icon,
@@ -246,7 +344,7 @@ function Toggle({ value, onChange }: { value: boolean; onChange: (v: boolean) =>
             onClick={() => onChange(!value)}
             className={`relative h-6 w-11 rounded-full border transition-all ${
                 value
-                    ? 'border-mauve bg-mauve/30 shadow-[0_0_12px_rgba(203,166,247,0.5)]'
+                    ? 'border-mauve bg-mauve/30 shadow-[0_0_12px_rgba(var(--accent-rgb),0.5)]'
                     : 'border-surface1/60 bg-mantle/40'
             }`}
         >

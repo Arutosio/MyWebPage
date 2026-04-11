@@ -2,32 +2,31 @@ import { useEffect, useRef, useState } from 'react';
 import {
     Battery,
     BatteryCharging,
-    Circle,
-    Cpu,
     Folder,
-    Globe,
-    MemoryStick,
-    Monitor,
-    Signal,
-    SignalZero,
+    Home,
+    Info,
+    LayoutGrid,
+    Settings as SettingsIcon,
     Terminal,
     User,
     Wallet,
-    Settings as SettingsIcon,
     type LucideIcon,
 } from 'lucide-react';
 import { useWindowStore } from '@/store/windows';
 import { useSettings } from '@/store/settings';
 import { APPS } from '@/lib/apps';
-import { useBrowserInfo, shortTz } from '@/lib/browser-info';
+import { useBrowserInfo } from '@/lib/browser-info';
+import { phaseDotColor } from '@/lib/phase-theme';
 import ClockPopover from './ClockPopover';
+import SysInfoPopover from './SysInfoPopover';
 
 const ICONS: Record<string, LucideIcon> = {
-    Terminal,
+    Home,
     User,
     Folder,
     Wallet,
     Settings: SettingsIcon,
+    TerminalSquare: Terminal,
 };
 
 export default function TopBar() {
@@ -45,8 +44,11 @@ export default function TopBar() {
 
     const [now, setNow] = useState(() => new Date());
     const [clockOpen, setClockOpen] = useState(false);
+    const [sysOpen, setSysOpen] = useState(false);
     const clockRef = useRef<HTMLButtonElement>(null);
+    const sysRef = useRef<HTMLButtonElement>(null);
     const [clockAnchorRight, setClockAnchorRight] = useState(12);
+    const [sysAnchorRight, setSysAnchorRight] = useState(12);
 
     useEffect(() => {
         const id = window.setInterval(() => setNow(new Date()), showSeconds ? 1000 : 15_000);
@@ -66,38 +68,49 @@ export default function TopBar() {
             setClockAnchorRight(window.innerWidth - rect.right);
         }
         setClockOpen((v) => !v);
+        setSysOpen(false);
+    };
+
+    const handleSysClick = () => {
+        if (sysRef.current) {
+            const rect = sysRef.current.getBoundingClientRect();
+            setSysAnchorRight(window.innerWidth - rect.right);
+        }
+        setSysOpen((v) => !v);
+        setClockOpen(false);
     };
 
     const batteryPct = Math.round(info.battery.level * 100);
     const BatteryIcon = info.battery.charging ? BatteryCharging : Battery;
-    const SignalIcon = info.online ? Signal : SignalZero;
+    const statusColor = info.online ? '#00f080' : '#ff3550';
 
     return (
         <>
-            <div className="pointer-events-auto fixed top-3 left-3 right-3 z-[70] flex h-11 items-center gap-2 rounded-xl border border-mauve/30 bg-base/55 px-2 shadow-[0_4px_24px_rgba(0,0,0,0.35),0_0_38px_rgba(203,166,247,0.2)] backdrop-blur-2xl">
-                {/* Start button */}
+            <div className="pointer-events-auto fixed top-2 left-2 right-2 z-[70] flex h-11 items-center gap-1.5 rounded-xl border-2 border-mauve/40 bg-base/70 px-1.5 shadow-[0_4px_18px_rgba(0,0,0,0.4),0_0_22px_rgba(var(--accent-rgb),0.22)] backdrop-blur-md sm:left-3 sm:right-3 sm:gap-2 sm:px-2">
+                {/* Start button — icon only, universally readable as "apps" */}
                 <button
                     type="button"
                     onClick={toggleStartMenu}
-                    className={`group flex h-8 items-center gap-2 rounded-lg border px-3 transition-all ${
+                    title="arutOS menu"
+                    className={`flex h-8 w-9 shrink-0 items-center justify-center rounded-md border transition-all ${
                         startMenuOpen
-                            ? 'border-mauve bg-mauve/20 text-pink shadow-[0_0_14px_rgba(203,166,247,0.5)]'
-                            : 'border-mauve/40 bg-mauve/10 text-mauve hover:bg-mauve/20 hover:shadow-[0_0_12px_rgba(203,166,247,0.5)]'
+                            ? 'border-mauve bg-mauve/25 text-pink shadow-[0_0_10px_rgba(var(--accent-rgb),0.55)]'
+                            : 'border-mauve/50 bg-mauve/10 text-mauve hover:bg-mauve/20 hover:shadow-[0_0_8px_rgba(var(--accent-rgb),0.5)]'
                     }`}
                     aria-label="Start menu"
                 >
-                    <Circle className="h-3 w-3 fill-current" />
-                    <span className="font-display text-[11px] font-bold uppercase tracking-[0.15em]">arutOS</span>
+                    <LayoutGrid className="h-4 w-4" strokeWidth={2.25} />
                 </button>
 
-                <Divider />
+                <div className="mx-0.5 hidden h-6 w-px bg-surface1/50 sm:block" />
 
-                {/* Open windows */}
-                <div className="flex flex-1 items-center gap-1 overflow-x-auto">
+                {/* Open windows — text label hidden on mobile so more chips fit */}
+                <div className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">
                     {windows.map((w) => {
                         const app = APPS[w.appId];
                         const Icon = ICONS[app.icon] ?? Terminal;
                         const active = w.id === focusedId && !w.minimized;
+                        const phaseHex = phaseDotColor(w.phase);
                         return (
                             <button
                                 key={w.id}
@@ -106,122 +119,95 @@ export default function TopBar() {
                                     if (active) toggleMinimize(w.id);
                                     else focus(w.id);
                                 }}
-                                className={`group flex h-8 items-center gap-2 rounded-lg border px-3 font-mono text-[11px] transition-all ${
+                                title={`${w.title} · ${w.phase}${w.phaseMode === 'frozen' ? ' (pinned)' : ''}`}
+                                className={`flex h-8 shrink-0 items-center gap-1.5 rounded-md border px-2 font-mono text-[11px] transition-all sm:gap-2 sm:px-3 ${
                                     active
-                                        ? 'border-mauve/70 bg-mauve/15 text-pink shadow-[0_0_12px_rgba(203,166,247,0.35)]'
+                                        ? 'border-mauve/80 bg-mauve/15 text-pink shadow-[0_0_8px_rgba(var(--accent-rgb),0.35)]'
                                         : w.minimized
-                                          ? 'border-surface1/30 bg-mantle/20 text-overlay0 hover:border-mauve/40 hover:text-text'
-                                          : 'border-surface1/40 bg-mantle/40 text-subtext hover:border-mauve/40 hover:text-text'
+                                          ? 'border-surface1/40 bg-mantle/20 text-overlay0 hover:border-mauve/40 hover:text-text'
+                                          : 'border-surface1/50 bg-mantle/40 text-subtext hover:border-mauve/40 hover:text-text'
                                 }`}
                             >
-                                <Icon className="h-3 w-3" strokeWidth={2} />
-                                <span>{app.title}</span>
+                                <span
+                                    className="h-1.5 w-1.5 shrink-0 rounded-full"
+                                    style={{
+                                        background: phaseHex,
+                                        boxShadow:
+                                            w.phaseMode === 'frozen'
+                                                ? `0 0 6px ${phaseHex}, inset 0 0 0 1px rgba(255,255,255,0.7)`
+                                                : `0 0 4px ${phaseHex}`,
+                                    }}
+                                    aria-hidden="true"
+                                />
+                                <Icon className="h-3 w-3 shrink-0" strokeWidth={2} />
+                                <span className="hidden sm:inline">{app.title}</span>
                             </button>
                         );
                     })}
                 </div>
 
-                {/* System tray */}
-                <div className="flex items-center gap-1.5 border-l border-surface1/40 pl-2">
-                    <Chip
-                        icon={<SignalIcon className="h-3 w-3" strokeWidth={2} />}
-                        label={info.online ? info.connection.type.toUpperCase() || 'NET' : 'OFF'}
-                        tone={info.online ? 'ok' : 'warn'}
-                        title={
-                            info.online
-                                ? `online · ${info.connection.supported ? `${info.connection.downlink} Mbps · ${info.connection.rtt}ms` : 'unknown'}`
-                                : 'offline'
-                        }
-                    />
+                {/* System tray — compact; text labels hide on mobile */}
+                <div className="flex shrink-0 items-center gap-1 border-l-2 border-surface1/50 pl-1.5 sm:gap-1.5 sm:pl-2">
+                    {/* Battery (when the API exposes it) */}
                     {info.battery.supported && (
-                        <Chip
-                            icon={<BatteryIcon className="h-3 w-3" strokeWidth={2} />}
-                            label={`${batteryPct}%`}
-                            tone={info.battery.charging || batteryPct > 20 ? 'ok' : 'warn'}
+                        <div
+                            className={`flex h-7 items-center gap-1 rounded border px-1.5 font-mono text-[10px] sm:gap-1.5 sm:px-2 ${
+                                info.battery.charging || batteryPct > 20
+                                    ? 'border-surface1/50 text-green'
+                                    : 'border-red/60 text-red'
+                            }`}
                             title={info.battery.charging ? `charging · ${batteryPct}%` : `battery ${batteryPct}%`}
-                        />
+                        >
+                            <BatteryIcon className="h-3 w-3" strokeWidth={2} />
+                            <span className="hidden sm:inline">{batteryPct}%</span>
+                        </div>
                     )}
-                    <Chip
-                        icon={<Cpu className="h-3 w-3" strokeWidth={2} />}
-                        label={`${info.cpuCores}×`}
-                        title={`${info.cpuCores} logical cores · ${info.platform}`}
-                    />
-                    {info.deviceMemory !== null && (
-                        <Chip
-                            icon={<MemoryStick className="h-3 w-3" strokeWidth={2} />}
-                            label={`${info.deviceMemory}G`}
-                            title={`${info.deviceMemory} GB device memory`}
-                        />
-                    )}
-                    <Chip
-                        icon={<Monitor className="h-3 w-3" strokeWidth={2} />}
-                        label={`${info.viewport.w}×${info.viewport.h}`}
-                        title={`viewport ${info.viewport.w}×${info.viewport.h} · screen ${info.screen.w}×${info.screen.h} @ ${info.pixelRatio}x`}
-                    />
-                    <Chip
-                        icon={<Globe className="h-3 w-3" strokeWidth={2} />}
-                        label={`${info.language.slice(0, 2)}·${shortTz(info.timezone)}`}
-                        title={`${info.language} · ${info.timezone}`}
-                    />
 
-                    <Divider />
+                    {/* Sys info button — replaces the old chip cluster */}
+                    <button
+                        ref={sysRef}
+                        type="button"
+                        onClick={handleSysClick}
+                        title="system info"
+                        aria-label="system info"
+                        className={`flex h-8 items-center gap-1.5 rounded-md border px-2 font-mono text-[10px] transition-all sm:px-2.5 ${
+                            sysOpen
+                                ? 'border-mauve bg-mauve/20 text-pink shadow-[0_0_8px_rgba(var(--accent-rgb),0.45)]'
+                                : 'border-surface1/50 bg-mantle/30 text-subtext hover:border-mauve/40 hover:text-text'
+                        }`}
+                    >
+                        <Info className="h-3 w-3" strokeWidth={2} />
+                        <span className="hidden sm:inline">sys</span>
+                        <span
+                            className="h-1.5 w-1.5 rounded-full"
+                            style={{ background: statusColor, boxShadow: `0 0 6px ${statusColor}` }}
+                            aria-hidden="true"
+                        />
+                    </button>
 
                     {/* Clock */}
                     <button
                         ref={clockRef}
                         type="button"
                         onClick={handleClockClick}
-                        className={`flex h-8 items-center gap-2 rounded-lg border px-3 font-display tabular-nums transition-all ${
+                        className={`flex h-8 items-center gap-1 rounded-md border px-2 font-display tabular-nums transition-all sm:gap-2 sm:px-3 ${
                             clockOpen
-                                ? 'border-mauve bg-mauve/20 text-pink shadow-[0_0_14px_rgba(203,166,247,0.45)]'
-                                : 'border-mauve/40 bg-mauve/10 text-mauve hover:bg-mauve/20'
+                                ? 'border-mauve bg-mauve/25 text-pink shadow-[0_0_10px_rgba(var(--accent-rgb),0.5)]'
+                                : 'border-mauve/50 bg-mauve/10 text-mauve hover:bg-mauve/20'
                         }`}
                         aria-label="Clock and phase"
                     >
-                        <span className="text-[14px] font-bold">
+                        <span className="text-[13px] font-bold sm:text-[14px]">
                             {hh}:{mm}
-                            {showSeconds && <span className="text-subtext">:{ss}</span>}
+                            {showSeconds && <span className="hidden text-subtext sm:inline">:{ss}</span>}
                         </span>
-                        {ampm && <span className="text-[9px] text-subtext">{ampm}</span>}
+                        {ampm && <span className="hidden text-[9px] text-subtext sm:inline">{ampm}</span>}
                     </button>
                 </div>
             </div>
 
             <ClockPopover open={clockOpen} onClose={() => setClockOpen(false)} anchorRight={clockAnchorRight} />
+            <SysInfoPopover open={sysOpen} onClose={() => setSysOpen(false)} anchorRight={sysAnchorRight} />
         </>
-    );
-}
-
-/* ---------- subcomponents ---------- */
-
-function Divider() {
-    return <div className="mx-1 h-6 w-px bg-surface1/50" />;
-}
-
-function Chip({
-    icon,
-    label,
-    tone = 'muted',
-    title,
-}: {
-    icon: React.ReactNode;
-    label: string;
-    tone?: 'muted' | 'ok' | 'warn';
-    title?: string;
-}) {
-    const toneCls =
-        tone === 'ok'
-            ? 'text-green border-surface1/40'
-            : tone === 'warn'
-              ? 'text-red border-red/50'
-              : 'text-subtext border-surface1/40';
-    return (
-        <div
-            className={`flex h-7 items-center gap-1.5 rounded border bg-mantle/30 px-2 font-mono text-[10px] ${toneCls}`}
-            title={title}
-        >
-            {icon}
-            <span>{label}</span>
-        </div>
     );
 }

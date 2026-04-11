@@ -71,7 +71,7 @@ export default function Projects() {
             <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-subtext">
                 // github_uplink
             </div>
-            <h1 className="font-display text-2xl font-bold uppercase tracking-wider text-mauve drop-shadow-[0_0_14px_rgba(203,166,247,0.4)]">
+            <h1 className="font-display text-2xl font-bold uppercase tracking-wider text-mauve drop-shadow-[0_0_14px_rgba(var(--accent-rgb),0.4)]">
                 [ CAPABILITY BANKS ]
             </h1>
 
@@ -105,7 +105,7 @@ export default function Projects() {
                             href={repo.html_url}
                             target="_blank"
                             rel="noopener"
-                            className="group block rounded-lg border border-surface0/70 bg-mantle/40 p-3 transition-all hover:-translate-y-0.5 hover:border-mauve/60 hover:bg-mauve/5 hover:shadow-[0_0_14px_rgba(203,166,247,0.28)]"
+                            className="group block rounded-lg border border-surface0/70 bg-mantle/40 p-3 transition-all hover:-translate-y-0.5 hover:border-mauve/60 hover:bg-mauve/5 hover:shadow-[0_0_14px_rgba(var(--accent-rgb),0.28)]"
                         >
                             <div className="mb-1 flex items-baseline justify-between gap-2">
                                 <div className="truncate font-display text-[13px] font-bold uppercase tracking-wide text-mauve group-hover:text-pink">

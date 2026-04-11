@@ -8,7 +8,7 @@ export default function Home() {
         <button
             type="button"
             onClick={() => open(id)}
-            className="rounded border border-mauve/40 bg-mauve/5 px-2 py-1 text-left font-mono text-[11px] uppercase tracking-wider text-pink transition-all hover:border-pink hover:bg-pink/10 hover:shadow-[0_0_8px_rgba(245,194,231,0.4)]"
+            className="rounded border border-mauve/40 bg-mauve/5 px-2 py-1 text-left font-mono text-[11px] uppercase tracking-wider text-pink transition-all hover:border-pink hover:bg-pink/10 hover:shadow-[0_0_8px_rgba(255, 58, 168,0.4)]"
         >
             ./{id}
         </button>
@@ -17,7 +17,7 @@ export default function Home() {
     return (
         <div className="space-y-4">
             <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-subtext">// welcome.sh</div>
-            <h1 className="font-display text-4xl font-bold leading-none text-mauve drop-shadow-[0_0_18px_rgba(203,166,247,0.45)]">
+            <h1 className="font-display text-4xl font-bold leading-none text-mauve drop-shadow-[0_0_18px_rgba(var(--accent-rgb),0.45)]">
                 ~/arutosio
             </h1>
             <div className="h-px bg-gradient-to-r from-mauve/60 via-pink/30 to-transparent" />
@@ -56,7 +56,7 @@ export default function Home() {
                 <p className="text-sky">
                     <span className="text-mauve">$</span> uptime
                 </p>
-                <p className="pl-3 text-green">online · running arutOS 1.0 · hyprland vibes</p>
+                <p className="pl-3 text-green">online · running arutOS 1.0 · terminal vibes</p>
             </div>
         </div>
     );

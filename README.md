@@ -1,7 +1,8 @@
 # arutOS
 
-Personal site for [Arutosio](https://github.com/Arutosio) built as a browser-based desktop environment
-inspired by Hyprland ricing. Windows you can drag, resize, minimize and stack.
+Personal site for [Arutosio](https://github.com/Arutosio) built as a browser-based desktop environment.
+Draggable, resizable, stackable windows on top of a time-of-day animated wallpaper, with a built-in
+terminal and a scalable plugin system.
 
 ## Stack
 

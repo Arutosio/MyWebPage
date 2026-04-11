@@ -58,7 +58,7 @@ export default function Donate() {
             <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-subtext">
                 // crypto_wallet
             </div>
-            <h1 className="font-display text-2xl font-bold uppercase tracking-wider text-mauve drop-shadow-[0_0_14px_rgba(203,166,247,0.4)]">
+            <h1 className="font-display text-2xl font-bold uppercase tracking-wider text-mauve drop-shadow-[0_0_14px_rgba(var(--accent-rgb),0.4)]">
                 [ RESOURCE TRANSFER ]
             </h1>
             <p className="text-[13px] leading-relaxed text-subtext">
@@ -92,7 +92,7 @@ export default function Donate() {
                             id="donate-asset"
                             value={selected}
                             onChange={(e) => setSelected(e.target.value)}
-                            className="w-full rounded border border-mauve/50 bg-mantle/60 px-3 py-2 font-mono text-[12px] uppercase tracking-wider text-mauve outline-none transition-all focus:border-pink focus:shadow-[0_0_10px_rgba(245,194,231,0.35)]"
+                            className="w-full rounded border border-mauve/50 bg-mantle/60 px-3 py-2 font-mono text-[12px] uppercase tracking-wider text-mauve outline-none transition-all focus:border-pink focus:shadow-[0_0_10px_rgba(255, 58, 168,0.35)]"
                         >
                             {Object.entries(wallets).map(([k, info]) => (
                                 <option key={k} value={k}>

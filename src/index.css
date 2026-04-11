@@ -1,9 +1,10 @@
 @import 'tailwindcss';
 
 /* ============================================================
- * DESIGN TOKENS — Catppuccin Mocha + Hyprland ricing accents
+ * DESIGN TOKENS — arutOS dark neon palette
  * Tailwind 4 auto-generates utility classes from @theme variables
- * (e.g. bg-base, text-mauve, border-mauve/40).
+ * (e.g. bg-base, text-mauve, border-mauve/40). The accent color
+ * can be overridden at runtime via `src/lib/apply-accent.ts`.
  * ============================================================ */
 @theme {
     /* Fonts */
@@ -11,43 +12,43 @@
     --font-display: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
     --font-mono: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
 
-    /* Surface */
-    --color-crust: #11111b;
-    --color-mantle: #181825;
-    --color-base: #1e1e2e;
-    --color-surface0: #313244;
-    --color-surface1: #45475a;
-    --color-surface2: #585b70;
+    /* Surface — deeper + harder blacks */
+    --color-crust: #050510;
+    --color-mantle: #0a0a16;
+    --color-base: #121222;
+    --color-surface0: #1c1c30;
+    --color-surface1: #262642;
+    --color-surface2: #353556;
 
     /* Overlay */
-    --color-overlay0: #6c7086;
-    --color-overlay1: #7f849c;
-    --color-overlay2: #9399b2;
+    --color-overlay0: #5a5a7a;
+    --color-overlay1: #7878a0;
+    --color-overlay2: #9696c0;
 
     /* Text */
-    --color-subtext: #a6adc8;
-    --color-text: #cdd6f4;
+    --color-subtext: #a8b0d0;
+    --color-text: #eef2ff;
 
-    /* Accents (Catppuccin Mocha) */
-    --color-rosewater: #f5e0dc;
-    --color-flamingo: #f2cdcd;
-    --color-pink: #f5c2e7;
-    --color-mauve: #cba6f7;
-    --color-red: #f38ba8;
-    --color-maroon: #eba0ac;
-    --color-peach: #fab387;
-    --color-yellow: #f9e2af;
-    --color-green: #a6e3a1;
-    --color-teal: #94e2d5;
-    --color-sky: #89dceb;
-    --color-sapphire: #74c7ec;
-    --color-blue: #89b4fa;
-    --color-lavender: #b4befe;
+    /* Accents — harder, more saturated neon */
+    --color-rosewater: #ffd8d0;
+    --color-flamingo: #ffb8b8;
+    --color-pink: #ff3aa8;
+    --color-mauve: #b860ff;
+    --color-red: #ff3550;
+    --color-maroon: #ff5074;
+    --color-peach: #ff8a40;
+    --color-yellow: #ffd000;
+    --color-green: #00f080;
+    --color-teal: #00dbc0;
+    --color-sky: #00d4ff;
+    --color-sapphire: #1e9afc;
+    --color-blue: #4477ff;
+    --color-lavender: #7e88ff;
 
     /* Shadows / glow */
-    --shadow-glow-sm: 0 0 8px rgba(203, 166, 247, 0.45);
-    --shadow-glow-md: 0 0 22px rgba(203, 166, 247, 0.5), 0 0 48px rgba(137, 180, 250, 0.25);
-    --shadow-glow-lg: 0 0 44px rgba(203, 166, 247, 0.55), 0 0 88px rgba(137, 180, 250, 0.35);
+    --shadow-glow-sm: 0 0 8px rgba(var(--accent-rgb),0.45);
+    --shadow-glow-md: 0 0 22px rgba(var(--accent-rgb),0.5), 0 0 48px rgba(68, 119, 255, 0.25);
+    --shadow-glow-lg: 0 0 44px rgba(var(--accent-rgb),0.55), 0 0 88px rgba(68, 119, 255, 0.35);
 }
 
 /* ============================================================
@@ -58,7 +59,6 @@ body {
     margin: 0;
     padding: 0;
     height: 100%;
-    background: var(--color-crust);
     color: var(--color-text);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
@@ -66,7 +66,15 @@ body {
     overscroll-behavior: none;
 }
 
+/* Background lives on html only.
+   Body stays transparent so the Wallpaper's fixed `-z-10` layer stays
+   visible — CSS paints negative z-index descendants BEFORE the parent's
+   background, and body had an opaque bg that was hiding the video. */
+html {
+    background: var(--color-crust);
+}
 body {
+    background: transparent;
     overflow: hidden;
 }
 
@@ -81,11 +89,11 @@ body {
 }
 
 ::selection {
-    background: rgba(203, 166, 247, 0.4);
+    background: rgba(var(--accent-rgb),0.4);
     color: var(--color-base);
 }
 
-/* Hyprland-flavoured scrollbar */
+/* arutOS scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -94,11 +102,11 @@ body {
     background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-    background: rgba(203, 166, 247, 0.35);
+    background: rgba(var(--accent-rgb),0.35);
     border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(203, 166, 247, 0.6);
+    background: rgba(var(--accent-rgb),0.6);
 }
 
 /* ============================================================
@@ -130,4 +138,46 @@ body {
     line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+/* ============================================================
+ * Range slider — arutOS themed
+ * ============================================================ */
+.rg-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: var(--color-surface1);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+}
+.rg-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-mauve);
+    border: 2px solid var(--color-base);
+    box-shadow: 0 0 8px rgba(var(--accent-rgb),0.7);
+    cursor: grab;
+    transition: transform 0.15s ease;
+}
+.rg-slider::-webkit-slider-thumb:active {
+    cursor: grabbing;
+    transform: scale(1.15);
+}
+.rg-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-mauve);
+    border: 2px solid var(--color-base);
+    box-shadow: 0 0 8px rgba(var(--accent-rgb),0.7);
+    cursor: grab;
+}
+.rg-slider:focus-visible::-webkit-slider-thumb {
+    box-shadow: 0 0 12px rgba(var(--accent-rgb),0.9);
 }

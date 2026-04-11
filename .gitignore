@@ -34,3 +34,6 @@ pnpm-debug.log*
 
 # claude code local state
 .omc/
+
+# git bash crash dumps
+*.stackdump

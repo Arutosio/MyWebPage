@@ -1,14 +1,24 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Folder, Terminal, User, Wallet, type LucideIcon } from 'lucide-react';
+import {
+    Folder,
+    Home,
+    Settings as SettingsIcon,
+    Terminal as TerminalIcon,
+    User,
+    Wallet,
+    type LucideIcon,
+} from 'lucide-react';
 import { useWindowStore } from '@/store/windows';
 import { APP_LIST } from '@/lib/apps';
 import type { AppId } from '@/types/window';
 
 const ICONS: Record<string, LucideIcon> = {
-    Terminal,
+    Home,
     User,
     Folder,
     Wallet,
+    Settings: SettingsIcon,
+    TerminalSquare: TerminalIcon,
 };
 
 export default function StartMenu() {
@@ -25,59 +35,58 @@ export default function StartMenu() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.15 }}
-                        className="fixed inset-0 z-[80] bg-crust/30"
+                        className="fixed inset-0 z-[80]"
                         onClick={closeStartMenu}
                     />
                     <motion.div
-                        initial={{ opacity: 0, y: 14, scale: 0.96 }}
+                        initial={{ opacity: 0, y: -10, scale: 0.97 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 8, scale: 0.97 }}
-                        transition={{ duration: 0.22, ease: [0.2, 0.8, 0.2, 1] }}
-                        className="fixed bottom-[68px] left-4 z-[85] w-[360px] overflow-hidden rounded-xl border border-mauve/40 bg-base/80 shadow-[0_0_60px_rgba(203,166,247,0.35)] backdrop-blur-2xl"
+                        exit={{ opacity: 0, y: -6, scale: 0.98 }}
+                        transition={{ duration: 0.18, ease: [0.2, 0.8, 0.2, 1] }}
+                        className="fixed left-3 top-[60px] z-[85] w-[320px] overflow-hidden rounded-lg border border-mauve/60 bg-base/95 shadow-[0_0_60px_rgba(var(--accent-rgb),0.4),0_20px_56px_rgba(0,0,0,0.65)] backdrop-blur-md"
                     >
                         {/* Header */}
-                        <div className="flex items-center justify-between border-b border-surface0/70 px-4 py-3">
+                        <div className="flex items-center justify-between border-b border-surface0/80 bg-mantle/90 px-4 py-2.5">
                             <div className="flex items-center gap-2">
-                                <div className="h-2 w-2 animate-pulse rounded-full bg-green shadow-[0_0_6px_#a6e3a1]" />
-                                <div className="font-display text-[11px] font-bold uppercase tracking-[0.2em] text-mauve">
+                                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-mauve shadow-[0_0_6px_#b860ff]" />
+                                <span className="font-display text-[10px] font-bold uppercase tracking-[0.22em] text-mauve">
                                     arutOS
-                                </div>
-                                <div className="font-mono text-[9px] text-subtext">v1.0</div>
+                                </span>
                             </div>
-                            <div className="font-mono text-[9px] text-overlay0">// apps</div>
+                            <span className="font-mono text-[9px] text-overlay0">// applications</span>
                         </div>
 
-                        {/* App grid */}
-                        <div className="grid grid-cols-2 gap-2 p-3">
+                        {/* Text list of windows to launch */}
+                        <ul className="max-h-[360px] overflow-y-auto py-1">
                             {APP_LIST.map((app) => {
-                                const Icon = ICONS[app.icon] ?? Terminal;
+                                const Icon = ICONS[app.icon] ?? TerminalIcon;
                                 return (
-                                    <button
-                                        key={app.id}
-                                        type="button"
-                                        onClick={() => open(app.id as AppId)}
-                                        className="group flex flex-col items-start gap-2 rounded-lg border border-surface0/70 bg-mantle/50 p-3 text-left transition-all hover:-translate-y-0.5 hover:border-mauve/60 hover:bg-mauve/10 hover:shadow-[0_0_18px_rgba(203,166,247,0.3)]"
-                                    >
-                                        <div className="flex h-9 w-9 items-center justify-center rounded-md border border-mauve/40 bg-mauve/10 text-mauve transition-colors group-hover:border-pink group-hover:text-pink">
-                                            <Icon className="h-4 w-4" strokeWidth={2} />
-                                        </div>
-                                        <div className="w-full">
-                                            <div className="truncate font-display text-[12px] font-semibold uppercase tracking-wider text-text group-hover:text-pink">
-                                                {app.title.replace(/_/g, ' ')}
-                                            </div>
-                                            <div className="truncate font-mono text-[9px] text-subtext">
+                                    <li key={app.id}>
+                                        <button
+                                            type="button"
+                                            onClick={() => open(app.id as AppId)}
+                                            className="group flex w-full items-center gap-3 px-4 py-2 text-left transition-all hover:bg-mauve/10"
+                                        >
+                                            <Icon
+                                                className="h-3.5 w-3.5 shrink-0 text-overlay1 transition-colors group-hover:text-mauve"
+                                                strokeWidth={2}
+                                            />
+                                            <span className="min-w-0 flex-1 truncate font-mono text-[12px] text-text group-hover:text-mauve">
+                                                {app.title}
+                                            </span>
+                                            <span className="shrink-0 truncate font-mono text-[9px] italic text-overlay0 group-hover:text-subtext">
                                                 {app.subtitle}
-                                            </div>
-                                        </div>
-                                    </button>
+                                            </span>
+                                        </button>
+                                    </li>
                                 );
                             })}
-                        </div>
+                        </ul>
 
                         {/* Footer */}
-                        <div className="flex items-center justify-between border-t border-surface0/70 bg-mantle/40 px-4 py-2 font-mono text-[9px] text-overlay0">
+                        <div className="flex items-center justify-between border-t border-surface0/80 bg-mantle/90 px-4 py-2 font-mono text-[9px] text-overlay0">
                             <span>@arutosio</span>
-                            <span>hyprland · ricing</span>
+                            <span>v1.0</span>
                         </div>
                     </motion.div>
                 </>

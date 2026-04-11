@@ -3,7 +3,7 @@ import { SLOTS, getSlotForHour, type Slot } from '@/lib/time-slots';
 import { useSettings } from '@/store/settings';
 
 /**
- * Hyprland-style animated wallpaper.
+ * arutOS animated wallpaper.
  * - `auto` mode (default): switches video clip based on hour of day.
  * - `manual` mode: locks to the user-picked phase from system settings.
  * Polls once a minute in auto mode to catch boundary crossings.

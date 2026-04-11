@@ -5,53 +5,78 @@ import { SLOTS, getSlotForHour, type PhaseName, type Slot } from '@/lib/time-slo
 interface Props {
     open: boolean;
     onClose: () => void;
-    anchorRight: number; // px offset from right of viewport for popover position
+    anchorRight: number;
 }
 
-const R = 54;
-const CX = 64;
-const CY = 64;
-const STROKE = 14;
-const C = 2 * Math.PI * R;
-
 const PHASE_COLORS: Record<PhaseName, string> = {
-    dawn: '#f5c2e7',    // pink
-    noon: '#fab387',    // peach
-    sunset: '#cba6f7',  // mauve
-    night: '#89b4fa',   // blue
+    dawn: '#ff3aa8',   // pink
+    noon: '#ffd000',   // yellow
+    sunset: '#ff8a40', // peach
+    night: '#4477ff',  // blue
 };
 
 const PHASE_VIDEO: Record<PhaseName, string> = {
-    dawn: 'RAILGUN',
-    noon: 'INDEX II',
-    sunset: 'INDEX',
-    night: 'ACCELERATOR',
+    dawn: 'railgun',
+    noon: 'index ii',
+    sunset: 'index',
+    night: 'accelerator',
 };
 
-function durationHours(slot: Slot): number {
-    return (slot.end - slot.start + 24) % 24 || 24;
+interface Segment {
+    name: PhaseName;
+    leftPct: number;
+    widthPct: number;
+    color: string;
 }
 
-function fractionOfCircle(startH: number) {
-    return startH / 24;
+function segmentsForSlot(slot: Slot): Segment[] {
+    if (slot.end > slot.start) {
+        return [
+            {
+                name: slot.name,
+                leftPct: (slot.start / 24) * 100,
+                widthPct: ((slot.end - slot.start) / 24) * 100,
+                color: PHASE_COLORS[slot.name],
+            },
+        ];
+    }
+    // Wraps past midnight (e.g. 20..5) → two visual segments
+    return [
+        {
+            name: slot.name,
+            leftPct: (slot.start / 24) * 100,
+            widthPct: ((24 - slot.start) / 24) * 100,
+            color: PHASE_COLORS[slot.name],
+        },
+        {
+            name: slot.name,
+            leftPct: 0,
+            widthPct: (slot.end / 24) * 100,
+            color: PHASE_COLORS[slot.name],
+        },
+    ];
 }
 
-function nextBoundary(now: Date): { nextSlot: Slot; nextTime: Date; minutesTo: number } {
+function nextBoundary(now: Date): { nextSlot: Slot; nextTime: Date; secondsTo: number } {
     const h = now.getHours();
     const current = getSlotForHour(h);
     const nextStartH = current.end % 24;
     const next = new Date(now);
     next.setHours(nextStartH, 0, 0, 0);
-    if (next.getTime() <= now.getTime()) {
-        next.setDate(next.getDate() + 1);
-    }
-    const minutesTo = Math.floor((next.getTime() - now.getTime()) / 60_000);
+    if (next.getTime() <= now.getTime()) next.setDate(next.getDate() + 1);
+    const secondsTo = Math.max(0, Math.floor((next.getTime() - now.getTime()) / 1000));
     const nextSlot = SLOTS.find((s) => s.start === nextStartH) ?? SLOTS[0];
-    return { nextSlot, nextTime: next, minutesTo };
+    return { nextSlot, nextTime: next, secondsTo };
 }
 
-function formatHourLabel(h: number): string {
-    return String(h).padStart(2, '0') + ':00';
+function formatCountdown(totalSeconds: number): string {
+    const h = Math.floor(totalSeconds / 3600);
+    const m = Math.floor((totalSeconds % 3600) / 60);
+    const s = totalSeconds % 60;
+    const pad = (n: number) => String(n).padStart(2, '0');
+    if (h > 0) return `${h}h ${pad(m)}m ${pad(s)}s`;
+    if (m > 0) return `${m}m ${pad(s)}s`;
+    return `${s}s`;
 }
 
 export default function ClockPopover({ open, onClose, anchorRight }: Props) {
@@ -65,16 +90,15 @@ export default function ClockPopover({ open, onClose, anchorRight }: Props) {
     }, [open]);
 
     const currentSlot = getSlotForHour(now.getHours());
-    const { nextSlot, nextTime, minutesTo } = nextBoundary(now);
-    const hoursTo = Math.floor(minutesTo / 60);
-    const mins = minutesTo % 60;
-    const timeStr = `${String(nextTime.getHours()).padStart(2, '0')}:${String(nextTime.getMinutes()).padStart(2, '0')}`;
+    const { nextSlot, nextTime, secondsTo } = nextBoundary(now);
+    const countdownStr = formatCountdown(secondsTo);
+    const nextStr = `${String(nextTime.getHours()).padStart(2, '0')}:${String(nextTime.getMinutes()).padStart(2, '0')}`;
 
-    // Current time marker (decimal hour)
     const nowDecimal = now.getHours() + now.getMinutes() / 60 + now.getSeconds() / 3600;
-    const markerAngle = (nowDecimal / 24) * Math.PI * 2 - Math.PI / 2;
-    const markerX = CX + Math.cos(markerAngle) * R;
-    const markerY = CY + Math.sin(markerAngle) * R;
+    const markerPct = (nowDecimal / 24) * 100;
+
+    // Build all segments
+    const allSegments = SLOTS.flatMap((s) => segmentsForSlot(s));
 
     return (
         <AnimatePresence>
@@ -89,178 +113,138 @@ export default function ClockPopover({ open, onClose, anchorRight }: Props) {
                         onClick={onClose}
                     />
                     <motion.div
-                        initial={{ opacity: 0, y: -10, scale: 0.97 }}
+                        initial={{ opacity: 0, y: -10, scale: 0.98 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -6, scale: 0.98 }}
-                        transition={{ duration: 0.22, ease: [0.2, 0.8, 0.2, 1] }}
+                        transition={{ duration: 0.18, ease: [0.2, 0.8, 0.2, 1] }}
                         style={{ right: anchorRight }}
-                        className="fixed top-[54px] z-[90] w-[300px] overflow-hidden rounded-xl border border-mauve/40 bg-base/85 shadow-[0_0_60px_rgba(203,166,247,0.35)] backdrop-blur-2xl"
+                        className="fixed top-[60px] z-[90] w-[340px] overflow-hidden rounded-lg border border-mauve/60 bg-base/95 shadow-[0_0_60px_rgba(var(--accent-rgb),0.4),0_20px_56px_rgba(0,0,0,0.65)] backdrop-blur-md"
                     >
                         {/* Header */}
-                        <div className="flex items-center justify-between border-b border-surface0/70 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.16em]">
-                            <span className="text-mauve">// phase_orbit</span>
-                            <span className="text-overlay0">24h</span>
+                        <div className="flex items-center justify-between border-b border-surface0/80 bg-mantle/90 px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.18em]">
+                            <span className="text-mauve">// phase.orbit</span>
+                            <span className="tabular-nums text-overlay0">
+                                {String(now.getHours()).padStart(2, '0')}:{String(now.getMinutes()).padStart(2, '0')}:{String(now.getSeconds()).padStart(2, '0')}
+                            </span>
                         </div>
 
-                        {/* Donut chart */}
-                        <div className="flex justify-center py-4">
-                            <svg width={128} height={128} viewBox="0 0 128 128">
-                                {/* Background ring */}
-                                <circle
-                                    cx={CX}
-                                    cy={CY}
-                                    r={R}
-                                    fill="none"
-                                    stroke="rgba(255,255,255,0.04)"
-                                    strokeWidth={STROKE}
-                                />
-
-                                {/* Phase arcs */}
-                                {SLOTS.map((slot) => {
-                                    const dur = durationHours(slot);
-                                    const arcLen = (dur / 24) * C;
-                                    const startOffset = fractionOfCircle(slot.start) * C;
-                                    const isCurrent = slot.name === currentSlot.name;
-                                    return (
-                                        <circle
-                                            key={slot.name}
-                                            cx={CX}
-                                            cy={CY}
-                                            r={R}
-                                            fill="none"
-                                            stroke={PHASE_COLORS[slot.name]}
-                                            strokeWidth={STROKE}
-                                            strokeDasharray={`${arcLen} ${C - arcLen}`}
-                                            strokeDashoffset={-startOffset}
-                                            opacity={isCurrent ? 1 : 0.35}
-                                            style={{
-                                                transform: 'rotate(-90deg)',
-                                                transformOrigin: `${CX}px ${CY}px`,
-                                                filter: isCurrent
-                                                    ? `drop-shadow(0 0 6px ${PHASE_COLORS[slot.name]})`
-                                                    : undefined,
-                                                transition: 'opacity 0.3s ease',
-                                            }}
-                                        />
-                                    );
-                                })}
-
-                                {/* Hour ticks */}
-                                {[0, 6, 12, 18].map((h) => {
-                                    const angle = (h / 24) * Math.PI * 2 - Math.PI / 2;
-                                    const x1 = CX + Math.cos(angle) * (R + STROKE / 2 + 2);
-                                    const y1 = CY + Math.sin(angle) * (R + STROKE / 2 + 2);
-                                    const x2 = CX + Math.cos(angle) * (R + STROKE / 2 + 6);
-                                    const y2 = CY + Math.sin(angle) * (R + STROKE / 2 + 6);
-                                    return (
-                                        <line
-                                            key={h}
-                                            x1={x1}
-                                            y1={y1}
-                                            x2={x2}
-                                            y2={y2}
-                                            stroke="rgba(205,214,244,0.4)"
-                                            strokeWidth={1}
-                                        />
-                                    );
-                                })}
-
-                                {/* Current time marker (outer dot) */}
-                                <circle cx={markerX} cy={markerY} r={4} fill="#f0fbff" />
-                                <circle
-                                    cx={markerX}
-                                    cy={markerY}
-                                    r={7}
-                                    fill="none"
-                                    stroke="#f0fbff"
-                                    strokeOpacity={0.5}
-                                    strokeWidth={1.5}
-                                />
-
-                                {/* Center text */}
-                                <text
-                                    x={CX}
-                                    y={CY - 2}
-                                    textAnchor="middle"
-                                    fontFamily="JetBrains Mono, monospace"
-                                    fontSize="18"
-                                    fontWeight="700"
-                                    fill="#cdd6f4"
+                        {/* Current phase big label */}
+                        <div className="flex items-end justify-between px-5 pt-4">
+                            <div>
+                                <div className="font-mono text-[9px] uppercase tracking-[0.18em] text-overlay0">
+                                    current phase
+                                </div>
+                                <div
+                                    className="font-display text-2xl font-bold uppercase tracking-wider"
+                                    style={{ color: PHASE_COLORS[currentSlot.name], textShadow: `0 0 12px ${PHASE_COLORS[currentSlot.name]}80` }}
                                 >
-                                    {String(now.getHours()).padStart(2, '0')}:{String(now.getMinutes()).padStart(2, '0')}
-                                </text>
-                                <text
-                                    x={CX}
-                                    y={CY + 12}
-                                    textAnchor="middle"
-                                    fontFamily="JetBrains Mono, monospace"
-                                    fontSize="8"
-                                    fill={PHASE_COLORS[currentSlot.name]}
-                                >
-                                    {currentSlot.name.toUpperCase()}
-                                </text>
-                            </svg>
-                        </div>
-
-                        {/* Info rows */}
-                        <div className="space-y-1.5 border-t border-surface0/70 px-4 py-3 font-mono text-[11px]">
-                            <div className="flex items-center justify-between">
-                                <span className="text-subtext">NOW</span>
-                                <span className="flex items-center gap-2">
-                                    <span
-                                        className="h-2 w-2 rounded-full"
-                                        style={{ background: PHASE_COLORS[currentSlot.name] }}
-                                    />
-                                    <span style={{ color: PHASE_COLORS[currentSlot.name] }}>
-                                        {currentSlot.name.toUpperCase()}
-                                    </span>
-                                    <span className="text-overlay0">·</span>
-                                    <span className="text-text">{PHASE_VIDEO[currentSlot.name]}</span>
-                                </span>
+                                    {currentSlot.name}
+                                </div>
+                                <div className="font-mono text-[10px] text-subtext">
+                                    · {PHASE_VIDEO[currentSlot.name]}
+                                </div>
                             </div>
-                            <div className="flex items-center justify-between">
-                                <span className="text-subtext">NEXT</span>
-                                <span className="flex items-center gap-2">
-                                    <span
-                                        className="h-2 w-2 rounded-full"
-                                        style={{ background: PHASE_COLORS[nextSlot.name] }}
-                                    />
-                                    <span style={{ color: PHASE_COLORS[nextSlot.name] }}>
-                                        {nextSlot.name.toUpperCase()}
-                                    </span>
-                                    <span className="text-overlay0">·</span>
-                                    <span className="text-text">{timeStr}</span>
-                                </span>
-                            </div>
-                            <div className="flex items-center justify-between border-t border-surface0/50 pt-1.5 mt-1.5">
-                                <span className="text-subtext">COUNTDOWN</span>
-                                <span className="text-pink">
-                                    {hoursTo > 0 ? `${hoursTo}h ${mins}m` : `${mins}m`}
-                                </span>
+                            <div className="text-right">
+                                <div className="font-mono text-[9px] uppercase tracking-[0.18em] text-overlay0">
+                                    next in
+                                </div>
+                                <div className="font-display text-lg font-bold tabular-nums text-pink">
+                                    {countdownStr}
+                                </div>
+                                <div className="font-mono text-[10px] text-subtext">→ {nextStr}</div>
                             </div>
                         </div>
 
-                        {/* Phase list */}
-                        <div className="space-y-1 border-t border-surface0/70 bg-mantle/30 px-4 py-3 font-mono text-[10px]">
-                            {SLOTS.map((slot) => {
-                                const active = slot.name === currentSlot.name;
-                                return (
+                        {/* Timeline bar */}
+                        <div className="px-5 pt-5 pb-3">
+                            <div className="relative h-7 overflow-hidden rounded border border-surface0/80 bg-crust/80">
+                                {/* Segments */}
+                                {allSegments.map((seg, i) => (
                                     <div
-                                        key={slot.name}
-                                        className={`flex items-center justify-between ${active ? 'text-text' : 'text-subtext'}`}
-                                    >
-                                        <span className="flex items-center gap-2">
+                                        key={`${seg.name}-${i}`}
+                                        className="absolute inset-y-0"
+                                        style={{
+                                            left: `${seg.leftPct}%`,
+                                            width: `${seg.widthPct}%`,
+                                            background: `linear-gradient(180deg, ${seg.color}26 0%, ${seg.color}55 100%)`,
+                                            borderLeft: `1px solid ${seg.color}99`,
+                                        }}
+                                    />
+                                ))}
+
+                                {/* Hour ticks at 6, 12, 18 */}
+                                {[6, 12, 18].map((h) => (
+                                    <div
+                                        key={h}
+                                        className="absolute inset-y-0 w-px bg-overlay0/40"
+                                        style={{ left: `${(h / 24) * 100}%` }}
+                                    />
+                                ))}
+
+                                {/* Current time marker (animated) */}
+                                <div
+                                    className="absolute inset-y-0 w-[2px] bg-text"
+                                    style={{
+                                        left: `${markerPct}%`,
+                                        boxShadow: '0 0 10px #eef2ff, 0 0 22px rgba(238,242,255,0.6)',
+                                        transition: 'left 0.9s linear',
+                                    }}
+                                />
+                                <div
+                                    className="absolute -top-0.5 h-2 w-2 -translate-x-1/2 rounded-full bg-text"
+                                    style={{
+                                        left: `${markerPct}%`,
+                                        boxShadow: '0 0 10px #eef2ff',
+                                        transition: 'left 0.9s linear',
+                                    }}
+                                />
+                                <div
+                                    className="absolute -bottom-0.5 h-2 w-2 -translate-x-1/2 rounded-full bg-text"
+                                    style={{
+                                        left: `${markerPct}%`,
+                                        boxShadow: '0 0 10px #eef2ff',
+                                        transition: 'left 0.9s linear',
+                                    }}
+                                />
+                            </div>
+
+                            {/* Hour labels */}
+                            <div className="mt-1.5 flex justify-between font-mono text-[9px] tabular-nums text-overlay0">
+                                <span>00</span>
+                                <span>06</span>
+                                <span>12</span>
+                                <span>18</span>
+                                <span>24</span>
+                            </div>
+                        </div>
+
+                        {/* Phase legend */}
+                        <div className="border-t border-surface0/80 bg-mantle/70 px-5 py-3">
+                            <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 font-mono text-[10px]">
+                                {SLOTS.map((s) => {
+                                    const active = s.name === currentSlot.name;
+                                    const nextIs = s.name === nextSlot.name;
+                                    return (
+                                        <div
+                                            key={s.name}
+                                            className={`flex items-center gap-2 ${active ? 'text-text' : 'text-subtext'}`}
+                                        >
                                             <span
                                                 className="h-1.5 w-1.5 rounded-full"
-                                                style={{ background: PHASE_COLORS[slot.name] }}
+                                                style={{ background: PHASE_COLORS[s.name] }}
                                             />
-                                            {formatHourLabel(slot.start)}
-                                        </span>
-                                        <span className="uppercase">{slot.name}</span>
-                                        <span className="text-overlay0">{PHASE_VIDEO[slot.name]}</span>
-                                    </div>
-                                );
-                            })}
+                                            <span className="w-8 tabular-nums text-overlay0">
+                                                {String(s.start).padStart(2, '0')}
+                                            </span>
+                                            <span className="flex-1 uppercase">{s.name}</span>
+                                            {active && <span className="text-[8px] text-pink">● now</span>}
+                                            {nextIs && !active && (
+                                                <span className="text-[8px] text-overlay0">next</span>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         </div>
                     </motion.div>
                 </>

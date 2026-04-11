@@ -26,7 +26,7 @@ export default function Bio() {
             <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-subtext">
                 // personnel_file
             </div>
-            <h1 className="font-display text-2xl font-bold uppercase tracking-wider text-mauve drop-shadow-[0_0_14px_rgba(203,166,247,0.4)]">
+            <h1 className="font-display text-2xl font-bold uppercase tracking-wider text-mauve drop-shadow-[0_0_14px_rgba(var(--accent-rgb),0.4)]">
                 [ PERSONNEL FILE ]
             </h1>
 
@@ -108,7 +108,7 @@ export default function Bio() {
                             href={href}
                             target="_blank"
                             rel="noopener"
-                            className="border-b border-mauve/40 text-mauve hover:border-pink hover:text-pink hover:shadow-[0_0_6px_rgba(245,194,231,0.4)]"
+                            className="border-b border-mauve/40 text-mauve hover:border-pink hover:text-pink hover:shadow-[0_0_6px_rgba(255, 58, 168,0.4)]"
                         >
                             {name}
                         </a>

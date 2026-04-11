@@ -195,3 +195,108 @@ export function formatUptime(ms: number): string {
 export function shortTz(tz: string): string {
     return tz.split('/').pop() ?? tz;
 }
+
+/* ============================================================
+ * PUBLIC IP + GEO — fetched from ipapi.co (free, CORS-enabled).
+ * Called lazily from SysInfoPopover only when the popover opens,
+ * cached at module level so subsequent opens reuse the result.
+ * ============================================================ */
+
+export interface GeoInfo {
+    ip: string;
+    city: string;
+    region: string;
+    country: string;
+    countryCode: string;
+    org: string;
+    timezone: string;
+    /** 'idle' before first fetch, 'loading' in flight, 'ok' or 'error' afterward. */
+    state: 'idle' | 'loading' | 'ok' | 'error';
+}
+
+const EMPTY_GEO: GeoInfo = {
+    ip: '--',
+    city: '--',
+    region: '--',
+    country: '--',
+    countryCode: '',
+    org: '',
+    timezone: '',
+    state: 'idle',
+};
+
+let cachedGeo: GeoInfo | null = null;
+let inflight: Promise<GeoInfo> | null = null;
+
+interface IpapiResponse {
+    ip?: string;
+    city?: string;
+    region?: string;
+    country_name?: string;
+    country?: string;
+    org?: string;
+    timezone?: string;
+    error?: boolean;
+    reason?: string;
+}
+
+async function fetchGeo(): Promise<GeoInfo> {
+    if (cachedGeo && cachedGeo.state === 'ok') return cachedGeo;
+    if (inflight) return inflight;
+    inflight = fetch('https://ipapi.co/json/')
+        .then((r): Promise<IpapiResponse> => {
+            if (!r.ok) throw new Error('http ' + r.status);
+            return r.json();
+        })
+        .then((d): GeoInfo => {
+            if (d.error) throw new Error(d.reason ?? 'api error');
+            const g: GeoInfo = {
+                ip: d.ip ?? '--',
+                city: d.city ?? '--',
+                region: d.region ?? '--',
+                country: d.country_name ?? '--',
+                countryCode: d.country ?? '',
+                org: d.org ?? '',
+                timezone: d.timezone ?? '',
+                state: 'ok',
+            };
+            cachedGeo = g;
+            return g;
+        })
+        .catch((): GeoInfo => {
+            const g: GeoInfo = { ...EMPTY_GEO, state: 'error' };
+            cachedGeo = g;
+            return g;
+        })
+        .finally(() => {
+            inflight = null;
+        });
+    return inflight;
+}
+
+/**
+ * Public IP + reverse geolocation by IP. The fetch runs only when `enabled`
+ * flips to true for the first time (i.e. the popover opens). Results are
+ * cached at module level.
+ */
+export function usePublicIp(enabled: boolean): GeoInfo {
+    const [geo, setGeo] = useState<GeoInfo>(() => cachedGeo ?? EMPTY_GEO);
+
+    useEffect(() => {
+        if (!enabled) return;
+        if (cachedGeo && cachedGeo.state === 'ok') {
+            setGeo(cachedGeo);
+            return;
+        }
+        setGeo((g) => ({ ...g, state: 'loading' }));
+        let cancelled = false;
+        fetchGeo().then((g) => {
+            if (!cancelled) setGeo(g);
+        });
+        return () => {
+            cancelled = true;
+        };
+    }, [enabled]);
+
+    return geo;
+}

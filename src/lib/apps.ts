@@ -5,6 +5,7 @@ import Bio from '@/apps/Bio';
 import Projects from '@/apps/Projects';
 import Donate from '@/apps/Donate';
 import Settings from '@/apps/Settings';
+import Terminal from '@/apps/Terminal';
 
 export interface AppDefinition {
     id: AppId;
@@ -23,7 +24,7 @@ export const APPS: Record<AppId, AppDefinition> = {
         id: 'home',
         title: 'welcome.sh',
         subtitle: 'boot splash',
-        icon: 'Terminal',
+        icon: 'Home',
         component: Home,
         defaultWidth: 620,
         defaultHeight: 440,
@@ -62,6 +63,17 @@ export const APPS: Record<AppId, AppDefinition> = {
         defaultHeight: 540,
         minWidth: 380,
         minHeight: 420,
+    },
+    terminal: {
+        id: 'terminal',
+        title: 'terminal',
+        subtitle: 'interactive shell',
+        icon: 'TerminalSquare',
+        component: Terminal,
+        defaultWidth: 720,
+        defaultHeight: 460,
+        minWidth: 440,
+        minHeight: 280,
     },
     settings: {
         id: 'settings',
