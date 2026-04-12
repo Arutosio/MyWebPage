@@ -154,15 +154,33 @@ export default function Settings() {
 
             {/* Danger zone */}
             <Section icon={<Trash2 className="h-4 w-4" />} title="Reset">
-                <button
-                    type="button"
-                    onClick={() => {
-                        if (confirm('Reset all settings to defaults?')) reset();
-                    }}
-                    className="rounded border border-red/50 bg-red/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wide text-red transition-all hover:bg-red/20 hover:shadow-[0_0_12px_rgba(255, 53, 80,0.5)]"
-                >
-                    [ FACTORY RESET ]
-                </button>
+                <div className="flex flex-wrap gap-2">
+                    <button
+                        type="button"
+                        onClick={() => {
+                            if (confirm('Reset all settings to defaults?')) reset();
+                        }}
+                        className="rounded border border-red/50 bg-red/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wide text-red transition-all hover:bg-red/20 hover:shadow-[0_0_12px_rgba(255, 53, 80,0.5)]"
+                    >
+                        [ FACTORY RESET ]
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => {
+                            if (!confirm('Wipe all local save files and reload?')) return;
+                            try {
+                                localStorage.clear();
+                                sessionStorage.clear();
+                            } catch (err) {
+                                console.error('Failed to clear storage', err);
+                            }
+                            location.reload();
+                        }}
+                        className="rounded border border-red/50 bg-red/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wide text-red transition-all hover:bg-red/20 hover:shadow-[0_0_12px_rgba(255, 53, 80,0.5)]"
+                    >
+                        [ WIPE LOCAL DATA ]
+                    </button>
+                </div>
             </Section>
         </div>
     );
