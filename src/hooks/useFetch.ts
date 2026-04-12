@@ -7,16 +7,32 @@ interface FetchResult<T> {
     loading: boolean;
 }
 
+const TTL_MS = 5 * 60 * 1000;
+const cache = new Map<string, { data: unknown; ts: number }>();
+
 /**
- * Minimal fetch hook with automatic cancellation on unmount.
- * Replaces the duplicated fetch-with-cancelled-flag pattern in Projects and Donate.
+ * Minimal fetch hook with automatic cancellation on unmount and a
+ * module-level 5-minute cache keyed by URL. Closing and reopening an app
+ * that uses the same endpoint (e.g. Projects) now serves from cache,
+ * which matters for rate-limited APIs like GitHub unauth.
  */
 export function useFetch<T>(url: string): FetchResult<T> {
-    const [data, setData] = useState<T | null>(null);
+    const cached = cache.get(url);
+    const fresh = cached && Date.now() - cached.ts < TTL_MS ? (cached.data as T) : null;
+
+    const [data, setData] = useState<T | null>(fresh);
     const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(fresh === null);
 
     useEffect(() => {
+        const entry = cache.get(url);
+        if (entry && Date.now() - entry.ts < TTL_MS) {
+            setData(entry.data as T);
+            setError(false);
+            setLoading(false);
+            return;
+        }
+
         const controller = new AbortController();
         setData(null);
         setError(false);
@@ -28,6 +44,7 @@ export function useFetch<T>(url: string): FetchResult<T> {
                 return r.json();
             })
             .then((d: T) => {
+                cache.set(url, { data: d, ts: Date.now() });
                 setData(d);
                 setLoading(false);
             })
