@@ -4,6 +4,7 @@ import { useFetch } from '@/hooks/useFetch';
 import AppHeader from '@/components/ui/AppHeader';
 import LoadingDots from '@/components/ui/LoadingDots';
 import ErrorBanner from '@/components/ui/ErrorBanner';
+import { toast } from '@/store/toast';
 
 interface ChainInfo {
     nameSymbolChain: string;
@@ -30,10 +31,20 @@ export default function Donate() {
     const effectiveSelected = selected || (wallets ? Object.keys(wallets)[0] ?? '' : '');
 
     const copy = (text: string, id: string) => {
-        navigator.clipboard.writeText(text).then(() => {
-            setCopied(id);
-            window.setTimeout(() => setCopied(null), 1400);
-        });
+        if (!navigator.clipboard?.writeText) {
+            toast.error('Copy failed', 'Clipboard API not available in this context.');
+            return;
+        }
+        navigator.clipboard
+            .writeText(text)
+            .then(() => {
+                setCopied(id);
+                window.setTimeout(() => setCopied(null), 1400);
+            })
+            .catch((err) => {
+                console.warn('[Donate] clipboard write failed', err);
+                toast.error('Copy failed', 'Could not write to clipboard.');
+            });
     };
 
     const current = effectiveSelected && wallets ? wallets[effectiveSelected] : null;

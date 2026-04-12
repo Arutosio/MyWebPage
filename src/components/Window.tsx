@@ -68,7 +68,6 @@ export default function Window({ win }: Props) {
                         <PhaseDot
                             phase={win.phase}
                             glow={isFocused ? 8 : 4}
-                            extraShadow={!isFocused ? undefined : undefined}
                             className="transition-all"
                         />
                         <span

@@ -255,7 +255,6 @@ export const BUILTIN_COMMANDS: readonly Command[] = [
                     author: 'arutOS',
                     commands: [
                         { name: 'greet', description: 'say hello', response: 'hello from the demo plugin ⚡' },
-                        { name: 'coin', description: 'flip a coin', response: Math.random() < 0.5 ? 'heads' : 'tails' },
                     ],
                     installedAt: Date.now(),
                 });

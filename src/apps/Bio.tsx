@@ -10,15 +10,6 @@ function computeAge(): number {
     return now.getFullYear() - BIRTH.getFullYear() - (passed ? 0 : 1);
 }
 
-const STATS: Array<[string, string]> = [
-    ['subject', 'ARUTOSIO'],
-    ['alias', '@arutosio'],
-    ['class', 'TECH ENTHUSIAST'],
-    ['level', '5 / 5'],
-    ['age', `${computeAge()} cycles`],
-    ['status', '[ online ]'],
-];
-
 const ABILITIES = ['JavaScript', 'TypeScript', 'C#', 'HTML/CSS', 'Git', 'Node.js', 'SQL'];
 const INTERESTS = ['Gaming', 'Anime', 'Streaming', 'Creating', 'Coffee'];
 
@@ -31,6 +22,14 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
 }
 
 export default function Bio() {
+    const stats: Array<[string, string]> = [
+        ['subject', 'ARUTOSIO'],
+        ['alias', '@arutosio'],
+        ['class', 'TECH ENTHUSIAST'],
+        ['level', '5 / 5'],
+        ['age', `${computeAge()} cycles`],
+        ['status', '[ online ]'],
+    ];
     return (
         <div className="space-y-5">
             <AppHeader label="// personnel_file" title="[ PERSONNEL FILE ]" />
@@ -41,7 +40,7 @@ export default function Bio() {
                     <span>clearance: sigma</span>
                 </div>
                 <div className="space-y-1 font-mono text-[11px]">
-                    {STATS.map(([k, v]) => (
+                    {stats.map(([k, v]) => (
                         <div key={k} className="grid grid-cols-[96px_14px_1fr] items-center">
                             <span className="uppercase tracking-wide text-subtext">{k}</span>
                             <span className="text-overlay0">:</span>
