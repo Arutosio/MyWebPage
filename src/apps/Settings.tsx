@@ -7,7 +7,7 @@ import {
     FONT_SCALE_STEP,
     type AccentColor,
 } from '@/store/settings';
-import { SLOTS, type PhaseName } from '@/lib/time-slots';
+import { SLOTS } from '@/lib/time-slots';
 import { PHASE_COLOR_HEX, PHASE_VIDEO } from '@/lib/phase-theme';
 import AppHeader from '@/components/ui/AppHeader';
 

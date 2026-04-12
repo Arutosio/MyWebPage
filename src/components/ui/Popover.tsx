@@ -20,7 +20,7 @@ interface Props {
     children: React.ReactNode;
 }
 
-const EASE = [0.2, 0.8, 0.2, 1];
+const EASE = [0.2, 0.8, 0.2, 1] as const;
 
 export default function Popover({
     open,
