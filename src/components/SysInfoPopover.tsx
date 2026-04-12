@@ -64,6 +64,7 @@ export default function SysInfoPopover({ open, onClose, anchorRight }: Props) {
             open={open}
             onClose={onClose}
             style={{ right: anchorRight }}
+            width="w-[320px] max-w-[calc(100vw_-_1rem)]"
             headerLeft="// sys.info"
             headerRight="browser telemetry"
             footer={

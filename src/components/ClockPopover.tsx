@@ -90,7 +90,7 @@ export default function ClockPopover({ open, onClose, anchorRight }: Props) {
             open={open}
             onClose={onClose}
             style={{ right: anchorRight }}
-            width="w-[340px]"
+            width="w-[340px] max-w-[calc(100vw_-_1rem)]"
             headerLeft="// phase.orbit"
             headerRight={
                 <span className="tabular-nums">
