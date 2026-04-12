@@ -10,6 +10,7 @@ import {
 import { SLOTS } from '@/lib/time-slots';
 import { PHASE_COLOR_HEX, PHASE_VIDEO } from '@/lib/phase-theme';
 import AppHeader from '@/components/ui/AppHeader';
+import { toast } from '@/store/toast';
 
 const ACCENTS: { id: AccentColor; hex: string; name: string }[] = [
     { id: 'mauve', hex: '#cba6f7', name: 'mauve' },
@@ -158,7 +159,9 @@ export default function Settings() {
                     <button
                         type="button"
                         onClick={() => {
-                            if (confirm('Reset all settings to defaults?')) reset();
+                            if (!confirm('Reset all settings to defaults?')) return;
+                            reset();
+                            toast.success('Settings reset', 'All preferences restored to defaults.');
                         }}
                         className="rounded border border-red/50 bg-red/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wide text-red transition-all hover:bg-red/20 hover:shadow-[0_0_12px_rgba(255, 53, 80,0.5)]"
                     >

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { toast } from '@/store/toast';
 
 interface FetchResult<T> {
     data: T | null;
@@ -13,31 +14,33 @@ interface FetchResult<T> {
 export function useFetch<T>(url: string): FetchResult<T> {
     const [data, setData] = useState<T | null>(null);
     const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        let cancelled = false;
+        const controller = new AbortController();
         setData(null);
         setError(false);
+        setLoading(true);
 
-        fetch(url)
+        fetch(url, { signal: controller.signal })
             .then((r) => {
                 if (!r.ok) throw new Error(r.statusText);
                 return r.json();
             })
             .then((d: T) => {
-                if (!cancelled) setData(d);
+                setData(d);
+                setLoading(false);
             })
             .catch((err) => {
-                if (!cancelled) {
-                    console.warn(`[useFetch] ${url} failed:`, err);
-                    setError(true);
-                }
+                if (err?.name === 'AbortError') return;
+                console.warn(`[useFetch] ${url} failed:`, err);
+                setError(true);
+                setLoading(false);
+                toast.error('Fetch failed', url);
             });
 
-        return () => {
-            cancelled = true;
-        };
+        return () => controller.abort();
     }, [url]);
 
-    return { data, error, loading: data === null && !error };
+    return { data, error, loading };
 }
