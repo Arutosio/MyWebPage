@@ -8,6 +8,7 @@ interface WindowStore {
     windows: WindowState[];
     focusedId: string | null;
     startMenuOpen: boolean;
+    nextZ: number;
 
     open: (appId: AppId) => void;
     close: (id: string) => void;
@@ -31,10 +32,14 @@ interface WindowStore {
     closeStartMenu: () => void;
 }
 
-let zCounter = 10;
-let idCounter = 0;
-
 import { TOP_BAR_SAFE } from '@/lib/constants';
+
+function nextId(): string {
+    if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
+        return `win-${crypto.randomUUID()}`;
+    }
+    return `win-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+}
 
 function currentPhase(): PhaseName {
     return getSlotForHour(new Date().getHours()).name;
@@ -55,24 +60,24 @@ export const useWindowStore = create<WindowStore>((set) => ({
     windows: [],
     focusedId: null,
     startMenuOpen: false,
+    nextZ: 10,
 
     open: (appId) =>
         set((state) => {
+            const z = state.nextZ + 1;
             const existing = state.windows.find((w) => w.appId === appId);
             if (existing) {
-                zCounter++;
                 return {
                     windows: state.windows.map((w) =>
-                        w.id === existing.id ? { ...w, minimized: false, zIndex: zCounter } : w,
+                        w.id === existing.id ? { ...w, minimized: false, zIndex: z } : w,
                     ),
                     focusedId: existing.id,
                     startMenuOpen: false,
+                    nextZ: z,
                 };
             }
 
             const app = APPS[appId];
-            zCounter++;
-            idCounter++;
             // The Desktop root is rendered with `zoom: fontScale`, so the logical
             // coordinate space visible to the user is (innerWidth/scale × innerHeight/scale).
             const scale = useSettings.getState().fontScale || 1;
@@ -119,7 +124,7 @@ export const useWindowStore = create<WindowStore>((set) => ({
             y = Math.min(Math.max(MARGIN, y), boundsH - height - MARGIN);
 
             const win: WindowState = {
-                id: `win-${idCounter}`,
+                id: nextId(),
                 appId,
                 title: app.title,
                 icon: app.icon,
@@ -129,7 +134,7 @@ export const useWindowStore = create<WindowStore>((set) => ({
                 height,
                 minWidth: Math.min(app.minWidth, width),
                 minHeight: Math.min(app.minHeight, height),
-                zIndex: zCounter,
+                zIndex: z,
                 minimized: false,
                 maximized: isMobile,
                 prevBounds: isMobile
@@ -143,6 +148,7 @@ export const useWindowStore = create<WindowStore>((set) => ({
                 windows: [...state.windows, win],
                 focusedId: win.id,
                 startMenuOpen: false,
+                nextZ: z,
             };
         }),
 
@@ -154,12 +160,13 @@ export const useWindowStore = create<WindowStore>((set) => ({
 
     focus: (id) =>
         set((state) => {
-            zCounter++;
+            const z = state.nextZ + 1;
             return {
                 windows: state.windows.map((w) =>
-                    w.id === id ? { ...w, zIndex: zCounter, minimized: false } : w,
+                    w.id === id ? { ...w, zIndex: z, minimized: false } : w,
                 ),
                 focusedId: id,
+                nextZ: z,
             };
         }),
 
@@ -174,12 +181,13 @@ export const useWindowStore = create<WindowStore>((set) => ({
             const target = state.windows.find((w) => w.id === id);
             if (!target) return state;
             if (target.minimized) {
-                zCounter++;
+                const z = state.nextZ + 1;
                 return {
                     windows: state.windows.map((w) =>
-                        w.id === id ? { ...w, minimized: false, zIndex: zCounter } : w,
+                        w.id === id ? { ...w, minimized: false, zIndex: z } : w,
                     ),
                     focusedId: id,
+                    nextZ: z,
                 };
             }
             return {
