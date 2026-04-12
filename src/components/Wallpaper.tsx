@@ -49,7 +49,7 @@ export default function Wallpaper() {
                 muted
                 loop
                 playsInline
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover object-left"
                 style={{ filter: 'brightness(0.55) saturate(1.05)' }}
             />
             {/* Subtle gradient veil so foreground UI stays readable */}
