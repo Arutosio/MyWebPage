@@ -5,15 +5,15 @@ import TopBar from './TopBar';
 import StartMenu from './StartMenu';
 import { useWindowStore } from '@/store/windows';
 import { useSettings } from '@/store/settings';
-import { getSlotForHour } from '@/lib/time-slots';
+import { usePhaseClock } from '@/lib/phase-clock';
 
 import { TOP_BAR_SAFE } from '@/lib/constants';
-const PHASE_POLL_MS = 60_000;
 
 export default function Desktop() {
     const windows = useWindowStore((s) => s.windows);
     const open = useWindowStore((s) => s.open);
     const fontScale = useSettings((s) => s.fontScale);
+    const phase = usePhaseClock((s) => s.phase);
 
     // Boot: open the welcome window after a short delay (once)
     useEffect(() => {
@@ -21,16 +21,10 @@ export default function Desktop() {
         return () => window.clearTimeout(t);
     }, [open]);
 
-    // Phase poll: refresh live windows when the real clock crosses a phase boundary
+    // Refresh live windows whenever the shared phase clock ticks over.
     useEffect(() => {
-        const refresh = () => {
-            const phase = getSlotForHour(new Date().getHours()).name;
-            useWindowStore.getState().refreshLivePhases(phase);
-        };
-        refresh();
-        const id = window.setInterval(refresh, PHASE_POLL_MS);
-        return () => window.clearInterval(id);
-    }, []);
+        useWindowStore.getState().refreshLivePhases(phase);
+    }, [phase]);
 
     // Viewport clamp: on every resize OR font-scale change, rAF-debounce and
     // re-fit windows into bounds. The effective logical viewport is

@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSettings, type AccentColor } from '@/store/settings';
-import { getSlotForHour, type PhaseName } from '@/lib/time-slots';
 import { PHASE_ACCENT } from '@/lib/phase-theme';
+import { usePhaseClock } from '@/lib/phase-clock';
 
 /**
  * Maps the accent name to the actual hex we baked into the Tailwind 4 @theme.
@@ -35,23 +35,9 @@ function hexToRgbTriple(hex: string): string {
 export function useApplyAccent() {
     const accent = useSettings((s) => s.accentColor);
     const followsPhase = useSettings((s) => s.accentFollowsPhase);
-    const [currentPhase, setCurrentPhase] = useState<PhaseName>(
-        () => getSlotForHour(new Date().getHours()).name,
-    );
+    const phase = usePhaseClock((s) => s.phase);
 
-    // Poll for phase boundary crossings every 60s while auto mode is on.
-    useEffect(() => {
-        if (!followsPhase) return;
-        const tick = () => {
-            const p = getSlotForHour(new Date().getHours()).name;
-            setCurrentPhase((prev) => (prev === p ? prev : p));
-        };
-        tick();
-        const id = window.setInterval(tick, 60_000);
-        return () => window.clearInterval(id);
-    }, [followsPhase]);
-
-    const effective = followsPhase ? PHASE_ACCENT[currentPhase] : accent;
+    const effective = followsPhase ? PHASE_ACCENT[phase] : accent;
 
     useEffect(() => {
         const hex = ACCENT_HEX[effective] ?? ACCENT_HEX.mauve;
