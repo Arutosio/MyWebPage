@@ -54,3 +54,11 @@ export function phaseGlow(phase: PhaseName, alpha = 0.35, radius = 32): string {
 export function phaseDotColor(phase: PhaseName): string {
     return PHASE_COLORS[phase].hex;
 }
+
+/** Phase → video/arc label mapping (used by ClockPopover and Settings). */
+export const PHASE_VIDEO: Record<PhaseName, string> = {
+    dawn: 'railgun',
+    noon: 'index ii',
+    sunset: 'index',
+    night: 'accelerator',
+};

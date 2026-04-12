@@ -1,6 +1,9 @@
-import { useEffect, useState } from 'react';
 import { Star, GitFork, Zap } from 'lucide-react';
 import { relativeTime } from '@/lib/time';
+import { useFetch } from '@/hooks/useFetch';
+import AppHeader from '@/components/ui/AppHeader';
+import LoadingDots from '@/components/ui/LoadingDots';
+import ErrorBanner from '@/components/ui/ErrorBanner';
 
 interface Repo {
     id: number;
@@ -30,41 +33,16 @@ const LANG_COLORS: Record<string, string> = {
 };
 
 export default function Projects() {
-    const [repos, setRepos] = useState<Repo[] | null>(null);
-    const [error, setError] = useState(false);
-
-    useEffect(() => {
-        let cancelled = false;
-        fetch('https://api.github.com/users/Arutosio/repos?sort=pushed&per_page=12')
-            .then((r) => {
-                if (!r.ok) throw new Error('api');
-                return r.json();
-            })
-            .then((data: Repo[]) => {
-                if (!cancelled) setRepos(data);
-            })
-            .catch((err) => {
-                if (!cancelled) {
-                    console.warn('[Projects] GitHub API fetch failed:', err);
-                    setError(true);
-                }
-            });
-        return () => {
-            cancelled = true;
-        };
-    }, []);
+    const { data: repos, error, loading } = useFetch<Repo[]>(
+        'https://api.github.com/users/Arutosio/repos?sort=pushed&per_page=12',
+    );
 
     return (
         <div className="space-y-4">
-            <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-subtext">
-                // github_uplink
-            </div>
-            <h1 className="font-display text-2xl font-bold uppercase tracking-wider text-mauve drop-shadow-[0_0_10px_rgba(var(--accent-rgb),0.35)]">
-                [ CAPABILITY BANKS ]
-            </h1>
+            <AppHeader label="// github_uplink" title="[ CAPABILITY BANKS ]" />
 
             {error && (
-                <div className="rounded border border-red/50 bg-red/10 p-3 font-mono text-[11px] text-red">
+                <ErrorBanner>
                     // link failed — github uplink unreachable.{' '}
                     <a
                         href="https://github.com/Arutosio"
@@ -74,15 +52,10 @@ export default function Projects() {
                     >
                         visit profile
                     </a>
-                </div>
+                </ErrorBanner>
             )}
 
-            {repos === null && !error && (
-                <div className="flex items-center gap-2 font-mono text-xs text-subtext">
-                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-mauve" />
-                    fetching uplink…
-                </div>
-            )}
+            {loading && <LoadingDots text="fetching uplink…" />}
 
             <div className="space-y-2">
                 {repos?.map((repo) => {

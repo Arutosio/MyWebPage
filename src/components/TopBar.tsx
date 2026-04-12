@@ -2,32 +2,20 @@ import { useEffect, useRef, useState } from 'react';
 import {
     Battery,
     BatteryCharging,
-    Folder,
-    Home,
     Info,
     LayoutGrid,
-    Settings as SettingsIcon,
     Terminal,
-    User,
-    Wallet,
     type LucideIcon,
 } from 'lucide-react';
 import { useWindowStore } from '@/store/windows';
 import { useSettings } from '@/store/settings';
 import { APPS } from '@/lib/apps';
+import { APP_ICONS } from '@/lib/icons';
 import { useBrowserInfo } from '@/lib/browser-info';
-import { phaseDotColor } from '@/lib/phase-theme';
+import { pad2 } from '@/lib/time';
+import PhaseDot from './ui/PhaseDot';
 import ClockPopover from './ClockPopover';
 import SysInfoPopover from './SysInfoPopover';
-
-const ICONS: Record<string, LucideIcon> = {
-    Home,
-    User,
-    Folder,
-    Wallet,
-    Settings: SettingsIcon,
-    TerminalSquare: Terminal,
-};
 
 export default function TopBar() {
     const windows = useWindowStore((s) => s.windows);
@@ -57,9 +45,9 @@ export default function TopBar() {
 
     const hourNum = now.getHours();
     const dispHour = hour24 ? hourNum : ((hourNum % 12) || 12);
-    const hh = String(dispHour).padStart(2, '0');
-    const mm = String(now.getMinutes()).padStart(2, '0');
-    const ss = String(now.getSeconds()).padStart(2, '0');
+    const hh = pad2(dispHour);
+    const mm = pad2(now.getMinutes());
+    const ss = pad2(now.getSeconds());
     const ampm = hour24 ? '' : hourNum >= 12 ? 'PM' : 'AM';
 
     const handleClockClick = () => {
@@ -87,7 +75,7 @@ export default function TopBar() {
     return (
         <>
             <div className="pointer-events-auto fixed top-2 left-2 right-2 z-[70] flex h-11 items-center gap-1.5 rounded-xl border-2 border-mauve/40 bg-base/70 px-1.5 shadow-[0_2px_8px_rgba(0,0,0,0.45),0_0_10px_rgba(var(--accent-rgb),0.2)] backdrop-blur-md sm:left-3 sm:right-3 sm:gap-2 sm:px-2">
-                {/* Start button — icon only, universally readable as "apps" */}
+                {/* Start button */}
                 <button
                     type="button"
                     onClick={toggleStartMenu}
@@ -104,13 +92,12 @@ export default function TopBar() {
 
                 <div className="mx-0.5 hidden h-6 w-px bg-surface1/50 sm:block" />
 
-                {/* Open windows — text label hidden on mobile so more chips fit */}
+                {/* Open windows */}
                 <div className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">
                     {windows.map((w) => {
                         const app = APPS[w.appId];
-                        const Icon = ICONS[app.icon] ?? Terminal;
+                        const Icon: LucideIcon = APP_ICONS[app.icon] ?? Terminal;
                         const active = w.id === focusedId && !w.minimized;
-                        const phaseHex = phaseDotColor(w.phase);
                         return (
                             <button
                                 key={w.id}
@@ -128,16 +115,10 @@ export default function TopBar() {
                                           : 'border-surface1/50 bg-mantle/40 text-subtext hover:border-mauve/40 hover:text-text'
                                 }`}
                             >
-                                <span
-                                    className="h-1.5 w-1.5 shrink-0 rounded-full"
-                                    style={{
-                                        background: phaseHex,
-                                        boxShadow:
-                                            w.phaseMode === 'frozen'
-                                                ? `0 0 6px ${phaseHex}, inset 0 0 0 1px rgba(255,255,255,0.7)`
-                                                : `0 0 4px ${phaseHex}`,
-                                    }}
-                                    aria-hidden="true"
+                                <PhaseDot
+                                    phase={w.phase}
+                                    glow={active ? 6 : 4}
+                                    extraShadow={w.phaseMode === 'frozen' ? 'inset 0 0 0 1px rgba(255,255,255,0.7)' : undefined}
                                 />
                                 <Icon className="h-3 w-3 shrink-0" strokeWidth={2} />
                                 <span className="hidden sm:inline">{app.title}</span>
@@ -146,9 +127,8 @@ export default function TopBar() {
                     })}
                 </div>
 
-                {/* System tray — compact; text labels hide on mobile */}
+                {/* System tray */}
                 <div className="flex shrink-0 items-center gap-1 border-l-2 border-surface1/50 pl-1.5 sm:gap-1.5 sm:pl-2">
-                    {/* Battery (when the API exposes it) */}
                     {info.battery.supported && (
                         <div
                             className={`flex h-7 items-center gap-1 rounded border px-1.5 font-mono text-[10px] sm:gap-1.5 sm:px-2 ${
@@ -163,7 +143,6 @@ export default function TopBar() {
                         </div>
                     )}
 
-                    {/* Sys info button — replaces the old chip cluster */}
                     <button
                         ref={sysRef}
                         type="button"
@@ -185,7 +164,6 @@ export default function TopBar() {
                         />
                     </button>
 
-                    {/* Clock */}
                     <button
                         ref={clockRef}
                         type="button"

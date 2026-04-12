@@ -8,7 +8,8 @@ import {
     type AccentColor,
 } from '@/store/settings';
 import { SLOTS, type PhaseName } from '@/lib/time-slots';
-import { PHASE_COLOR_HEX } from '@/lib/phase-theme';
+import { PHASE_COLOR_HEX, PHASE_VIDEO } from '@/lib/phase-theme';
+import AppHeader from '@/components/ui/AppHeader';
 
 const ACCENTS: { id: AccentColor; hex: string; name: string }[] = [
     { id: 'mauve', hex: '#cba6f7', name: 'mauve' },
@@ -18,17 +19,6 @@ const ACCENTS: { id: AccentColor; hex: string; name: string }[] = [
     { id: 'peach', hex: '#fab387', name: 'peach' },
     { id: 'sky', hex: '#89dceb', name: 'sky' },
 ];
-
-// Single source of truth lives in `src/lib/phase-theme.ts`.
-// Was previously duplicated AND used stale Catppuccin hex values — both fixed now.
-const PHASE_COLORS = PHASE_COLOR_HEX;
-
-const PHASE_VIDEO: Record<PhaseName, string> = {
-    dawn: 'RAILGUN',
-    noon: 'INDEX II',
-    sunset: 'INDEX',
-    night: 'ACCELERATOR',
-};
 
 export default function Settings() {
     const wallpaperMode = useSettings((s) => s.wallpaperMode);
@@ -52,12 +42,7 @@ export default function Settings() {
 
     return (
         <div className="space-y-6">
-            <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-subtext">
-                // system_settings
-            </div>
-            <h1 className="font-display text-2xl font-bold uppercase tracking-wider text-mauve drop-shadow-[0_0_10px_rgba(var(--accent-rgb),0.35)]">
-                [ SYSTEM PREFERENCES ]
-            </h1>
+            <AppHeader label="// system_settings" title="[ SYSTEM PREFERENCES ]" />
             <p className="text-[12px] text-subtext">
                 Changes are saved automatically and persist across sessions in your browser.
             </p>
@@ -92,10 +77,10 @@ export default function Settings() {
                                 >
                                     <span
                                         className="h-2 w-2 rounded-full"
-                                        style={{ background: PHASE_COLORS[slot.name] }}
+                                        style={{ background: PHASE_COLOR_HEX[slot.name] }}
                                     />
                                     <span className="flex-1">{slot.name}</span>
-                                    <span className="text-[9px] text-overlay0">{PHASE_VIDEO[slot.name]}</span>
+                                    <span className="text-[9px] text-overlay0">{PHASE_VIDEO[slot.name].toUpperCase()}</span>
                                 </button>
                             );
                         })}
@@ -185,13 +170,6 @@ export default function Settings() {
 
 /* ---------- subcomponents ---------- */
 
-/**
- * Font scale slider — uses LOCAL state while the user is dragging, and
- * commits to the global store only on release. Without this, every onChange
- * rewrites the store, which re-zooms the whole desktop (including this very
- * window), the slider thumb gets repositioned under the still-pressed mouse,
- * and the value jitters in a feedback loop.
- */
 function FontScaleRow({
     fontScale,
     setFontScale,
@@ -202,17 +180,11 @@ function FontScaleRow({
     const [local, setLocal] = useState(fontScale);
     const [dragging, setDragging] = useState(false);
 
-    // When the store value changes from elsewhere (e.g. reset button), sync
-    // the local preview — but NOT while the user is actively dragging.
     useEffect(() => {
         if (!dragging) setLocal(fontScale);
     }, [fontScale, dragging]);
 
     const commit = () => {
-        // Only commit when an actual drag / keyboard interaction was in progress.
-        // Without this guard, a stray blur (e.g. clicking elsewhere in the window
-        // after the slider had been tabbed into) would re-write the store with a
-        // possibly stale local value, reverting the user's previous change.
         if (!dragging) return;
         setDragging(false);
         if (local !== fontScale) setFontScale(local);

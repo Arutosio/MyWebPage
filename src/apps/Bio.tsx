@@ -1,3 +1,5 @@
+import AppHeader from '@/components/ui/AppHeader';
+
 const BIRTH = new Date(1994, 3, 30);
 
 function computeAge(): number {
@@ -20,15 +22,18 @@ const STATS: Array<[string, string]> = [
 const ABILITIES = ['JavaScript', 'TypeScript', 'C#', 'HTML/CSS', 'Git', 'Node.js', 'SQL'];
 const INTERESTS = ['Gaming', 'Anime', 'Streaming', 'Creating', 'Coffee'];
 
+function SectionHeading({ children }: { children: React.ReactNode }) {
+    return (
+        <h2 className="mb-2 font-display text-[11px] uppercase tracking-[0.2em] text-mauve">
+            {children}
+        </h2>
+    );
+}
+
 export default function Bio() {
     return (
         <div className="space-y-5">
-            <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-subtext">
-                // personnel_file
-            </div>
-            <h1 className="font-display text-2xl font-bold uppercase tracking-wider text-mauve drop-shadow-[0_0_10px_rgba(var(--accent-rgb),0.35)]">
-                [ PERSONNEL FILE ]
-            </h1>
+            <AppHeader label="// personnel_file" title="[ PERSONNEL FILE ]" />
 
             <div className="rounded-lg border border-surface0/80 bg-mantle/50 p-4">
                 <div className="mb-2 flex items-center justify-between border-b border-surface0/60 pb-2 font-mono text-[9px] uppercase tracking-[0.18em] text-overlay0">
@@ -47,9 +52,7 @@ export default function Bio() {
             </div>
 
             <section>
-                <h2 className="mb-2 font-display text-[11px] uppercase tracking-[0.2em] text-mauve">
-                    // biography
-                </h2>
+                <SectionHeading>// biography</SectionHeading>
                 <p className="text-[13px] leading-relaxed text-subtext">
                     Computer enthusiast since forever. Passionate gamer exploring virtual worlds and
                     getting way too invested in pixel characters. I build web things when I&apos;m not
@@ -59,9 +62,7 @@ export default function Bio() {
             </section>
 
             <section>
-                <h2 className="mb-2 font-display text-[11px] uppercase tracking-[0.2em] text-mauve">
-                    // abilities
-                </h2>
+                <SectionHeading>// abilities</SectionHeading>
                 <div className="flex flex-wrap gap-1.5">
                     {ABILITIES.map((a) => (
                         <span
@@ -75,9 +76,7 @@ export default function Bio() {
             </section>
 
             <section>
-                <h2 className="mb-2 font-display text-[11px] uppercase tracking-[0.2em] text-mauve">
-                    // interests
-                </h2>
+                <SectionHeading>// interests</SectionHeading>
                 <div className="flex flex-wrap gap-1.5">
                     {INTERESTS.map((i) => (
                         <span
@@ -91,9 +90,7 @@ export default function Bio() {
             </section>
 
             <section>
-                <h2 className="mb-2 font-display text-[11px] uppercase tracking-[0.2em] text-mauve">
-                    // channels
-                </h2>
+                <SectionHeading>// channels</SectionHeading>
                 <div className="flex flex-wrap gap-2 font-mono text-[11px]">
                     {[
                         ['github', 'https://github.com/Arutosio'],

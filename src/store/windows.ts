@@ -34,12 +34,7 @@ interface WindowStore {
 let zCounter = 10;
 let idCounter = 0;
 
-/**
- * Height reserved at the top for the system bar. MUST match the
- * `TOP_BAR_SAFE` constant in `src/components/Desktop.tsx` — they are the
- * same logical offset: the top of the bounds container (where windows live).
- */
-const TOP_BAR_SAFE = 68;
+import { TOP_BAR_SAFE } from '@/lib/constants';
 
 function currentPhase(): PhaseName {
     return getSlotForHour(new Date().getHours()).name;

@@ -2,6 +2,11 @@
  * Shared time utilities used across apps (Projects, Terminal, Clock, …).
  */
 
+/** Zero-pad a number to 2 digits. */
+export function pad2(n: number): string {
+    return String(n).padStart(2, '0');
+}
+
 /**
  * Convert a date string (or Date) into a compact relative duration from now.
  * Examples: `5m`, `3h`, `2d`, `4mo`, `1y`.

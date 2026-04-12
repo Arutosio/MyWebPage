@@ -1,5 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Copy, Check } from 'lucide-react';
+import { useFetch } from '@/hooks/useFetch';
+import AppHeader from '@/components/ui/AppHeader';
+import LoadingDots from '@/components/ui/LoadingDots';
+import ErrorBanner from '@/components/ui/ErrorBanner';
 
 interface ChainInfo {
     nameSymbolChain: string;
@@ -18,34 +22,12 @@ interface CryptoInfo {
 type Wallets = Record<string, CryptoInfo>;
 
 export default function Donate() {
-    const [wallets, setWallets] = useState<Wallets | null>(null);
-    const [error, setError] = useState(false);
+    const { data: wallets, error, loading } = useFetch<Wallets>('/Json/WalletDepositAddress.json');
     const [selected, setSelected] = useState<string>('');
     const [copied, setCopied] = useState<string | null>(null);
 
-    useEffect(() => {
-        let cancelled = false;
-        fetch('/Json/WalletDepositAddress.json')
-            .then((r) => {
-                if (!r.ok) throw new Error('not-found');
-                return r.json();
-            })
-            .then((data: Wallets) => {
-                if (cancelled) return;
-                setWallets(data);
-                const first = Object.keys(data)[0];
-                if (first) setSelected(first);
-            })
-            .catch((err) => {
-                if (!cancelled) {
-                    console.warn('[Donate] wallet JSON fetch failed:', err);
-                    setError(true);
-                }
-            });
-        return () => {
-            cancelled = true;
-        };
-    }, []);
+    // Auto-select first wallet when data arrives
+    const effectiveSelected = selected || (wallets ? Object.keys(wallets)[0] ?? '' : '');
 
     const copy = (text: string, id: string) => {
         navigator.clipboard.writeText(text).then(() => {
@@ -54,33 +36,19 @@ export default function Donate() {
         });
     };
 
-    const current = selected && wallets ? wallets[selected] : null;
+    const current = effectiveSelected && wallets ? wallets[effectiveSelected] : null;
 
     return (
         <div className="space-y-4">
-            <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-subtext">
-                // crypto_wallet
-            </div>
-            <h1 className="font-display text-2xl font-bold uppercase tracking-wider text-mauve drop-shadow-[0_0_10px_rgba(var(--accent-rgb),0.35)]">
-                [ RESOURCE TRANSFER ]
-            </h1>
+            <AppHeader label="// crypto_wallet" title="[ RESOURCE TRANSFER ]" />
             <p className="text-[13px] leading-relaxed text-subtext">
                 Enjoying the content? Power the reactor. Pick an asset below and copy the wallet address
                 — peer-to-peer, non-refundable, handle with Accelerator-level care.
             </p>
 
-            {error && (
-                <div className="rounded border border-red/50 bg-red/10 p-3 font-mono text-[11px] text-red">
-                    // wallet config missing. try again later.
-                </div>
-            )}
+            {error && <ErrorBanner>// wallet config missing. try again later.</ErrorBanner>}
 
-            {!wallets && !error && (
-                <div className="flex items-center gap-2 font-mono text-xs text-subtext">
-                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-mauve" />
-                    loading wallets…
-                </div>
-            )}
+            {loading && <LoadingDots text="loading wallets…" />}
 
             {wallets && (
                 <>
@@ -93,7 +61,7 @@ export default function Donate() {
                         </label>
                         <select
                             id="donate-asset"
-                            value={selected}
+                            value={effectiveSelected}
                             onChange={(e) => setSelected(e.target.value)}
                             className="w-full rounded border border-mauve/50 bg-mantle/60 px-3 py-2 font-mono text-[12px] uppercase tracking-wider text-mauve outline-none transition-all focus:border-pink focus:shadow-[0_0_10px_rgba(255, 58, 168,0.35)]"
                         >

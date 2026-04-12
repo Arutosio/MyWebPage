@@ -4,6 +4,7 @@ import { useSettings } from '@/store/settings';
 import { APPS } from '@/lib/apps';
 import type { WindowState } from '@/types/window';
 import { phaseGlow, phaseDotColor } from '@/lib/phase-theme';
+import PhaseDot from './ui/PhaseDot';
 import WindowControls from './WindowControls';
 
 interface Props {
@@ -13,22 +14,13 @@ interface Props {
 export default function Window({ win }: Props) {
     const focus = useWindowStore((s) => s.focus);
     const updateBounds = useWindowStore((s) => s.updateBounds);
-    // Derived boolean selector — this component only re-renders when ITS own
-    // focused-ness flips, not every time ANY window's focusedId changes.
     const isFocused = useWindowStore((s) => s.focusedId === win.id);
-    // Fetch scale so react-rnd knows its parent is visually zoomed.
-    // (The `zoom` itself is applied in Desktop.tsx so the WHOLE UI scales,
-    // not only the window content.)
     const fontScale = useSettings((s) => s.fontScale);
     const app = APPS[win.appId];
     const Content = app.component;
 
     if (win.minimized) return null;
 
-    // Tight, crisp UI shadows. The accent ring uses `var(--accent-rgb)` which
-    // is written at runtime by `useApplyAccent()` — so when the accent changes
-    // (either manually or via the phase follower), the window glow repaints
-    // automatically without component-level work.
     const baseShadow = isFocused
         ? '0 0 10px rgba(var(--accent-rgb, 184, 96, 255), 0.35), 0 3px 8px rgba(0,0,0,0.45)'
         : '0 0 6px rgba(var(--accent-rgb, 184, 96, 255), 0.15), 0 2px 6px rgba(0,0,0,0.4)';
@@ -73,13 +65,11 @@ export default function Window({ win }: Props) {
                 {/* Titlebar */}
                 <div className="rg-win-titlebar flex h-9 cursor-grab select-none items-center gap-3 border-b border-surface0/80 bg-mantle/95 px-3 active:cursor-grabbing">
                     <div className="flex min-w-0 flex-1 items-center gap-2">
-                        <span
-                            className="h-1.5 w-1.5 shrink-0 rounded-full transition-all"
-                            style={{
-                                background: phaseHex,
-                                boxShadow: isFocused ? `0 0 8px ${phaseHex}` : `0 0 4px ${phaseHex}80`,
-                            }}
-                            aria-hidden="true"
+                        <PhaseDot
+                            phase={win.phase}
+                            glow={isFocused ? 8 : 4}
+                            extraShadow={!isFocused ? undefined : undefined}
+                            className="transition-all"
                         />
                         <span
                             className={`truncate font-mono text-[11px] tracking-wider ${
@@ -90,7 +80,7 @@ export default function Window({ win }: Props) {
                         </span>
                         <span
                             className="ml-1 shrink-0 font-mono text-[9px] uppercase tracking-[0.18em] italic"
-                            style={{ color: `${phaseHex}` }}
+                            style={{ color: phaseHex }}
                         >
                             · {win.phase}
                             {win.phaseMode === 'frozen' && <span className="ml-1 not-italic">[●]</span>}
@@ -105,8 +95,6 @@ export default function Window({ win }: Props) {
                     />
                 </div>
 
-                {/* Content — solid inner bg for legibility over the video.
-                    Root-level zoom in Desktop.tsx already scales everything; no local zoom needed. */}
                 <div className="flex-1 overflow-auto bg-base/90 px-6 py-5 font-body text-[13px] leading-relaxed text-text">
                     <Content />
                 </div>

@@ -7,7 +7,7 @@ import { useWindowStore } from '@/store/windows';
 import { useSettings } from '@/store/settings';
 import { getSlotForHour } from '@/lib/time-slots';
 
-const TOP_BAR_SAFE = 68; // px reserved at top for the bar
+import { TOP_BAR_SAFE } from '@/lib/constants';
 const PHASE_POLL_MS = 60_000;
 
 export default function Desktop() {
