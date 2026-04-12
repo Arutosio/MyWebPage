@@ -48,9 +48,14 @@ export default function Desktop() {
         };
         doClamp(); // also clamp when fontScale prop changes
         window.addEventListener('resize', onResize);
+        window.addEventListener('orientationchange', onResize);
+        const vv = window.visualViewport;
+        vv?.addEventListener('resize', onResize);
         return () => {
             cancelAnimationFrame(rafId);
             window.removeEventListener('resize', onResize);
+            window.removeEventListener('orientationchange', onResize);
+            vv?.removeEventListener('resize', onResize);
         };
     }, [fontScale]);
 
