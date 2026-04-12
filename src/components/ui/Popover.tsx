@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Props {
@@ -34,6 +35,15 @@ export default function Popover({
     width = 'w-[320px]',
     children,
 }: Props) {
+    useEffect(() => {
+        if (!open) return;
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') onClose();
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, [open, onClose]);
+
     return (
         <AnimatePresence>
             {open && (
@@ -48,6 +58,8 @@ export default function Popover({
                         onClick={onClose}
                     />
                     <motion.div
+                        role="dialog"
+                        aria-modal="true"
                         initial={{ opacity: 0, y: -10, scale: 0.98 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -6, scale: 0.98 }}
